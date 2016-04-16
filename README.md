@@ -6,9 +6,7 @@ Show the app on your browser: [http://localhost:9080/Netbank/](http://localhost:
 
 #### Currency data
 
-```
-https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a
-```
+[https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a](https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a)
 
 #### Mainframe
 
