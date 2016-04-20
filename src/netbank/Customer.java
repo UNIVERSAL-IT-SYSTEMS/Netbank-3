@@ -10,36 +10,27 @@ public class Customer extends User {
 	Person person;
 	Account account;
 	
-	public Customer() {
-		
-	}
-	
-public Boolean transaction(BigDecimal amount, UUID recieverId) {
-		
+	public Boolean transaction(Double amount, UUID recieverId) {
+			
 		// TODO first receive the account, then check currency. If currency is different, then change amount to different currency.
 		
-		Currency diffcurrency = null;
-		
-		if (diffcurrency.getNumericCode() != account.currency.getNumericCode()) {
-			try {
-				int hey = Integer.parseInt(getCurrentEchangeRate(diffcurrency));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		if (checkIfBelowZero(amount,account.balance)) {
-			account.balance = change(account.balance.subtract(amount));
+		Account account2 = null;
+		Double tempValue;
+		try {
+			account.setBalance(account.getBalance()-amount);
+			tempValue = getCurrentEchangeRate(account.getCurrency())*amount;
+			// TODO send!
+			account2.setBalance(account2.getBalance()+tempValue);
 			
-			// TODO Actually send the money: get true or false whether it's received. 
-			
-			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
-		
-		return false;
+		return true;
 	}
 	
-
-	
+	public Boolean withdrawal(Double amount) {
+		return account.setBalance(account.getBalance()-amount);
+	}
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Currency"%>
 <%@page import="netbank.*" %>
-<%@page import="java.math.BigDecimal" %>
 <%@page import="java.text.NumberFormat" %>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
@@ -17,14 +17,45 @@
 <body>
 <h1>Put-in Bank</h1>
 <% Employee employee = new Employee(new Person("Morten Nielsen", "DTU", "dk", "DK")); %>
-<% employee.newAccount(BigDecimal.valueOf(50000.0), employee.getPersonName(), BigDecimal.valueOf(2.0), BigDecimal.valueOf(50000.0), Currency.getInstance(Locale.CHINA)); %>
+<% employee.newAccount(50000.9999, employee.getPersonName(), 2.0, 50000.0, Currency.getInstance(Locale.CHINA)); %>
 <h2>
 
 Hello <%= employee.getPersonName() %>. You live in <%= employee.getPersonLocation().getDisplayCountry() %>, <%= employee.getPersonAddress() %>
 </h2>
 <h3>
-<%= employee.getCurrentEchangeRate(Currency.getInstance(Locale.UK)) %> and <%= employee.change(BigDecimal.valueOf(1234.99999)) %>, 
-<%= employee.changeCurrency(Currency.getInstance(Locale.UK), Currency.getInstance(Locale.CHINA)) %>
+<%= employee.getCurrentEchangeRate(Currency.getInstance(Locale.UK)) %> and  
+<%= employee.changeCurrency(Currency.getInstance(Locale.GERMANY), Currency.getInstance(Locale.US)) %>
 </h3>
+
+<select>
+	<%
+	Object[] currencies = Currency.getAvailableCurrencies().toArray();  
+	for(int i = 0; i < currencies.length; i++) {
+		String option = currencies[i].toString();
+	%>
+	<option value="<%= option %>"><%= option %></option>
+	<% } %>
+</select>
+
+<select>
+	<%
+	Object[] languages = Locale.getISOLanguages();  
+	for(int i = 0; i < languages.length; i++) {
+		String option = languages[i].toString();
+	%>
+	<option value="<%= option %>"><%= option %></option>
+	<% } %>
+</select>
+
+<select>
+	<%
+	Object[] regions = Locale.getISOCountries();  
+	for(int i = 0; i < regions.length; i++) {
+		String option = regions[i].toString();
+	%>
+	<option value="<%= option %>"><%= option %></option>
+	<% } %>
+</select>
+
 </body>
 </html>
