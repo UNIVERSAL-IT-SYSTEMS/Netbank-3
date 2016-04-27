@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Customer extends User {
 
-	Person person;
+	CustomerInf person;
 	Account account;
 	
 	public Boolean transaction(Double amount, UUID recieverId) {
@@ -33,4 +33,5 @@ public class Customer extends User {
 	public Boolean withdrawal(Double amount) {
 		return account.setBalance(account.getBalance()-amount);
 	}
+	
 }

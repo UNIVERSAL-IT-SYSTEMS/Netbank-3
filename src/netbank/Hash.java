@@ -2,6 +2,7 @@ package netbank;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class Hash {
 	
@@ -22,4 +23,14 @@ public class Hash {
 		}
 		return generatedPassword;
 	}
+	
+	public static String getSalt() {
+		SecureRandom r = new SecureRandom();
+        StringBuffer sb = new StringBuffer();
+        while(sb.length() < 32){
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+
+        return sb.toString().substring(0, 32);
+    }
 }

@@ -19,8 +19,9 @@ public abstract class User {
 			JsonObject rates = obj.getJsonObject("rates");
 			return Double.parseDouble(rates.get(currency.getCurrencyCode()).toString());
 		} catch (Exception e) {
-			return null;
 			// TODO: handle exception
+			e.printStackTrace();
+			return 1.0;
 		}
 	}
 	
@@ -32,7 +33,7 @@ public abstract class User {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			return 1.0;
 		}
 	}
 }

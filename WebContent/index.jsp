@@ -1,4 +1,6 @@
 <!DOCTYPE HTML>
+<%@page import="java.math.BigInteger"%>
+<%@page import="java.security.SecureRandom"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Currency"%>
@@ -26,6 +28,8 @@ Hello <%= employee.getPersonName() %>. You live in <%= employee.getPersonLocatio
 <%= employee.getCurrentEchangeRate(Currency.getInstance(Locale.UK)) %> and  
 <%= employee.changeCurrency(Currency.getInstance(Locale.GERMANY), Currency.getInstance(Locale.US)) %>
 </h3>
+<h4><% String salt = Hash.getSalt(); %><%= Hash.SHA512("morten",salt) %></h4>
+
 
 <select>
 	<%

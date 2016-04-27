@@ -6,26 +6,14 @@ import java.util.UUID;
 
 public class Employee extends User {
 	
-	Person person;
+	CustomerInf person;
 	Account account;
 	
-	public Employee(Person person) {
-		this.person = person;
-	}
-	
-	public void newAccount(Double balance, String owner, Double interest, Double debt, Currency currency) {
-		person.addAccount(new Account(balance, owner, UUID.randomUUID(), interest, debt, currency));
-	}
-
-	public void setPersonName(String name) { person.setName(name); }
-	public void setPersonAddress(String address) { person.setAddress(address); }
-	public void setPersonLocation(String language, String region) { 
+	public void setCostumerName(String name) { person.setName(name); }
+	public void setCostumerAddress(String address) { person.setAddress(address); }
+	public void setCostumerLocation(String language, String region) { 
 		person.setLocale(new Locale.Builder().setLanguage(language).setRegion(region).build());
 	}
-	
-	public String getPersonName() { return person.getName(); }
-	public String getPersonAddress() { return person.getAddress(); }
-	public Locale getPersonLocation() { return person.getLocale(); }
 	
 	public void setAccountBalance(Double balance) { account.setBalance(balance); }
 	public void setAccountInterest(Double interest) { account.setInterest(interest); }
@@ -38,5 +26,29 @@ public class Employee extends User {
 	
 	public void Deposit(Double amount) {
 		account.setBalance(account.getBalance()+amount);
+	}
+	
+	public void changeOwnerOfAccount(UUID newOwner, UUID account) {
+		
+		// TODO: get person and account from the UUID
+		Account thisAccount = null;
+		thisAccount.setOwnerID(newOwner);
+	}
+	
+	public Boolean deleteAccount(Account thisAccount) {
+		Double tempBalance = account.getBalance();
+		Double tempDebt = account.getDebt();
+		if( /* TODO: there is at least another account */ tempBalance == 0) {
+			
+			// TODO: Find another account with same ownerID
+			Account oneAccount = null;
+			
+			oneAccount.setBalance(oneAccount.getBalance()+tempBalance);
+			oneAccount.setDebt(oneAccount.getDebt()+tempDebt);
+			return true;
+		} else if (tempBalance == 0 && tempDebt == 0) {
+			return true;
+		}
+		return false;
 	}
 }
