@@ -22,7 +22,7 @@ public class Account {
 		this.interest = BigDecimal.valueOf(interest).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.debt = BigDecimal.valueOf(debt).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
-		accountID = (UUID.randomUUID());
+		accountID = UUID.randomUUID();
 	}
 	
 	public Double getBalance() { return balance.doubleValue(); }
@@ -33,11 +33,17 @@ public class Account {
 	public Currency getCurrency() { return currency; }
 	public UUID getAccountID() { return accountID; }
 	
-	public Boolean setBalance(Double value) { if(value >= 0) { balance = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); return true; } return false; }
-	public Boolean setDebt(Double value) { if(value >= 0) { debt = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); return true; } return false; }
+	public void addBalance(Double value) { balance = balance.add(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
+	public void subtractBalance(Double value) { balance = balance.subtract(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
+	public void addDebt(Double value) { debt = debt.add(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
+	public void subtractDebt(Double value) { debt = debt.subtract(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setInterest(Double value) { interest = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); }
-	public void setCurrency(Currency newCurrency) { currency = newCurrency; }
+	public void setCurrency(Currency newCurrency) { 
+		currency = newCurrency; 
+		balance = balance.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+		debt = debt.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+	}
 	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
 	public void setOwner(String owner) { this.owner = owner; }
 	
-}
+	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return true; } return false; } }

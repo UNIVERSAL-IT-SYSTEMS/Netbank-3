@@ -3,6 +3,7 @@ package netbank;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.UUID;
 
 public class Transaction {
@@ -13,9 +14,11 @@ public class Transaction {
 	private BigDecimal amount;
 	private String senderName;
 	private String receiverName;
+	private Currency currency; // Receiver's currency.
 	
-	public Transaction(Double amount, UUID sender, String senderName, UUID receiver, String receiverName) {
+	public Transaction(Double amount, Currency currency, UUID sender, String senderName, UUID receiver, String receiverName) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
+		this.currency = currency;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.senderName = senderName;
@@ -26,6 +29,7 @@ public class Transaction {
 	
 	public Timestamp getTimestamp() { return currentTimestamp; }
 	public Double getAmount() { return amount.doubleValue(); }
+	public Currency getCurrency() { return currency; }
 	public UUID getTransactionID() { return transactionID; }
 	public UUID getSenderID() { return sender; }
 	public UUID getReceiverID() { return receiver; }

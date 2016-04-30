@@ -1,8 +1,5 @@
 package netbank;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.UUID;
 
 public class Customer extends User {
@@ -12,26 +9,31 @@ public class Customer extends User {
 	
 	public Boolean transaction(Double amount, UUID recieverId) {
 			
-		// TODO first receive the account, then check currency. If currency is different, then change amount to different currency.
+		// TODO Receive account.
 		
-		Account account2 = null;
-		Double tempValue;
-		try {
-			account.setBalance(account.getBalance()-amount);
-			tempValue = getCurrentEchangeRate(account.getCurrency())*amount;
-			// TODO send!
-			account2.setBalance(account2.getBalance()+tempValue);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(account.belowZero(amount)) {
 			return false;
 		}
+		
+		Account receiveAccount = null;
+		Transaction trans = new Transaction(amount, receiveAccount.getCurrency(), account.getOwnerID(), account.getOwner(), 
+											receiveAccount.getAccountID(), receiveAccount.getOwner());
+		account.subtractBalance(amount);
+		if(account.getCurrency()==receiveAccount.getCurrency()) {
+			receiveAccount.addBalance(amount);
+		} else {
+			receiveAccount.addBalance(amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency()));
+		}
+		
 		return true;
 	}
 	
 	public Boolean withdrawal(Double amount) {
-		return account.setBalance(account.getBalance()-amount);
+		if(account.belowZero(amount)) {
+			return false;
+		}
+		account.subtractBalance(amount);
+		return true;
 	}
 	
 }

@@ -12,54 +12,21 @@
 <%@page language="java"
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-<head>
-<title>Put-in Bank</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
-<h1>Put-in Bank</h1>
-<% Employee employee = new Employee(new Person("Morten Nielsen", "DTU", "dk", "DK")); %>
-<% employee.newAccount(50000.9999, employee.getPersonName(), 2.0, 50000.0, Currency.getInstance(Locale.CHINA)); %>
-<h2>
-
-Hello <%= employee.getPersonName() %>. You live in <%= employee.getPersonLocation().getDisplayCountry() %>, <%= employee.getPersonAddress() %>
-</h2>
-<h3>
-<%= employee.getCurrentEchangeRate(Currency.getInstance(Locale.UK)) %> and  
-<%= employee.changeCurrency(Currency.getInstance(Locale.GERMANY), Currency.getInstance(Locale.US)) %>
-</h3>
-<h4><% String salt = Hash.getSalt(); %><%= Hash.SHA512("morten",salt) %></h4>
-
-
-<select>
-	<%
-	Object[] currencies = Currency.getAvailableCurrencies().toArray();  
-	for(int i = 0; i < currencies.length; i++) {
-		String option = currencies[i].toString();
-	%>
-	<option value="<%= option %>"><%= option %></option>
-	<% } %>
-</select>
-
-<select>
-	<%
-	Object[] languages = Locale.getISOLanguages();  
-	for(int i = 0; i < languages.length; i++) {
-		String option = languages[i].toString();
-	%>
-	<option value="<%= option %>"><%= option %></option>
-	<% } %>
-</select>
-
-<select>
-	<%
-	Object[] regions = Locale.getISOCountries();  
-	for(int i = 0; i < regions.length; i++) {
-		String option = regions[i].toString();
-	%>
-	<option value="<%= option %>"><%= option %></option>
-	<% } %>
-</select>
-
-</body>
+	<head>
+		<title>Log-in</title>
+		<link rel='stylesheet' href=''>
+	</head>
+	<body>
+		<div class="login-screen">
+			<h1>Log-in</h1><br>
+			<form>
+			<input type="text" name="user" placeholder="Username">
+			<input type="password" name="pass" placeholder="Password">
+			<input type="submit" name="login" class="login-submit" value="login">
+			</form>
+    		<div class="login-options">
+    			<a href="#">Register</a> • <a href="#">Forgot Password</a>
+    	</div>
+    </div>
+<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) %>
 </html>

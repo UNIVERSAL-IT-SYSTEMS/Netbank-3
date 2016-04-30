@@ -1,5 +1,6 @@
 package netbank;
 
+import java.io.IOException;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.UUID;
@@ -15,39 +16,40 @@ public class Employee extends User {
 		person.setLocale(new Locale.Builder().setLanguage(language).setRegion(region).build());
 	}
 	
-	public void setAccountBalance(Double balance) { account.setBalance(balance); }
 	public void setAccountInterest(Double interest) { account.setInterest(interest); }
-	public void setAccountDebt(Double debt) { account.setDebt(debt); }
-	public void setAccountCurrency(Currency currency) { 
-		setAccountBalance(changeCurrency(account.getCurrency(),currency)*account.getBalance()); 
-		setAccountDebt(changeCurrency(account.getCurrency(),currency)*account.getDebt());
-		setAccountCurrency(currency);
-	}
+	public void setAccountCurrency(Currency currency) { setAccountCurrency(currency); }
 	
 	public void Deposit(Double amount) {
-		account.setBalance(account.getBalance()+amount);
+		account.addBalance(account.getBalance()+amount);
 	}
 	
 	public void changeOwnerOfAccount(UUID newOwner, UUID account) {
 		
 		// TODO: get person and account from the UUID
 		Account thisAccount = null;
-		thisAccount.setOwnerID(newOwner);
+		CustomerInf thisCustomer = null;
+		thisAccount.setOwnerID(thisCustomer.getID());
+		thisAccount.setOwner(thisCustomer.getName());
 	}
 	
 	public Boolean deleteAccount(Account thisAccount) {
 		Double tempBalance = account.getBalance();
 		Double tempDebt = account.getDebt();
-		if( /* TODO: there is at least another account */ tempBalance == 0) {
-			
+		if (tempBalance == 0 && tempDebt == 0) {
+			return true;
+		} else if( /* TODO: there is at least another account */ tempBalance == 0) {
 			// TODO: Find another account with same ownerID
 			Account oneAccount = null;
-			
-			oneAccount.setBalance(oneAccount.getBalance()+tempBalance);
-			oneAccount.setDebt(oneAccount.getDebt()+tempDebt);
-			return true;
-		} else if (tempBalance == 0 && tempDebt == 0) {
-			return true;
+			if(account.getCurrency()==thisAccount.getCurrency()) {
+				oneAccount.addBalance(tempBalance);
+				oneAccount.addDebt(tempDebt);
+				return true;
+			} else {
+				Double cur = Currencies.changeCurrency(account.getCurrency(), thisAccount.getCurrency());
+				oneAccount.addBalance((tempBalance*cur));
+				oneAccount.addDebt((tempBalance*cur));
+				return true;
+			}
 		}
 		return false;
 	}

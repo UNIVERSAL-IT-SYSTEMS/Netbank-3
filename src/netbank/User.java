@@ -1,39 +1,27 @@
 package netbank;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Currency;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import java.util.Locale;
+import java.util.UUID;
 
 public abstract class User {
 	
-	public Double getCurrentEchangeRate(Currency currency) throws IOException {
-		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
-		try (InputStream is = url.openStream();
-		JsonReader rdr = Json.createReader(is)) { 
-			JsonObject obj = rdr.readObject();
-			JsonObject rates = obj.getJsonObject("rates");
-			return Double.parseDouble(rates.get(currency.getCurrencyCode()).toString());
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return 1.0;
-		}
-	}
+	Account account;
+	CustomerInf costumer;
 	
-	public Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
-		try {
-			Double oldAmount = getCurrentEchangeRate(newCurrency);
-			Double newAmount = getCurrentEchangeRate(oldCurrency);
-			return newAmount/oldAmount;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 1.0;
-		}
-	}
+	public String getName() { return costumer.getName(); }
+	public String getAddress() { return costumer.getAddress(); }
+	public Locale getLocale() { return costumer.getLocale(); }
+	public UUID getID() { return costumer.getID(); }
+	public String getSalt() { return costumer.getSalt(); }
+	public String getHash() { return costumer.getHash(); }
+
+	public Double getBalance() { return account.getBalance(); }
+	public Double getInterest() { return account.getInterest(); }
+	public Double getDebt() { return account.getDebt(); }
+	public UUID getOwnerID() { return account.getOwnerID(); }
+	public String getOwner() { return account.getOwner(); }
+	public Currency getCurrency() { return account.getCurrency(); }
+	public UUID getAccountID() { return account.getAccountID(); }
+	
 }
