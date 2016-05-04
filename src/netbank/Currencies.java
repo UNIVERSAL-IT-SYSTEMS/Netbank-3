@@ -15,7 +15,7 @@ public class Currencies {
 
 	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
-		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
+		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
 		try {
 			InputStream is = url.openStream();
 			JsonReader rdr = Json.createReader(is);

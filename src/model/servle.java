@@ -17,21 +17,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import netbank.Database;
+
 /**
  * Servlet implementation class servle
  */
-@WebServlet("/servle")
+@WebServlet("/")
 public class servle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	@Resource(lookup = "jdbc/db2")
-    private DataSource myDataSource;
+    private static DataSource myDataSource;
+	static Database db;
     /**
+     * @throws SQLException 
      * @see HttpServlet#HttpServlet()
      */
-    public servle() {
+    public servle() throws SQLException {
         super();
-        
         
 //        try {
 //        	// Load the IBM Data Server Driver for JDBC and SQLJ with DriverManager
@@ -67,35 +70,49 @@ public class servle extends HttpServlet {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-		
-		
-    	Connection connection = null;
 		try {
-			connection = myDataSource.getConnection();
+			db = new Database(myDataSource);
+//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
+//			while(res.next()) {
+//				String name = res.getString(1);
+//				String name2 = res.getString(2);
+//				response.getWriter().println(name + " " + name2);
+//			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Statement stmt = null;
-		try {
-			stmt = connection.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			ResultSet result = stmt.executeQuery("SELECT * FROM DTUGRP04.Sample");
-			while(result.next()) {
-				String name = result.getString(1);
-				String name2 = result.getString(2);
-				response.getWriter().println(name + " " + name2);
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		response.sendRedirect("index.jsp");
 		
+		
+//    	Connection connection = null;
+//		try {
+//			connection = myDataSource.getConnection();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		Statement stmt = null;
+//		try {
+//			stmt = connection.createStatement();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			ResultSet result = stmt.executeQuery("SELECT * FROM DTUGRP04.Sample");
+//			while(result.next()) {
+//				String name = result.getString(1);
+//				String name2 = result.getString(2);
+//				response.getWriter().println(name + " " + name2);
+//			}
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
 		//response.getWriter().append(con.toString());//"Served at: ").append(request.getContextPath());
 	}
 
@@ -110,12 +127,13 @@ public class servle extends HttpServlet {
             
         }
 		
+		
 		response.getWriter().append("clicked");
 		//doGet(request, response);
 	}
 	
-	public static int test() {
-		return 5;
+	public static Database getDb() {
+		return db;
 	}
 
 }

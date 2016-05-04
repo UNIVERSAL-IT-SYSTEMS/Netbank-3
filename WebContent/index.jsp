@@ -5,10 +5,13 @@
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Currency"%>
 <%@page import="netbank.*" %>
+<%@page import="model.*" %>
+
 <%@page import="java.text.NumberFormat" %>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Locale" %>
+<%@page import="java.sql.ResultSet" %>
 <%@page language="java"
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
@@ -28,5 +31,14 @@
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
     	</div>
     </div>
+
+<% ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+<% while(res.next()) { %>
+				<%= res.getString(1) %>
+				<%= res.getString(2) %>
+			<% } %>
+
+
 <% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) %>
+
 </html>
