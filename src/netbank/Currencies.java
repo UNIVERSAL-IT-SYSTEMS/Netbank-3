@@ -27,13 +27,11 @@ public class Currencies {
 					tempCurrencies.put((Currency) Currency.getAvailableCurrencies().toArray()[i], 
 						Double.parseDouble(rates.get(Currency.getAvailableCurrencies().toArray()[i].toString()).toString()));
 				} catch(Exception e) {
-					
+
 				}
 			}		
-			if (!tempCurrencies.isEmpty()) {
-				for (int i = 0; i < tempCurrencies.size(); i++) {
-					currencies.replace(tempCurrencies.keys().nextElement(), tempCurrencies.get(currencies.keys().nextElement()));
-				} 
+			if(!tempCurrencies.isEmpty()) {
+				currencies = tempCurrencies;
 			}
 			currencyConversionEnabled = true;
 		} catch(Exception e) {

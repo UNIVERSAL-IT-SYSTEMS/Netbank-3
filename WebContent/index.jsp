@@ -28,5 +28,5 @@
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
     	</div>
     </div>
-<% Currencies.UpdateCurrencies(); %> <%= Currencies.isCurrencyConversionEnabled() %>
+<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) %>
 </html>
