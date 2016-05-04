@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 public class Database {
 	
-	//@Resource(lookup = "jdbc/db2")
+	@Resource(lookup = "jdbc/db2")
 	private DataSource myDataSource;
 	
 	Connection connection;

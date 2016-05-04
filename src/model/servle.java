@@ -22,19 +22,19 @@ import netbank.Database;
 /**
  * Servlet implementation class servle
  */
-@WebServlet("/servle")
+@WebServlet("/")
 public class servle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	@Resource(lookup = "jdbc/db2")
-    private DataSource myDataSource;
+    private static DataSource myDataSource;
 	static Database db;
     /**
+     * @throws SQLException 
      * @see HttpServlet#HttpServlet()
      */
-    public servle() {
+    public servle() throws SQLException {
         super();
-        
         
 //        try {
 //        	// Load the IBM Data Server Driver for JDBC and SQLJ with DriverManager
@@ -70,18 +70,18 @@ public class servle extends HttpServlet {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-//		try {
-//			db = new Database(myDataSource);
+		try {
+			db = new Database(myDataSource);
 //			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
 //			while(res.next()) {
 //				String name = res.getString(1);
 //				String name2 = res.getString(2);
 //				response.getWriter().println(name + " " + name2);
 //			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.sendRedirect("index.jsp");
 		
