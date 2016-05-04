@@ -38,10 +38,14 @@ public class Account {
 	public void addDebt(Double value) { debt = debt.add(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void subtractDebt(Double value) { debt = debt.subtract(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setInterest(Double value) { interest = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); }
-	public void setCurrency(Currency newCurrency) { 
-		currency = newCurrency; 
-		balance = balance.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
-		debt = debt.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+	public Boolean setCurrency(Currency newCurrency) {
+		if(Currencies.isCurrencyConversionEnabled()) {
+			currency = newCurrency; 
+			balance = balance.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+			debt = debt.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+			return true;
+		}
+		return false;
 	}
 	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
 	public void setOwner(String owner) { this.owner = owner; }

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Currency;
 import java.util.Hashtable;
-import java.util.Locale;
 
 import javax.json.*;
 

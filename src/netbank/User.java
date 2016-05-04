@@ -5,23 +5,18 @@ import java.util.Locale;
 import java.util.UUID;
 
 public abstract class User {
-	
-	Account account;
-	CustomerInf costumer;
-	
-	public String getName() { return costumer.getName(); }
-	public String getAddress() { return costumer.getAddress(); }
-	public Locale getLocale() { return costumer.getLocale(); }
-	public UUID getID() { return costumer.getID(); }
-	public String getSalt() { return costumer.getSalt(); }
-	public String getHash() { return costumer.getHash(); }
+		
+	public String getName(CustomerInf customer) { return customer.getName(); }
+	public String getAddress(CustomerInf customer) { return customer.getAddress(); }
+	public Locale getLocale(CustomerInf customer) { return customer.getLocale(); }
+	public UUID getID(CustomerInf customer) { return customer.getID(); }
 
-	public Double getBalance() { return account.getBalance(); }
-	public Double getInterest() { return account.getInterest(); }
-	public Double getDebt() { return account.getDebt(); }
-	public UUID getOwnerID() { return account.getOwnerID(); }
-	public String getOwner() { return account.getOwner(); }
-	public Currency getCurrency() { return account.getCurrency(); }
-	public UUID getAccountID() { return account.getAccountID(); }
+	public double getAccountBalance(Account account) { return account.getBalance(); }
+	public double getAccountInterest(Account account) { return account.getInterest(); }
+	public double getAccountDebt(Account account) { return account.getDebt(); }
+	public UUID getAccountOwnerID(Account account) { return account.getOwnerID(); }
+	public String getAccountOwner(Account account) { return account.getOwner(); }
+	public Currency getAccountCurrency(Account account) { return account.getCurrency(); }
+	public UUID getAccountID(Account account) { return account.getAccountID(); }
 	
 }

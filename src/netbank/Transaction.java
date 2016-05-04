@@ -7,6 +7,7 @@ import java.util.Currency;
 import java.util.UUID;
 
 public class Transaction {
+	TransactionType type;
 	private Timestamp currentTimestamp;
 	private UUID transactionID;
 	private UUID sender;
@@ -16,13 +17,15 @@ public class Transaction {
 	private String receiverName;
 	private Currency currency; // Receiver's currency.
 	
-	public Transaction(Double amount, Currency currency, UUID sender, String senderName, UUID receiver, String receiverName) {
+	public Transaction(Double amount, Currency currency, UUID sender, 
+			String senderName, UUID receiver, String receiverName, TransactionType type) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.senderName = senderName;
 		this.receiverName = receiverName;
+		this.type = type;
 		currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
 		transactionID = UUID.randomUUID();
 	}
@@ -35,5 +38,6 @@ public class Transaction {
 	public UUID getReceiverID() { return receiver; }
 	public String getSenderName() { return senderName; }
 	public String getReceiverName() { return receiverName; }
+	public String getTransactionType() { return type.name(); }
 	
 }
