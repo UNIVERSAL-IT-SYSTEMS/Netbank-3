@@ -12,9 +12,9 @@ import javax.json.*;
 public class Currencies {
 	
 	static Hashtable<Currency, Double> currencies = new Hashtable<Currency, Double>();
-	Boolean CurrencyConversionDisabled = false;
+	static Boolean currencyConversionEnabled = true;
 
-	public void UpdateCurrencies() throws IOException {
+	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
 		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
 		try {
@@ -35,11 +35,13 @@ public class Currencies {
 					currencies.replace(tempCurrencies.keys().nextElement(), tempCurrencies.get(currencies.keys().nextElement()));
 				} 
 			}
-			CurrencyConversionDisabled = false;
+			currencyConversionEnabled = true;
 		} catch(Exception e) {
-			CurrencyConversionDisabled = true;
+			currencyConversionEnabled = false;
 		}
 	}	
+	
+	public static Boolean isCurrencyConversionEnabled() { return currencyConversionEnabled; }
 	
 	public static Double getCurrency(Currency currency) { return currencies.get(currency); }
 	

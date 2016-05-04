@@ -11,7 +11,6 @@ public class CustomerInf {
 	private UUID ID;
 	private String salt;
 	private String hash;
-	// TODO let the server check if there is already someone with this ID. 
 
 	public CustomerInf(String name, String address, String language, String country) {
 		this.name = name;
