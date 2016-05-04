@@ -31,11 +31,11 @@
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
     	</div>
     </div>
-<% Currencies.UpdateCurrencies(); %> <%= Currencies.isCurrencyConversionEnabled() %>
 
-<% ResultSet res = servle.getDb().getters("wsa"); %>
-<% while(res.next()) { %>
-				<%= res.getString(1) %>
-				<%= res.getString(2) %>
-			<% } %>
+<% Database res = servle.getDb(); %>
+<% ResultSet ree = res.getters("SELECT * FROM DTUGRP04.Sample"); %>
+
+
+<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) %>
+
 </html>

@@ -16,7 +16,7 @@ public class Currencies {
 
 	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
-		URL url = new URL("https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
+		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
 		try {
 			InputStream is = url.openStream();
 			JsonReader rdr = Json.createReader(is);
@@ -27,13 +27,11 @@ public class Currencies {
 					tempCurrencies.put((Currency) Currency.getAvailableCurrencies().toArray()[i], 
 						Double.parseDouble(rates.get(Currency.getAvailableCurrencies().toArray()[i].toString()).toString()));
 				} catch(Exception e) {
-					
+
 				}
 			}		
-			if (!tempCurrencies.isEmpty()) {
-				for (int i = 0; i < tempCurrencies.size(); i++) {
-					currencies.replace(tempCurrencies.keys().nextElement(), tempCurrencies.get(currencies.keys().nextElement()));
-				} 
+			if(!tempCurrencies.isEmpty()) {
+				currencies = tempCurrencies;
 			}
 			currencyConversionEnabled = true;
 		} catch(Exception e) {

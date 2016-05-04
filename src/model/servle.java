@@ -70,20 +70,20 @@ public class servle extends HttpServlet {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-		try {
-			db = new Database(myDataSource);
-			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
-			while(res.next()) {
-				String name = res.getString(1);
-				String name2 = res.getString(2);
-				response.getWriter().println(name + " " + name2);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			db = new Database(myDataSource);
+//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
+//			while(res.next()) {
+//				String name = res.getString(1);
+//				String name2 = res.getString(2);
+//				response.getWriter().println(name + " " + name2);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		//response.sendRedirect("index.jsp");
+		response.sendRedirect("index.jsp");
 		
 		
 //    	Connection connection = null;
