@@ -14,11 +14,13 @@ public class CustomerTest {
 	Account account;
 	UUID sender;
 	UUID receiver;
+	UUID accID;
 	
 	@Before
 	public void initiate() {
 		sender = UUID.randomUUID();
-		account = new Account(2.0, "test", sender, 2.0, 40.0, Currency.getInstance(Locale.GERMANY));
+		accID = UUID.randomUUID();
+		account = new Account(2.0, "test", sender, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
 	}
 
 	@Test

@@ -9,14 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AccountTest {
-	CustomerInf customInf;
-	Customer custom;
-	Employee emp;
 	Account account;
+	UUID cusID;
+	UUID accID;
+	
 	
 	@Before
 	public void initiate() {
-		account = new Account(2.0, "test", customInf.getID(), 2.0, 40.0, Currency.getInstance(Locale.GERMANY));
+		cusID = UUID.randomUUID();
+		accID = UUID.randomUUID();
+		account = new Account(2.0, "test", cusID, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
 		try {
 			Currencies.UpdateCurrencies();
 		} catch (IOException e) {
@@ -28,7 +30,7 @@ public class AccountTest {
 	public void newAccount() {
 		assertEquals(2.0,account.getBalance(),0); 
 		assertEquals("test",account.getOwner());
-		assertEquals(customInf.getID(),account.getOwnerID());
+		assertEquals(cusID,account.getOwnerID());
 		assertTrue( UUID.randomUUID() != account.getAccountID() && account.getAccountID().toString().getBytes().length==36);
 		assertEquals(2.0,account.getInterest(), 0);
 		assertEquals(40.0,account.getDebt(),0);

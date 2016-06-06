@@ -19,7 +19,7 @@ public class Database {
 		myDataSource = dats;
 	}
 	
-	public ResultSet getters(String qwy){
+	public ResultSet getters(String qwy) {
 		try {
 			connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
