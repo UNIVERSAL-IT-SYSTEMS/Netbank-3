@@ -2,6 +2,8 @@ package netbank;
 
 import static org.junit.Assert.*;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.UUID;
@@ -18,7 +20,8 @@ public class TransactionTest {
 	@Before
 	public void initiate() {
 		tr = new Transaction(4.0, Currency.getInstance(Locale.CANADA), senderUUID, 
-				"Alice", receiverUUID, "Bob", TransactionType.Transaction);
+				"Alice", receiverUUID, "Bob", TransactionType.Transaction, 
+				new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 	}
 
 	@Test

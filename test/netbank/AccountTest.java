@@ -16,7 +16,6 @@ public class AccountTest {
 	
 	@Before
 	public void initiate() {
-		customInf = new CustomerInf("testCustomer", "test 1", Locale.GERMAN.toString(), Locale.GERMAN.toString());
 		account = new Account(2.0, "test", customInf.getID(), 2.0, 40.0, Currency.getInstance(Locale.GERMANY));
 		try {
 			Currencies.UpdateCurrencies();
