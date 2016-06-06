@@ -15,14 +15,14 @@ public class Account {
 	private BigDecimal debt;
 	private Currency currency;
 	
-	public Account(Double balance, String owner, UUID ownerID, Double interest, Double debt, Currency currency) {
+	public Account(Double balance, String owner, UUID ownerID, Double interest, Double debt, Currency currency, UUID accountID) {
 		this.balance = BigDecimal.valueOf(balance).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.owner = owner;
 		this.ownerID = ownerID;
 		this.interest = BigDecimal.valueOf(interest).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.debt = BigDecimal.valueOf(debt).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
-		accountID = UUID.randomUUID();
+		this.accountID = accountID;
 	}
 	
 	public Double getBalance() { return balance.doubleValue(); }
@@ -38,6 +38,8 @@ public class Account {
 	public void addDebt(Double value) { debt = debt.add(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void subtractDebt(Double value) { debt = debt.subtract(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setInterest(Double value) { interest = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); }
+	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
+	public void setOwner(String owner) { this.owner = owner; }
 	public Boolean setCurrency(Currency newCurrency) {
 		if(Currencies.isCurrencyConversionEnabled()) {
 			currency = newCurrency; 
@@ -47,7 +49,5 @@ public class Account {
 		}
 		return false;
 	}
-	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
-	public void setOwner(String owner) { this.owner = owner; }
 	
-	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return true; } return false; } }
+	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return false; } return true; } }

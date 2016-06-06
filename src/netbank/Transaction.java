@@ -2,12 +2,11 @@ package netbank;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Currency;
 import java.util.UUID;
 
 public class Transaction {
-	TransactionType type;
+	private TransactionType type;
 	private Timestamp currentTimestamp;
 	private UUID transactionID;
 	private UUID sender;
@@ -17,8 +16,9 @@ public class Transaction {
 	private String receiverName;
 	private Currency currency; // Receiver's currency.
 	
-	public Transaction(Double amount, Currency currency, UUID sender, 
-			String senderName, UUID receiver, String receiverName, TransactionType type) {
+	public Transaction(Double amount, Currency currency, UUID sender, String senderName, 
+			UUID receiver, String receiverName, TransactionType type, 
+			Timestamp currenctTimestamp, UUID transactionID) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
 		this.sender = sender;
@@ -26,8 +26,8 @@ public class Transaction {
 		this.senderName = senderName;
 		this.receiverName = receiverName;
 		this.type = type;
-		currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-		transactionID = UUID.randomUUID();
+		this.currentTimestamp = currenctTimestamp;
+		this.transactionID = transactionID;
 	}
 	
 	public Timestamp getTimestamp() { return currentTimestamp; }

@@ -1,17 +1,16 @@
-package netbank;
+ package netbank;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Currency;
 import java.util.Hashtable;
-
 import javax.json.*;
 
 public class Currencies {
 	
-	static Hashtable<Currency, Double> currencies = new Hashtable<Currency, Double>();
-	static Boolean currencyConversionEnabled = true;
+	private static Hashtable<Currency, Double> currencies = new Hashtable<Currency, Double>();
+	private static Boolean currencyConversionEnabled = true;
 
 	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
@@ -21,26 +20,29 @@ public class Currencies {
 			JsonReader rdr = Json.createReader(is);
 			JsonObject obj = rdr.readObject();
 			JsonObject rates = obj.getJsonObject("rates");
-			for(int i = 0; i<Currency.getAvailableCurrencies().size(); i++) {
+			for(int i = 0; i < Currency.getAvailableCurrencies().size(); i++) {
 				try {
 					tempCurrencies.put((Currency) Currency.getAvailableCurrencies().toArray()[i], 
 						Double.parseDouble(rates.get(Currency.getAvailableCurrencies().toArray()[i].toString()).toString()));
 				} catch(Exception e) {
-
+					System.err.println("Couldn't add: "+Currency.getAvailableCurrencies().toArray()[i]+e);
 				}
-			}		
+			}
 			if(!tempCurrencies.isEmpty()) {
 				currencies = tempCurrencies;
 			}
 			currencyConversionEnabled = true;
 		} catch(Exception e) {
 			currencyConversionEnabled = false;
+			System.err.println("Failed to retrieve currencies. "+e);
 		}
 	}	
 	
 	public static Boolean isCurrencyConversionEnabled() { return currencyConversionEnabled; }
 	
 	public static Double getCurrency(Currency currency) { return currencies.get(currency); }
+	
+	public static Object[] getCurrencies() { return currencies.keySet().toArray(); }
 	
 	public static Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
 		Double oldAmount = getCurrency(newCurrency);

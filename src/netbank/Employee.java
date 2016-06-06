@@ -1,8 +1,10 @@
 package netbank;
 
+import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.UUID;
+import java.sql.Timestamp;
 
 public class Employee extends User {
 	
@@ -14,23 +16,32 @@ public class Employee extends User {
 	
 	public void setAccountInterest(Account account, Double interest) { account.setInterest(interest); }
 	public Boolean setAccountCurrency(Account account, Currency currency) { return account.setCurrency(currency); }
-	public void subtractAccountBalance(Account account, Double value) { 
+	public Boolean subtractAccountBalance(Account account, Double value) { 
 		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-			null, null, TransactionType.Withdrawal);
+			null, null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
+		if(account.belowZero(value)) {
+			return false;
+		} 
 		account.subtractBalance(value); 
+		return true;
 	}
-	public void addAccountDebt(Account account, Double value) { new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-			null, null, TransactionType.AddDebt);
+	public void addAccountDebt(Account account, Double value) { 
+		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
+			null, null, TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		account.addDebt(value);
 	}
-	public void subtractAccpountDebt(Account account, Double value) { 
+	public Boolean subtractAccpountDebt(Account account, Double value) { 
 		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-				null, null, TransactionType.SubtractDebt);
+				null, null, TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
+		if(account.belowZero(value)) {
+			return false;
+		}
 		account.subtractDebt(value); 
+		return true;
 	}
 	public void deposit(Account account, Double amount) {
 		new Transaction(amount, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-				null, null, TransactionType.Deposit);
+				null, null, TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		account.addBalance(amount);
 	}
 	
@@ -62,6 +73,11 @@ public class Employee extends User {
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	public Boolean deleteCustomer() {
+		// TODO: If the customer has an account then return false. Else delete from the database and return true
 		return false;
 	}
 }

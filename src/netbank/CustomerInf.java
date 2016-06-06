@@ -12,11 +12,13 @@ public class CustomerInf {
 	private String salt;
 	private String hash;
 
-	public CustomerInf(String name, String address, String language, String country) {
+	public CustomerInf(String name, String address, String language, String country, UUID ID, String salt, String hash) {
 		this.name = name;
 		this.address = address;
 		this.location = new Locale.Builder().setLanguage(language).setRegion(country).build();
-		ID = UUID.randomUUID();
+		this.ID = ID;
+		this.salt = salt;
+		this.hash = hash;
 	}
 	
 	public String getName() { return name; }
