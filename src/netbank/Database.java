@@ -20,10 +20,14 @@ public class Database {
 	}
 	
 	public ResultSet getters(String qwy) {
+		ResultSet res = null;
 		try {
 			connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
-			return stmt.executeQuery(qwy);
+			res = stmt.executeQuery(qwy);
+			stmt.close();
+			return res;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

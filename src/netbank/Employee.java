@@ -21,7 +21,7 @@ public class Employee extends User {
 			null, null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		if(account.belowZero(value)) {
 			return false;
-		} 
+		}
 		account.subtractBalance(value); 
 		return true;
 	}
