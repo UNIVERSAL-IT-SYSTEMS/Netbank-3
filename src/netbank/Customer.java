@@ -9,7 +9,7 @@ public class Customer extends User {
 	public Boolean transaction(Account account, Double amount, UUID recieverID) {
 			
 		// TODO Receive account.
-		Account receiveAccount = DatabaseGet.getAccount(recieverID);
+		Account receiveAccount = DatabaseGet.getAccount("accID",recieverID);
 		
 		if(account.belowZero(amount)) {
 			return false;
@@ -18,11 +18,13 @@ public class Customer extends User {
 				receiveAccount.getAccountID(), receiveAccount.getOwner(), TransactionType.Transaction, 
 				new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		account.subtractBalance(amount);
-		if(account.getCurrency()==receiveAccount.getCurrency()) {
+		if(account.getCurrency() == receiveAccount.getCurrency()) {
 			receiveAccount.addBalance(amount);
+			// TODO: Save both accounts
 			return true;
-		} else if(Currencies.isCurrencyConversionEnabled()) {
+		} else if (Currencies.isCurrencyConversionEnabled()) {
 			receiveAccount.addBalance(amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency()));
+			// TODO: Save both accounts
 			return true;
 		} else {
 			return false;
@@ -37,6 +39,7 @@ public class Customer extends User {
 				null, null, TransactionType.Withdrawal, 
 				new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		account.subtractBalance(amount);
+		// TODO: Save account
 		return true;
 	}
 	

@@ -48,28 +48,30 @@ public class Employee extends User {
 	public void changeOwnerOfAccount(Account account, UUID newOwner, UUID newAccountID) {
 		
 		// TODO: get person and account from the UUID
-		Account thisAccount = null;
-		CustomerInf thisCustomer = null;
+		Account thisAccount = DatabaseGet.getAccount("accID",newAccountID);
+		CustomerInf thisCustomer = DatabaseGet.getCustomer("cusID",newOwner);
 		thisAccount.setOwnerID(thisCustomer.getID());
 		thisAccount.setOwner(thisCustomer.getName());
 	}
 	
-	public Boolean deleteAccount(Account account, Account thisAccount) {
-		Double tempBalance = account.getBalance();
-		Double tempDebt = account.getDebt();
-		if (tempBalance == 0 && tempDebt == 0) {
+	public Boolean deleteAccount(Account account) {
+		if (account.getBalance() == 0 && account.getDebt() == 0) {
+			// TODO: Delete the account
 			return true;
-		} else if( /* TODO: there is at least another account */ tempBalance == 0) {
-			// TODO: Find another account with same ownerID
-			Account oneAccount = null;
-			if(account.getCurrency()==thisAccount.getCurrency()) {
+		} else {
+			Double tempBalance = account.getBalance();
+			Double tempDebt = account.getDebt();
+			Account oneAccount = DatabaseGet.getAccount("cusID", account.getOwnerID());
+			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);
 				oneAccount.addDebt(tempDebt);
+				// TODO: Delete the account
 				return true;
-			} else if(Currencies.isCurrencyConversionEnabled()) {
-				Double cur = Currencies.changeCurrency(account.getCurrency(), thisAccount.getCurrency());
+			} else if (oneAccount != null && Currencies.isCurrencyConversionEnabled()) {
+				Double cur = Currencies.changeCurrency(account.getCurrency(), oneAccount.getCurrency());
 				oneAccount.addBalance(tempBalance*cur);
 				oneAccount.addDebt(tempBalance*cur);
+				// TODO: Delete the account.
 				return true;
 			}
 		}
