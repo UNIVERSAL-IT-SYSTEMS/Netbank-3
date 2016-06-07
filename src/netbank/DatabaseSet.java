@@ -1,7 +1,6 @@
 package netbank;
 
 import java.sql.ResultSet;
-
 import model.servle;
 
 public class DatabaseSet {

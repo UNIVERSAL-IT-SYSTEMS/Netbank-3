@@ -32,7 +32,7 @@ public class TransactionTest {
 		assertEquals("Alice",tr.getSenderName());
 		assertEquals(receiverUUID,tr.getReceiverID());
 		assertEquals("Bob",tr.getReceiverName());
-		assertEquals("Transaction",tr.getTransactionType());
+		assertEquals(TransactionType.valueOf("Transaction"),tr.getTransactionType());
 		assertNotNull(tr.getTransactionID());
 		assertNotNull(tr.getTimestamp());
 	}

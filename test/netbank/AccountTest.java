@@ -31,10 +31,10 @@ public class AccountTest {
 		assertEquals(2.0,account.getBalance(),0); 
 		assertEquals("test",account.getOwner());
 		assertEquals(cusID,account.getOwnerID());
-		assertTrue( UUID.randomUUID() != account.getAccountID() && account.getAccountID().toString().getBytes().length==36);
 		assertEquals(2.0,account.getInterest(), 0);
 		assertEquals(40.0,account.getDebt(),0);
 		assertEquals(Currency.getInstance(Locale.GERMANY),account.getCurrency());
+		assertEquals(accID,account.getAccountID());
 	}
 	
 	@Test
@@ -55,14 +55,14 @@ public class AccountTest {
 		account.setOwner("test2");
 		assertEquals("test2",account.getOwner());
 		
-		assertFalse(account.setCurrency(Currency.getInstance(Locale.CHINA)));
+		assertTrue(account.setCurrency(Currency.getInstance(Locale.CHINA)));
 	}
 	
 	@Test
 	public void BelowZero() {
 		System.out.println(account.getBalance());
-		assertFalse(account.belowZero(200.0));
-		assertTrue(account.belowZero(1.0));
+		assertFalse(account.belowZero(1.0));
+		assertTrue(account.belowZero(200.0));
 	}
 
 }

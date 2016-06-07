@@ -34,9 +34,14 @@ public class CustomerInfTest {
 	
 	@Test
 	public void ChangeInformation() {
-		String salt = Hash.getSalt();
-		assertEquals(salt,cust.getSalt());
+		cust.setName("Alice");
+		assertEquals("Alice",cust.getName());
+		cust.setAddress("new place");
+		assertEquals("new place",cust.getAddress());
+		cust.setLocale(new Locale.Builder().setLanguage("en").setRegion("US").build());
+		assertEquals(Locale.US,cust.getLocale());
 		String hash = Hash.SHA512("test1", salt);
+		cust.setHash(hash);
 		assertEquals(hash,cust.getHash());
 	}
 

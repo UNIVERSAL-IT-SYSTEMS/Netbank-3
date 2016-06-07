@@ -1,11 +1,11 @@
  package netbank;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Currency;
 import java.util.Hashtable;
-import javax.json.*;
+import java.util.Scanner;
+import org.json.*;
 
 public class Currencies {
 	
@@ -15,27 +15,32 @@ public class Currencies {
 	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
 		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
+		Currency[] currecyNames = Currency.getAvailableCurrencies().toArray(new Currency[Currency.getAvailableCurrencies().size()]);
 		try {
-			InputStream is = url.openStream();
-			JsonReader rdr = Json.createReader(is);
-			JsonObject obj = rdr.readObject();
-			JsonObject rates = obj.getJsonObject("rates");
+			Scanner scan = new Scanner(url.openStream());
+			String str = new String();
+			while (scan.hasNext()) {
+				str += scan.nextLine();
+			}
+			scan.close();
+			JSONObject obj = new JSONObject(str);
+			JSONObject rates = obj.getJSONObject("rates");
 			for(int i = 0; i < Currency.getAvailableCurrencies().size(); i++) {
 				try {
-					tempCurrencies.put((Currency) Currency.getAvailableCurrencies().toArray()[i], 
-						Double.parseDouble(rates.get(Currency.getAvailableCurrencies().toArray()[i].toString()).toString()));
-				} catch(Exception e) {
+					tempCurrencies.put(currecyNames[i], 
+						rates.getDouble(currecyNames[i].getCurrencyCode()));
+					rates.getDouble(currecyNames[i].toString());
+				} catch(JSONException e) {
 					System.err.println("Couldn't add: "+Currency.getAvailableCurrencies().toArray()[i]+e);
 				}
 			}
-			if(!tempCurrencies.isEmpty()) {
-				currencies = tempCurrencies;
-			}
+			currencies = tempCurrencies;
 			currencyConversionEnabled = true;
-		} catch(Exception e) {
+		} catch(JSONException e) {
 			currencyConversionEnabled = false;
 			System.err.println("Failed to retrieve currencies. "+e);
 		}
+		
 	}	
 	
 	public static Boolean isCurrencyConversionEnabled() { return currencyConversionEnabled; }

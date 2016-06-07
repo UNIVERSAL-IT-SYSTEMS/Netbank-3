@@ -1,11 +1,10 @@
 package netbank;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.util.Currency;
 import java.util.Locale;
-
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,12 +19,16 @@ public class CurrenciesTest {
 	public void withData() {
 		assertTrue(Currencies.isCurrencyConversionEnabled());
 		assertNotEquals(0.0,Currencies.getCurrency(Currency.getInstance(Locale.CANADA)));
-		assertNotEquals(0.0,Currencies.changeCurrency(Currency.getInstance(Locale.CANADA), Currency.getInstance(Locale.FRANCE)));
-	}
+		assertEquals(Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) /
+				Currencies.getCurrency(Currency.getInstance(Locale.FRANCE)),
+				Currencies.changeCurrency(Currency.getInstance(Locale.CANADA), Currency.getInstance(Locale.FRANCE)),0);
+		assertNotNull(Currencies.getCurrencies());
+	} 
 	
-	@Test
-	public void withoutData() {
-		
+	@Test(expected = JSONException.class)
+	public void withoutData() throws IOException {
+		Currencies.UpdateCurrencies();
+		assertFalse(Currencies.isCurrencyConversionEnabled());
 	}
 
 }
