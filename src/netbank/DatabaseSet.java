@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import model.servle;
 
 public class DatabaseSet {
+	//Remember to test actual calls to the database
+	//
 	
 	public static boolean setAccount(Account acc) {
 		ResultSet res = servle.getDb().getters("UPDATE DTUGRP04.accounts SET UsrID="+acc.getOwnerID().toString()
@@ -18,6 +20,8 @@ public class DatabaseSet {
 	
 	public static boolean setEmployee(Account acc) {
 		//Not finished since employee table has not been created
+		//After having finished the table in DataStudio, replace
+		//with relevant data
 		ResultSet res = servle.getDb().getters("UPDATE DTUGRP04.employee SET UsrID="+acc.getOwnerID()
 		+ ", Balance="+acc.getBalance()+", Interest="+acc.getInterest()
 		+ ", Debt="+acc.getDebt()+", Currency="+acc.getCurrency()
