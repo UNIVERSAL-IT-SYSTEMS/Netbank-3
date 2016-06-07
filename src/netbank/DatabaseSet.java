@@ -1,6 +1,8 @@
 package netbank;
 
 import java.sql.ResultSet;
+import java.util.Locale;
+import java.util.UUID;
 
 import model.servle;
 
@@ -19,14 +21,15 @@ public class DatabaseSet {
 		return true;
 	}
 	
-	public static boolean setEmployee(Account acc) {
+	public static boolean setEmployee(EmployeeInf emp) {
 		//Not finished since employee table has not been created
 		//After having finished the table in DataStudio, replace
 		//with relevant data
-		ResultSet res = servle.getDb().getters("UPDATE DTUGRP04.employee SET UsrID="+acc.getOwnerID()
-		+ ", Balance="+acc.getBalance()+", Interest="+acc.getInterest()
-		+ ", Debt="+acc.getDebt()+", Currency="+acc.getCurrency()
-		+ "WHERE UsrID="+acc.getAccountID().toString());
+		ResultSet res = servle.getDb().getters("UPDATE DTUGRP04.employee SET userid="+emp.getID().toString()
+				+ ", name="+emp.getName()+", address="+emp.getAddress()
+				+ ", password="+emp.getHash()+", salt="+emp.getSalt()
+				+ ", locale="+emp.getLocale().toString()
+				+ "WHERE userid="+emp.getID().toString());
 		if(res == null) {
 			return false;
 		}

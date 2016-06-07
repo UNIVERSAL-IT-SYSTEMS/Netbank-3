@@ -25,7 +25,6 @@ public class Database {
 			connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
 			res = stmt.executeQuery(qwy);
-			stmt.close();
 			return res;
 			
 		} catch (SQLException e) {
