@@ -35,28 +35,41 @@
     	
     	<div class="login-screen">
 			<h1>SQL</h1><br>
-			<form>
-			<input type="text" name="user" placeholder="Query">
-			<input type="submit" name="sqldo" class="login-submit" value="Do">
+			<form method="post" action="servle">
+				<input type="text" name="user" placeholder="Query">
+				<input type="submit" name="sqldo" class="login-submit" value="Do">
 			</form>
     	</div>
     	Sample: <br>
     	<% ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+    	<table>
 			<% while(res.next()) { %>
-				<%= res.getString(1) %>
-				<%= res.getString(2) %>
+			<tr>
+				<td><%= res.getString(1) %></td>
+				<td><%= res.getString(2) %></td>
+				<td><%= res.getString(3) %></td>
+			</tr>
 			<% } %>
+		</table>
 		<br><br>Users<br>
 		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\""); %>
+		<table>
 			<% while(res.next()) { %>
-				<%= res.getString(1) %>
-				<%= res.getString(2) %>
-			<% } %>
+			<tr>
+				<td><%= res.getString(1) %></td>
+				<td><%= res.getString(2) %></td>
+		</tr>
+		<% } %>
+		</table>
 		<br><br>Accounts<br>
 		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+		<table>
 			<% while(res.next()) { %>
-				<%= res.getString(1) %>
-				<%= res.getString(2) %>
+			<tr>
+				<td><%= res.getString(1) %></td>
+				<td><%= res.getString(2) %></td>
+			</tr>
 			<% } %>
+		</table>
 	</body>
 </html>

@@ -71,19 +71,20 @@ public class servle extends HttpServlet {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-		try {
-			db = new Database(myDataSource);
-//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
-//			while(res.next()) {
-//				String name = res.getString(1);
-//				String name2 = res.getString(2);
-//				response.getWriter().println(name + " " + name2);
-//			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(db == null) {
+			try {
+				db = new Database(myDataSource);
+	//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
+	//			while(res.next()) {
+	//				String name = res.getString(1);
+	//				String name2 = res.getString(2);
+	//				response.getWriter().println(name + " " + name2);
+	//			}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
 		response.sendRedirect("index.jsp");
 		
 		
@@ -122,15 +123,16 @@ public class servle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if (request.getParameter("button1") != null) {
-            System.out.println("clicked");
+		if (request.getParameter("sqldo") != null) {
+			//System.out.println(request.getParameter("user"));
+			db.setters(request.getParameter("user"));
         } else {
             
         }
 		
 		
-		response.getWriter().append("clicked");
-		//doGet(request, response);
+		//response.getWriter().append("clicked");
+		doGet(request, response);
 	}
 	
 	public static Database getDb() {
