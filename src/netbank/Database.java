@@ -34,4 +34,15 @@ public class Database {
 		return null;	
 	}
 	
+	public boolean setters(String qwy) {
+		try {
+			connection = myDataSource.getConnection();
+			stmt = connection.createStatement();
+			stmt.execute(qwy);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
