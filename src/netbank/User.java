@@ -19,4 +19,13 @@ public abstract class User {
 	public Currency getAccountCurrency(Account account) { return account.getCurrency(); }
 	public UUID getAccountID(Account account) { return account.getAccountID(); }
 	
+	public void ChangePassword(CustomerInf customer, String password) {
+		customer.setHash(Hash.SHA512(password, customer.getSalt()));
+		DatabaseSet.setCostumer(customer);
+	}
+	
+	public void ChangePassword(EmployeeInf employee, String password) {
+		employee.setHash(Hash.SHA512(password, employee.getSalt()));
+		DatabaseSet.setEmployee(employee);
+	}
 }

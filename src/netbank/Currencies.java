@@ -15,21 +15,21 @@ public class Currencies {
 	public static void UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> tempCurrencies = new Hashtable<Currency, Double>();
 		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
-		Currency[] currecyNames = Currency.getAvailableCurrencies().toArray(new Currency[Currency.getAvailableCurrencies().size()]);
+		Currency[] currencyNames = Currency.getAvailableCurrencies().toArray(new Currency[Currency.getAvailableCurrencies().size()]);
 		try {
 			Scanner scan = new Scanner(url.openStream());
-			String str = new String();
+			String text = new String();
 			while (scan.hasNext()) {
-				str += scan.nextLine();
+				text += scan.nextLine();
 			}
 			scan.close();
-			JSONObject obj = new JSONObject(str);
+			JSONObject obj = new JSONObject(text);
 			JSONObject rates = obj.getJSONObject("rates");
 			for(int i = 0; i < Currency.getAvailableCurrencies().size(); i++) {
 				try {
-					tempCurrencies.put(currecyNames[i], 
-						rates.getDouble(currecyNames[i].getCurrencyCode()));
-					rates.getDouble(currecyNames[i].toString());
+					tempCurrencies.put(currencyNames[i], 
+						rates.getDouble(currencyNames[i].getCurrencyCode()));
+					rates.getDouble(currencyNames[i].getCurrencyCode());
 				} catch(JSONException e) {
 					System.err.println("Couldn't add: "+Currency.getAvailableCurrencies().toArray()[i]+e);
 				}
@@ -40,8 +40,7 @@ public class Currencies {
 			currencyConversionEnabled = false;
 			System.err.println("Failed to retrieve currencies. "+e);
 		}
-		
-	}	
+	}
 	
 	public static Boolean isCurrencyConversionEnabled() { return currencyConversionEnabled; }
 	

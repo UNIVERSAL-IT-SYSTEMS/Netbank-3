@@ -29,9 +29,34 @@
 			</form>
     		<div class="login-options">
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
+    		</div>
     	</div>
-    </div>
-
-<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
-
+    	<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
+    	
+    	<div class="login-screen">
+			<h1>SQL</h1><br>
+			<form>
+			<input type="text" name="user" placeholder="Query">
+			<input type="submit" name="sqldo" class="login-submit" value="Do">
+			</form>
+    	</div>
+    	Sample: <br>
+    	<% ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+			<% while(res.next()) { %>
+				<%= res.getString(1) %>
+				<%= res.getString(2) %>
+			<% } %>
+		<br><br>Users<br>
+		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\""); %>
+			<% while(res.next()) { %>
+				<%= res.getString(1) %>
+				<%= res.getString(2) %>
+			<% } %>
+		<br><br>Accounts<br>
+		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+			<% while(res.next()) { %>
+				<%= res.getString(1) %>
+				<%= res.getString(2) %>
+			<% } %>
+	</body>
 </html>

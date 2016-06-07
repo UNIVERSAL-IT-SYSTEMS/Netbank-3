@@ -8,50 +8,80 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public void setCostumerName(CustomerInf customer, String name) { customer.setName(name); }
-	public void setCostumerAddress(CustomerInf customer, String address) { customer.setAddress(address); }
-	public void setCostumerLocation(CustomerInf customer, String language, String region) { 
-		customer.setLocale(new Locale.Builder().setLanguage(language).setRegion(region).build());
+	public void setCostumerName(CustomerInf customer, String name) { 
+		customer.setName(name); 
+		DatabaseSet.setCostumer(customer); 
 	}
 	
-	public void setAccountInterest(Account account, Double interest) { account.setInterest(interest); }
-	public Boolean setAccountCurrency(Account account, Currency currency) { return account.setCurrency(currency); }
+	public void setCostumerAddress(CustomerInf customer, String address) { 
+		customer.setAddress(address); 
+		DatabaseSet.setCostumer(customer); 
+	}
+	
+	public void setCostumerLocation(CustomerInf customer, String language, String country) { 
+		customer.setLanguage(language);
+		customer.setCountry(country);
+		customer.setLocale(new Locale.Builder().setLanguage(language).setRegion(country).build());
+		DatabaseSet.setCostumer(customer);
+	}
+	
+	public void setAccountInterest(Account account, Double interest) { 
+		account.setInterest(interest); 
+		DatabaseSet.setAccount(account);
+	}
+	
+	public Boolean setAccountCurrency(Account account, Currency currency) { 
+		if(account.setCurrency(currency)) {
+			DatabaseSet.setAccount(account);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public Boolean subtractAccountBalance(Account account, Double value) { 
-		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-			null, null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		if(account.belowZero(value)) {
 			return false;
 		}
+		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
+			null, null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		
 		account.subtractBalance(value); 
+		DatabaseSet.setAccount(account);
 		return true;
 	}
+	
 	public void addAccountDebt(Account account, Double value) { 
-		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-			null, null, TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
+		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
+			null, null, TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		
 		account.addDebt(value);
+		DatabaseSet.setAccount(account);
 	}
+	
 	public Boolean subtractAccpountDebt(Account account, Double value) { 
-		new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-				null, null, TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
 		if(account.belowZero(value)) {
 			return false;
 		}
+		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
+				null, null, TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		
 		account.subtractDebt(value); 
+		DatabaseSet.setAccount(account);
 		return true;
 	}
 	public void deposit(Account account, Double amount) {
-		new Transaction(amount, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
-				null, null, TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
+		DatabaseSet.setTransaction(new Transaction(amount, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
+				null, null, TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
 		account.addBalance(amount);
+		DatabaseSet.setAccount(account);
 	}
 	
-	public void changeOwnerOfAccount(Account account, UUID newOwner, UUID newAccountID) {
-		
-		// TODO: get person and account from the UUID
-		Account thisAccount = DatabaseGet.getAccount("accID",newAccountID);
+	public void changeOwnershipOfAccount(Account account, UUID newOwner) {
 		CustomerInf thisCustomer = DatabaseGet.getCustomer("cusID",newOwner);
-		thisAccount.setOwnerID(thisCustomer.getID());
-		thisAccount.setOwner(thisCustomer.getName());
+		account.setOwnerID(thisCustomer.getID());
+		account.setOwner(thisCustomer.getName());
+		DatabaseSet.setAccount(account);
 	}
 	
 	public Boolean deleteAccount(Account account) {
@@ -78,8 +108,18 @@ public class Employee extends User {
 		return false;
 	}
 	
-	public Boolean deleteCustomer() {
-		// TODO: If the customer has an account then return false. Else delete from the database and return true
-		return false;
+	public Boolean deleteCustomer(CustomerInf customer) {
+		Account account = DatabaseGet.getAccount("cusID", customer.getID());
+		Boolean accountDeleted = true;
+		while(account != null) {
+			accountDeleted = deleteAccount(account);
+			if(!accountDeleted) {
+				return false;
+			}
+			account = DatabaseGet.getAccount("cusID", customer.getID());
+		}
+		
+		// TODO: Delete the customer
+		return true;
 	}
 }
