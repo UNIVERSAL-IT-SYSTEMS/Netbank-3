@@ -38,6 +38,6 @@ public class Transaction {
 	public UUID getReceiverID() { return receiver; }
 	public String getSenderName() { return senderName; }
 	public String getReceiverName() { return receiverName; }
-	public Enum getTransactionType() { return type; }
+	public TransactionType getTransactionType() { return type; }
 	
 }

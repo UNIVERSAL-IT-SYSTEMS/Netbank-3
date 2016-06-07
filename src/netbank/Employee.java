@@ -8,6 +8,10 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
+	public void newAccount(CustomerInf customer, Double interest, Currency currency) {
+		DatabaseSet.setAccount(new Account(0.0, customer.getName(), customer.getID(), interest, 0.0, currency, UUID.randomUUID()));
+	}
+	
 	public void setCostumerName(CustomerInf customer, String name) { 
 		customer.setName(name); 
 		DatabaseSet.setCostumer(customer); 
@@ -21,7 +25,6 @@ public class Employee extends User {
 	public void setCostumerLocation(CustomerInf customer, String language, String country) { 
 		customer.setLanguage(language);
 		customer.setCountry(country);
-		customer.setLocale(new Locale.Builder().setLanguage(language).setRegion(country).build());
 		DatabaseSet.setCostumer(customer);
 	}
 	
@@ -70,6 +73,7 @@ public class Employee extends User {
 		DatabaseSet.setAccount(account);
 		return true;
 	}
+	
 	public void deposit(Account account, Double amount) {
 		DatabaseSet.setTransaction(new Transaction(amount, account.getCurrency(), account.getOwnerID(), account.getOwner(), 
 				null, null, TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
@@ -95,12 +99,14 @@ public class Employee extends User {
 			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);
 				oneAccount.addDebt(tempDebt);
+				DatabaseSet.setAccount(oneAccount);
 				// TODO: Delete the account
 				return true;
 			} else if (oneAccount != null && Currencies.isCurrencyConversionEnabled()) {
 				Double cur = Currencies.changeCurrency(account.getCurrency(), oneAccount.getCurrency());
 				oneAccount.addBalance(tempBalance*cur);
 				oneAccount.addDebt(tempBalance*cur);
+				DatabaseSet.setAccount(oneAccount);
 				// TODO: Delete the account.
 				return true;
 			}
@@ -121,5 +127,10 @@ public class Employee extends User {
 		
 		// TODO: Delete the customer
 		return true;
+	}
+	
+	public void ChangePassword(EmployeeInf employee, String password) {
+		employee.setHash(Hash.SHA512(password, employee.getSalt()));
+		DatabaseSet.setEmployee(employee);
 	}
 }

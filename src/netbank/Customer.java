@@ -42,4 +42,9 @@ public class Customer extends User {
 		DatabaseSet.setAccount(account);
 		return true;
 	}
+	
+	public void ChangePassword(CustomerInf customer, String password) {
+		customer.setHash(Hash.SHA512(password, customer.getSalt()));
+		DatabaseSet.setCostumer(customer);
+	}
 }

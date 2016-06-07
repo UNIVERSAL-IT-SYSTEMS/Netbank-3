@@ -1,15 +1,14 @@
 package netbank;
 
 import static org.junit.Assert.*;
-
 import java.util.Locale;
 import java.util.UUID;
-
 import org.junit.Before;
 import org.junit.Test;
 
 public class CustomerInfTest {
 	CustomerInf cust;
+	Account acc;
 	String salt;
 	String hash;
 	UUID ID;
@@ -30,6 +29,8 @@ public class CustomerInfTest {
 		assertEquals(salt,cust.getSalt());
 		assertEquals(hash,cust.getHash());
 		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(),cust.getLocale());
+		assertEquals("da",cust.getLanguage());
+		assertEquals("dk",cust.getCountry());
 	}
 	
 	@Test
@@ -38,11 +39,14 @@ public class CustomerInfTest {
 		assertEquals("Alice",cust.getName());
 		cust.setAddress("new place");
 		assertEquals("new place",cust.getAddress());
-		cust.setLocale(new Locale.Builder().setLanguage("en").setRegion("US").build());
-		assertEquals(Locale.US,cust.getLocale());
 		String hash = Hash.SHA512("test1", salt);
 		cust.setHash(hash);
 		assertEquals(hash,cust.getHash());
+		cust.setLanguage("en");
+		assertEquals("en",cust.getLanguage());
+		assertEquals(new Locale.Builder().setLanguage("en").setRegion("dk").build(),cust.getLocale());
+		cust.setCountry("us");
+		assertEquals("us",cust.getCountry());
+		assertEquals(new Locale.Builder().setLanguage("en").setRegion("us").build(),cust.getLocale());
 	}
-
 }

@@ -44,7 +44,6 @@ public class CustomerInf {
 		this.country = country; 
 		location = new Locale.Builder().setLanguage(language).setRegion(country).build(); 
 	}
-	public void setLocale(Locale location) { this.location = location; }
 	public void setHash(String hash) { this.hash = hash; }
 	
 }
