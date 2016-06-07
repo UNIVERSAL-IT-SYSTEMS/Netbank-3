@@ -15,8 +15,8 @@ public class DatabaseGet {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.accounts WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 balance, 2 owner, 3 ownerID, 4 interest, 5 debt, 6 currency, 7 accountID
-			return new Account(res.getDouble(1), res.getString(2), UUID.fromString(res.getString(3)), res.getDouble(4), 
-					res.getDouble(5), Currency.getInstance(res.getString(6)), UUID.fromString(res.getString(7)));
+			return new Account(res.getDouble(1), UUID.fromString(res.getString(2)), res.getDouble(3), 
+					res.getDouble(4), Currency.getInstance(res.getString(5)), UUID.fromString(res.getString(6)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +55,7 @@ public class DatabaseGet {
 		try {
 			// 1 amount, 2 currency, 3 senderID, 4 senderName, 5 receiverID, 6 receiverName, 7 type, 8 timestamp, 9 transactionID
 			return new Transaction(res.getDouble(1), Currency.getInstance(res.getString(2)), UUID.fromString(res.getString(3)), 
-					res.getString(4), UUID.fromString(res.getString(5)), res.getString(6),TransactionType.valueOf(res.getString(7)), 
+					UUID.fromString(res.getString(5)), TransactionType.valueOf(res.getString(7)), 
 					Timestamp.valueOf(res.getString(8)),UUID.fromString(res.getString(9)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

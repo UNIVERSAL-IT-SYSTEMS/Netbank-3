@@ -18,7 +18,7 @@ public class AccountTest {
 	public void initiate() {
 		cusID = UUID.randomUUID();
 		accID = UUID.randomUUID();
-		account = new Account(2.0, "test", cusID, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
+		account = new Account(2.0, cusID, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
 		try {
 			Currencies.UpdateCurrencies();
 		} catch (IOException e) {
@@ -29,7 +29,6 @@ public class AccountTest {
 	@Test
 	public void newAccount() {
 		assertEquals(2.0,account.getBalance(),0); 
-		assertEquals("test",account.getOwner());
 		assertEquals(cusID,account.getOwnerID());
 		assertEquals(2.0,account.getInterest(), 0);
 		assertEquals(40.0,account.getDebt(),0);
@@ -52,15 +51,12 @@ public class AccountTest {
 		UUID newID = UUID.randomUUID();
 		account.setOwnerID(newID);
 		assertEquals(newID,account.getOwnerID());
-		account.setOwner("test2");
-		assertEquals("test2",account.getOwner());
 		
 		assertTrue(account.setCurrency(Currency.getInstance(Locale.CHINA)));
 	}
 	
 	@Test
 	public void BelowZero() {
-		System.out.println(account.getBalance());
 		assertFalse(account.belowZero(1.0));
 		assertTrue(account.belowZero(200.0));
 	}

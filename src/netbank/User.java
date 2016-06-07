@@ -13,11 +13,10 @@ public abstract class User {
 	public Locale getLocale(CustomerInf customer) { return customer.getLocale(); }
 	public UUID getID(CustomerInf customer) { return customer.getID(); }
 
-	public double getAccountBalance(Account account) { return account.getBalance(); }
-	public double getAccountInterest(Account account) { return account.getInterest(); }
-	public double getAccountDebt(Account account) { return account.getDebt(); }
+	public Double getAccountBalance(Account account) { return account.getBalance(); }
+	public Double getAccountInterest(Account account) { return account.getInterest(); }
+	public Double getAccountDebt(Account account) { return account.getDebt(); }
 	public UUID getAccountOwnerID(Account account) { return account.getOwnerID(); }
-	public String getAccountOwner(Account account) { return account.getOwner(); }
 	public Currency getAccountCurrency(Account account) { return account.getCurrency(); }
 	public UUID getAccountID(Account account) { return account.getAccountID(); }
 	

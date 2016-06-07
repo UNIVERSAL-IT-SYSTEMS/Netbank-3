@@ -31,7 +31,7 @@
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
     		</div>
     	</div>
-    	
+
     	<div class="login-screen">
 			<h1>SQL</h1><br>
 			<form method="post" action="servle">
