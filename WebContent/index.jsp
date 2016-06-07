@@ -31,8 +31,7 @@
     			<a href="#">Register</a> • <a href="#">Forgot Password</a>
     		</div>
     	</div>
-    	<% Currencies.UpdateCurrencies(); %> <%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
-    	
+    	    	
     	<div class="login-screen">
 			<h1>SQL</h1><br>
 			<form method="post" action="servle">
@@ -62,12 +61,16 @@
 		<% } %>
 		</table>
 		<br><br>Accounts<br>
-		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
+		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\""); %>
 		<table>
 			<% while(res.next()) { %>
 			<tr>
 				<td><%= res.getString(1) %></td>
 				<td><%= res.getString(2) %></td>
+				<td><%= res.getString(3) %></td>
+				<td><%= res.getString(4) %></td>
+				<td><%= res.getString(5) %></td>
+				<td><%= res.getString(6) %></td>
 			</tr>
 			<% } %>
 		</table>

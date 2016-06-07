@@ -8,16 +8,14 @@ import java.util.UUID;
 public class Account {
 	
 	private BigDecimal balance;
-	private String owner;
 	private UUID ownerID;
 	private UUID accountID;
 	private BigDecimal interest;
 	private BigDecimal debt;
 	private Currency currency;
 	
-	public Account(Double balance, String owner, UUID ownerID, Double interest, Double debt, Currency currency, UUID accountID) {
+	public Account(Double balance, UUID ownerID, Double interest, Double debt, Currency currency, UUID accountID) {
 		this.balance = BigDecimal.valueOf(balance).setScale(2, BigDecimal.ROUND_FLOOR);
-		this.owner = owner;
 		this.ownerID = ownerID;
 		this.interest = BigDecimal.valueOf(interest).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.debt = BigDecimal.valueOf(debt).setScale(2, BigDecimal.ROUND_FLOOR);
@@ -29,7 +27,6 @@ public class Account {
 	public Double getInterest() { return interest.doubleValue(); }
 	public Double getDebt() { return debt.doubleValue(); }
 	public UUID getOwnerID() { return ownerID; }
-	public String getOwner() { return owner; }
 	public Currency getCurrency() { return currency; }
 	public UUID getAccountID() { return accountID; }
 	
@@ -39,7 +36,6 @@ public class Account {
 	public void subtractDebt(Double value) { debt = debt.subtract(BigDecimal.valueOf(value)).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setInterest(Double value) { interest = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
-	public void setOwner(String owner) { this.owner = owner; }
 	public Boolean setCurrency(Currency newCurrency) {
 		if(Currencies.isCurrencyConversionEnabled()) {
 			currency = newCurrency; 

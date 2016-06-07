@@ -71,20 +71,21 @@ public class servle extends HttpServlet {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-		if(db == null) {
-			try {
-				db = new Database(myDataSource);
-	//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
-	//			while(res.next()) {
-	//				String name = res.getString(1);
-	//				String name2 = res.getString(2);
-	//				response.getWriter().println(name + " " + name2);
-	//			}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		if(db == null) {
+//			try {
+//				db = new Database(myDataSource);
+//	//			ResultSet res = db.getters("SELECT * FROM DTUGRP04.Sample");
+//	//			while(res.next()) {
+//	//				String name = res.getString(1);
+//	//				String name2 = res.getString(2);
+//	//				response.getWriter().println(name + " " + name2);
+//	//			}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+		initDB();
 		response.sendRedirect("index.jsp");
 		
 		
@@ -137,6 +138,17 @@ public class servle extends HttpServlet {
 	
 	public static Database getDb() {
 		return db;
+	}
+	
+	public static void initDB() {
+		if(db == null) {
+			try {
+				db = new Database(myDataSource);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

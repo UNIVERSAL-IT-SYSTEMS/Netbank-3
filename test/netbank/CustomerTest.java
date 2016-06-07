@@ -25,7 +25,7 @@ public class CustomerTest {
 		accID = UUID.randomUUID();
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test", salt);
-		account = new Account(2.0, "test", sender, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
+		account = new Account(2.0, sender, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
 		custInf = new CustomerInf("test", "testaddress", "da", "dk", sender, salt, hash);
 	}
 
@@ -48,7 +48,6 @@ public class CustomerTest {
 		assertEquals(2.0,custom.getAccountInterest(account),0.0);
 		assertEquals(40.0,custom.getAccountDebt(account),0.0);
 		assertEquals(sender,custom.getAccountOwnerID(account));
-		assertEquals("test",custom.getAccountOwner(account));
 		assertEquals(Currency.getInstance(Locale.GERMANY),custom.getAccountCurrency(account));
 		assertEquals(accID,custom.getAccountID(account));
 		
