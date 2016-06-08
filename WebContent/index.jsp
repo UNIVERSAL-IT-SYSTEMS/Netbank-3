@@ -22,13 +22,13 @@
 	<body>
 		<div class="login-screen">
 			<h1>Log-in</h1><br>
-			<form>
-			<input type="text" name="user" placeholder="Username">
-			<input type="password" name="pass" placeholder="Password">
-			<input type="submit" name="login" class="login-submit" value="login">
+			<form action="login" method="post">
+			<input type="text" name="username" placeholder="Username">
+			<input type="password" name="password" placeholder="Password">
+			<input type="submit" name="login">
 			</form>
     		<div class="login-options">
-    			<a href="#">Register</a> • <a href="#">Forgot Password</a>
+    			<a href="Register.jsp">Register</a> • <a href="#">Forgot Password</a>
     		</div>
     	</div>
     	    	
