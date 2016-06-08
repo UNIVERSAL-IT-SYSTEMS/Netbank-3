@@ -12,7 +12,8 @@ public class DatabaseGet {
 	
 	// type = accID, cusID, empID, traID
 	
-	public static ArrayList<Account> getAccounts(String type, UUID ID) {
+
+	public static ArrayList<Account> getAccounts(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.accounts WHERE "+type+" = "+ID.toString());
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
@@ -29,7 +30,7 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static EmployeeInf getEmployee(String type, UUID ID) {
+	public static EmployeeInf getEmployee(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.employees WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
@@ -42,7 +43,7 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static CustomerInf getCustomer(String type, UUID ID) {
+	public static CustomerInf getCustomer(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.customers WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
@@ -55,7 +56,7 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static Transaction getTransaction(String type, UUID ID) {
+	public static Transaction getTransaction(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 transactionID, 2 senderID, 3 receiverID, 4 amount, 5 currency 7 type, 8 timestamp

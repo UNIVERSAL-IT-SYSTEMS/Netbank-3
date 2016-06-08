@@ -46,7 +46,7 @@ public class login extends HttpServlet {
 			if(Dao.loginValidate(res.getString(7),res.getString(8),password)) {
 				try {
 					UUID cusID = UUID.fromString(res.getString(1));
-					ArrayList<Account> accounts = DatabaseGet.getAccounts("cusID", cusID);
+					ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.cusID, cusID);
 					request.setAttribute("accounts", accounts); // add to request
 					request.setAttribute("customer", res); // add to request
 					request.getSession().setAttribute("accounts", accounts); // add to session
