@@ -1,7 +1,13 @@
 package model;
 
-import java.io.PrintWriter;  
+import netbank.*;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.*;
+import java.util.UUID;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +27,15 @@ public class login extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		
-		if(Dao.loginValidate(username, password) || true) { 
-			response.sendRedirect("MainMenu.jsp");
+		ResultSet res = servle.getDb().getters("SELECT * FROM \"DTUGRP04\".\"customers\" WHERE username=" + username +";" );
+		if(Dao.loginValidate(res,password)) {
+			UUID cusID = UUID.fromString(res.getString(1));
+			
+			request.setAttribute("sharedId", res); // add to request
+			request.getSession().setAttribute("sharedId", res); // add to session
+			this.getServletConfig().getServletContext().setAttribute("sharedId", res);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
+			dispatcher.forward(request, response);
 		} else {
 			out.print("Username or password error");
 			response.sendRedirect("LoginFail.jsp");
