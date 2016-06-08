@@ -19,9 +19,9 @@ public class TransactionTest {
 	
 	@Before
 	public void initiate() {
-		tr = new Transaction(4.0, Currency.getInstance(Locale.CANADA), senderUUID, 
-				receiverUUID, TransactionType.Transaction, 
-				new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID());
+		tr = new Transaction(UUID.randomUUID(),senderUUID,receiverUUID,4.0, Currency.getInstance(Locale.CANADA), 
+				 TransactionType.Transaction, 
+				new Timestamp(Calendar.getInstance().getTime().getTime()));
 	}
 
 	@Test
