@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Employee extends User {
 	
 	public void newAccount(CustomerInf customer, Double interest, Currency currency) {
-		DatabaseSet.setAccount(new Account(0.0, customer.getID(), interest, 0.0, currency, UUID.randomUUID()));
+		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
 	public void setCostumerName(CustomerInf customer, String name) { 

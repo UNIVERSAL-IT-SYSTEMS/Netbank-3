@@ -11,7 +11,7 @@
 
 <div class="register-screen" style="text-align: center">
 	<h1>Register</h1><br>
-	<c:out value="${message}" />
+	<% if(request.getAttribute("message")!=null){out.println(request.getAttribute("message"));} %>
 		<form action="RegisterServlet" method="post">
 			<input type="text" name="username" placeholder="Username"><br/>
 			<input type="password" name="password" placeholder="Password"><br/>

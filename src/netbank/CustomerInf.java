@@ -14,7 +14,7 @@ public class CustomerInf {
 	private String salt;
 	private String hash;
 
-	public CustomerInf(String name, String address, String language, String country, UUID ID, String salt, String hash) {
+	public CustomerInf(UUID ID, String name, String address, String language, String country, String salt, String hash) {
 		this.name = name;
 		this.address = address;
 		this.language = language;

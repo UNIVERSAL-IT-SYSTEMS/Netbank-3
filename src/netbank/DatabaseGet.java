@@ -15,8 +15,8 @@ public class DatabaseGet {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.accounts WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 balance, 2 owner, 3 ownerID, 4 interest, 5 debt, 6 currency, 7 accountID
-			return new Account(res.getDouble(1), UUID.fromString(res.getString(2)), res.getDouble(3), 
-					res.getDouble(4), Currency.getInstance(res.getString(5)), UUID.fromString(res.getString(6)));
+			return new Account(UUID.fromString(res.getString(6)), UUID.fromString(res.getString(2)), res.getDouble(1), res.getDouble(3), 
+					res.getDouble(4), Currency.getInstance(res.getString(5)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,8 +28,8 @@ public class DatabaseGet {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.employees WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 name, 2 address, 3 language, 4 country
-			return new EmployeeInf(res.getString(1), res.getString(2), res.getString(3), res.getString(4), 
-					UUID.fromString(res.getString(5)), res.getString(6), res.getString(7));
+			return new EmployeeInf(UUID.fromString(res.getString(5)), res.getString(1), res.getString(2), res.getString(3), 
+					res.getString(4), res.getString(6), res.getString(7));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,8 +41,8 @@ public class DatabaseGet {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.customers WHERE "+type+" = "+ID.toString());
 		try {
 			// 1 name, 2 address, 3 language, 4 country, 5 ID, 6 salt, 7 hash
-			return new CustomerInf(res.getString(1), res.getString(2), res.getString(3), res.getString(4), 
-					UUID.fromString(res.getString(5)), res.getString(6), res.getString(7));
+			return new CustomerInf(UUID.fromString(res.getString(5)), res.getString(1), res.getString(2), res.getString(3), 
+					res.getString(4), res.getString(6), res.getString(7));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
