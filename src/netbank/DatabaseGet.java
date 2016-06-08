@@ -3,6 +3,7 @@ package netbank;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.UUID;
 import model.servle;
@@ -11,12 +12,17 @@ public class DatabaseGet {
 	
 	// type = accID, cusID, empID, traID
 	
-	public static Account getAccount(IDType type, UUID ID) {
+
+	public static ArrayList<Account> getAccounts(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.accounts WHERE "+type+" = "+ID.toString());
+		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
+			while(res.next()) {
+				accounts.add(new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), res.getDouble(3), res.getDouble(4), 
+					res.getDouble(5), Currency.getInstance(res.getString(6))));
+			}
 			// 1 balance, 2 owner, 3 ownerID, 4 interest, 5 debt, 6 currency, 7 accountID
-			return new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), res.getDouble(3), res.getDouble(4), 
-					res.getDouble(5), Currency.getInstance(res.getString(6)));
+			return accounts;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

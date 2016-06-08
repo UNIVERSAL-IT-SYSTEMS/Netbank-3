@@ -5,10 +5,11 @@ import java.sql.*;
 import netbank.Hash;  
 
 public class Dao {
-	public static boolean loginValidate(String name, String pass){  
+	public static boolean loginValidate(ResultSet res, String password) {  
 		boolean status = false;  
 		try{ 
-			ResultSet res = servle.getDb().getters("SELECT username,hash,salt FROM \"DTUGRP04\".\"customers\" WHERE username=" + name +";" );
+
+			
 //			Class.forName("oracle.jdbc.driver.OracleDriver");  
 //			Connection con = DriverManager.getConnection(
 //					"jdbc:oracle:thin:@localhost:1521:xe","system","oracle");  
@@ -21,7 +22,7 @@ public class Dao {
 				return false;
 			}
 			
-			if(Hash.SHA512(pass, res.getString(3)) == res.getString(2)) {
+			if(Hash.SHA512(password, res.getString(7)) == res.getString(8)) {
 				return true;
 			} else {
 				return false;

@@ -1,5 +1,6 @@
 package netbank;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
@@ -94,7 +95,9 @@ public class Employee extends User {
 		} else {
 			Double tempBalance = account.getBalance();
 			Double tempDebt = account.getDebt();
-			Account oneAccount = DatabaseGet.getAccount(IDType.cusID, account.getOwnerID());
+
+			Account oneAccount = DatabaseGet.getAccounts(IDType.cusID, account.getOwnerID()).get(0);
+
 			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);
 				oneAccount.addDebt(tempDebt);
@@ -114,16 +117,15 @@ public class Employee extends User {
 	}
 	
 	public Boolean deleteCustomer(CustomerInf customer) {
-		Account account = DatabaseGet.getAccount(IDType.cusID, customer.getID());
+
+		ArrayList<Account> accounts =  DatabaseGet.getAccounts(IDType.cusID, customer.getID());
 		Boolean accountDeleted = true;
-		while(account != null) {
-			accountDeleted = deleteAccount(account);
+		for (int i = 0; i < accounts.size(); i++) {
+			accountDeleted = deleteAccount(accounts.get(i));
 			if(!accountDeleted) {
 				return false;
 			}
-			account = DatabaseGet.getAccount(IDType.cusID, customer.getID());
 		}
-		
 		// TODO: Delete the customer
 		return true;
 	}

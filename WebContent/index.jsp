@@ -18,19 +18,25 @@
 <html>
 	<head>
 		<title>Log-in</title>
+		
 		<link rel='stylesheet' href=''>
 	</head>
 	<body>
 	<div style="text-align: center">
 		<div class="login-screen">
+<<<<<<< HEAD
 			<h1>Put-in</h1><br>
+=======
+		<% if(request.getAttribute("message")!=null) { out.println(request.getAttribute("message")); } %>
+			<h1>Log-in</h1><br>
+>>>>>>> b08b732d69c168801f2be42684d05aa439ea3b6f
 			<form action="login" method="post">
 			<input type="text" name="username" placeholder="Username">
 			<input type="password" name="password" placeholder="Password">
 			<input type="submit" name="login">			
 			</form>
     		<div class="login-options">
-    			<a href="Register.jsp">Register</a> • <a href="#">Forgot Password</a>
+    			<a href="Register.jsp">Register</a>
     		</div>
     	</div>
 		<% Currencies.UpdateCurrencies(); %>
