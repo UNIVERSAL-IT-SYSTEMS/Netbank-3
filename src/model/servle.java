@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import netbank.Database;
+import netbank.Hash;
 
 /**
  * Servlet implementation class servle
@@ -26,8 +28,8 @@ import netbank.Database;
 public class servle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	@Resource(lookup = "jdbc/db2")
-    private static DataSource myDataSource;
+	//@Resource(lookup = "jdbc/db2")
+    //private static DataSource myDataSource;
 	static Database db;
     /**
      * @throws SQLException 
@@ -127,8 +129,19 @@ public class servle extends HttpServlet {
 		if (request.getParameter("sqldo") != null) {
 			//System.out.println(request.getParameter("user"));
 			db.setters(request.getParameter("user"));
+        } else if(request.getParameter("register") != null){
+        	db.setters("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()
+        			+ "','"+request.getParameter("user")+"','"+request.getParameter("addr")
+        			+ "','"+Hash.SHA512(request.getParameter("pass"),Hash.getSalt())
+        			+ "','"+Hash.getSalt()
+        			+ "','"+request.getParameter("country")+ "');");
+        	System.out.println("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()
+			+ "','"+request.getParameter("user")+"','"+request.getParameter("addr")
+			+ "','"+Hash.SHA512(request.getParameter("pass"),Hash.getSalt())
+			+ "','"+Hash.getSalt()
+			+ "','"+request.getParameter("country")+ "');");
         } else {
-            
+        	System.out.println("NOTHING");
         }
 		
 		
@@ -143,7 +156,7 @@ public class servle extends HttpServlet {
 	public static void initDB() {
 		if(db == null) {
 			try {
-				db = new Database(myDataSource);
+				db = new Database();//myDataSource);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
