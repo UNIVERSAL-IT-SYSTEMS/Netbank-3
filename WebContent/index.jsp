@@ -23,7 +23,7 @@
 	<body>
 	<div style="text-align: center">
 		<div class="login-screen">
-			<h1>Log-in</h1><br>
+			<h1>Put-in</h1><br>
 			<form action="login" method="post">
 			<input type="text" name="username" placeholder="Username">
 			<input type="password" name="password" placeholder="Password">
