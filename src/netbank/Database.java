@@ -1,6 +1,7 @@
 package netbank;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,26 +10,39 @@ import javax.sql.DataSource;
 
 public class Database {
 	
-	@Resource(lookup = "jdbc/db2")
-	private DataSource myDataSource;
+	//@Resource(lookup = "jdbc/db2")
+	//private DataSource myDataSource;
 	
 	Connection connection;
 	Statement stmt;
 	
-	public Database(DataSource dats) throws SQLException {
-		myDataSource = dats;
+	private String name = "com.ibm.db2.jcc.DB2Driver";
+	private String user = "DTU09";
+	private String password = "FAGP2016";
+	private String url = "jdbc:db2://192.86.32.54:5040/DALLASB:retrieveMessagesFromServerOnGetMessage=true;emulateParameterMetaDataForZCalls=1;";
+
+	
+	//DataSource dats
+	public Database() throws SQLException {
+		//myDataSource = dats;
+		
 	}
 	
 	public ResultSet getters(String qwy) {
 		ResultSet res = null;
 		try {
-			connection = myDataSource.getConnection();
+			Class.forName(name);
+			connection = DriverManager.getConnection(url, user, password);
+			//connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
 			res = stmt.executeQuery(qwy);
 			return res;
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("SQLEXCEPTION");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("CLASSNOTFOUND");
 			e.printStackTrace();
 		}	
 		return null;	
@@ -36,7 +50,8 @@ public class Database {
 	
 	public boolean setters(String qwy) {
 		try {
-			connection = myDataSource.getConnection();
+			connection = DriverManager.getConnection(url, user, password);
+			//connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
 			stmt.execute(qwy);
 			return true;
