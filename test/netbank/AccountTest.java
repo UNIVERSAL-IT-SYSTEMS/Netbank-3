@@ -18,7 +18,7 @@ public class AccountTest {
 	public void initiate() {
 		cusID = UUID.randomUUID();
 		accID = UUID.randomUUID();
-		account = new Account(2.0, cusID, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
+		account = new Account(accID,cusID,2.0, 2.0, 40.0, Currency.getInstance(Locale.GERMANY));
 		try {
 			Currencies.UpdateCurrencies();
 		} catch (IOException e) {

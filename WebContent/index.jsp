@@ -21,9 +21,8 @@
 		<link rel='stylesheet' href=''>
 	</head>
 	<body>
+	<div style="text-align: center">
 		<div class="login-screen">
-		<% Currencies.UpdateCurrencies(); %>
-		<%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
 			<h1>Log-in</h1><br>
 			<form action="login" method="post">
 			<input type="text" name="username" placeholder="Username">
@@ -34,50 +33,11 @@
     			<a href="Register.jsp">Register</a> • <a href="#">Forgot Password</a>
     		</div>
     	</div>
-		
-    	<div class="login-screen">
-			<h1>SQL</h1><br>
-			<form method="post" action="servle">
-				<input type="text" name="user" placeholder="Query">
-				<input type="submit" name="sqldo" class="login-submit" value="Do">
-			</form>
-    	</div>
-    	Sample: <br>
-    	<% ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample"); %>
-    	<table>
-			<% while(res.next()) { %>
-			<tr>
-				<td><%= res.getString(1) %></td>
-				<td><%= res.getString(2) %></td>
-				<td><%= res.getString(3) %></td>
-			</tr>
-			<% } %>
-		</table>
-		<br><br>Users<br>
-		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\""); %>
-		<table>
-			<% while(res.next()) { %>
-			<tr>
-				<td><%= res.getString(1) %></td>
-				<td><%= res.getString(2) %></td>
-				<td><%= res.getString(3) %></td>
-				<td><%= res.getString(4) %></td>
-		</tr>
-		<% } %>
-		</table>
-		<br><br>Accounts<br>
-		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\""); %>
-		<table>
-			<% while(res.next()) { %>
-			<tr>
-				<td><%= res.getString(1) %></td>
-				<td><%= res.getString(2) %></td>
-				<td><%= res.getString(3) %></td>
-				<td><%= res.getString(4) %></td>
-				<td><%= res.getString(5) %></td>
-				<td><%= res.getString(6) %></td>
-			</tr>
-			<% } %>
-		</table>
+		<% Currencies.UpdateCurrencies(); %>
+		<%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
+		<br>
+		<a href="tableview.jsp">View tables</a>
+	</div>
+    	
 	</body>
 </html>

@@ -18,8 +18,8 @@ public class UserTest {
 	public void initiate() {
 		cusID = UUID.randomUUID();
 		accID = UUID.randomUUID();
-		acc = new Account(2.0, cusID, 2.0, 40.0, Currency.getInstance(Locale.GERMANY), accID);
-		cust = new CustomerInf("Alice", "testaddress", "da", "dk", cusID , Hash.getSalt(), Hash.SHA512("test", Hash.getSalt()));
+		acc = new Account(accID,cusID,2.0,  2.0, 40.0, Currency.getInstance(Locale.GERMANY));
+		cust = new CustomerInf( cusID ,"username","Alice", "testaddress", "da", "dk", Hash.getSalt(), Hash.SHA512("test", Hash.getSalt()));
 	}
 
 	@Test

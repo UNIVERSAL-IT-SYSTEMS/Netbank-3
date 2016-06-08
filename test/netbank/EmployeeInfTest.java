@@ -18,7 +18,7 @@ public class EmployeeInfTest {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test123", salt);
 		ID = UUID.randomUUID();
-		empl = new EmployeeInf("test", "testaddress", "da", "dk", ID , salt, hash);
+		empl = new EmployeeInf( ID , "testuserid","test", "testaddress", "da", "dk",salt, hash);
 	}
 
 	@Test
