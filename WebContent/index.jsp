@@ -24,12 +24,8 @@
 	<body>
 	<div style="text-align: center">
 		<div class="login-screen">
-<<<<<<< HEAD
 			<h1>Put-in</h1><br>
-=======
-		<% if(request.getAttribute("message")!=null) { out.println(request.getAttribute("message")); } %>
-			<h1>Log-in</h1><br>
->>>>>>> b08b732d69c168801f2be42684d05aa439ea3b6f
+			<% if(request.getAttribute("message")!=null) { out.println(request.getAttribute("message")); } %>
 			<form action="login" method="post">
 			<input type="text" name="username" placeholder="Username">
 			<input type="password" name="password" placeholder="Password">
