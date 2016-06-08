@@ -36,8 +36,8 @@ public class RegisterServlet extends HttpServlet {
 			response.sendRedirect("Register.jsp");
 		} else {
 			String salt = Hash.getSalt();
-			servle.getDb().setters("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()
-			+ "','"+name+"','"+address+ "','"+Hash.SHA512(password,salt)+ "','"+salt+ "','"+country+ "');");
+			servle.getDb().setters("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()+"','"+username
+			+"','"+name+"','"+address+"','"+language+"','"+country+"','"+Hash.SHA512(password,salt)+"','"+salt+"');");
 		}
 		
 		out.close(); 

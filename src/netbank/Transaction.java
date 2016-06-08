@@ -14,9 +14,9 @@ public class Transaction {
 	private BigDecimal amount;
 	private Currency currency; // Receiver's currency.
 	
-	public Transaction(Double amount, Currency currency, UUID sender, 
-			UUID receiver, TransactionType type, 
-			Timestamp currenctTimestamp, UUID transactionID) {
+	public Transaction(UUID transactionID, UUID sender, UUID receiver, Double amount, Currency currency,  
+			TransactionType type, 
+			Timestamp currenctTimestamp) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
 		this.sender = sender;

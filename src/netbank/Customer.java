@@ -13,9 +13,9 @@ public class Customer extends User {
 			return false;
 		}
 		
-		DatabaseSet.setTransaction(new Transaction(amount, receiveAccount.getCurrency(), account.getOwnerID(), 
-				receiveAccount.getAccountID(), TransactionType.Transaction, 
-				new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
+			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.Transaction, 
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
@@ -36,8 +36,8 @@ public class Customer extends User {
 		if(account.belowZero(amount)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(amount, account.getCurrency(), account.getOwnerID(),
-				null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),null, amount, account.getCurrency(), 
+			TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
 		return true;

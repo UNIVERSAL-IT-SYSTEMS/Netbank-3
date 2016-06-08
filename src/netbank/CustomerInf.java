@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class CustomerInf {
 	
+	private String username;
 	private String name;
 	private String address;
 	private String language;
@@ -14,7 +15,8 @@ public class CustomerInf {
 	private String salt;
 	private String hash;
 
-	public CustomerInf(UUID ID, String name, String address, String language, String country, String salt, String hash) {
+	public CustomerInf(UUID ID, String username, String name, String address, String language, String country, String salt, String hash) {
+		this.username = username;
 		this.name = name;
 		this.address = address;
 		this.language = language;
@@ -25,6 +27,7 @@ public class CustomerInf {
 		this.hash = hash;
 	}
 	
+	public String getUsername() { return username; }
 	public String getName() { return name; }
 	public String getAddress() { return address; }
 	public String getLanguage() { return language; }

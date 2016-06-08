@@ -46,8 +46,8 @@ public class Employee extends User {
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), 
-			null, TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, value, account.getCurrency(), 
+			TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(value); 
 		DatabaseSet.setAccount(account);
@@ -55,8 +55,8 @@ public class Employee extends User {
 	}
 	
 	public void addAccountDebt(Account account, Double value) { 
-		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), 
-			null, TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(),account.getOwnerID(), null, value, account.getCurrency(), 
+			TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.addDebt(value);
 		DatabaseSet.setAccount(account);
@@ -66,8 +66,8 @@ public class Employee extends User {
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(value, account.getCurrency(), account.getOwnerID(), 
-				null, TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, value, account.getCurrency(), 
+			TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractDebt(value); 
 		DatabaseSet.setAccount(account);
@@ -75,8 +75,8 @@ public class Employee extends User {
 	}
 	
 	public void deposit(Account account, Double amount) {
-		DatabaseSet.setTransaction(new Transaction(amount, account.getCurrency(), account.getOwnerID(), 
-				null, TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime()), UUID.randomUUID()));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
+			TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.addBalance(amount);
 		DatabaseSet.setAccount(account);
 	}
