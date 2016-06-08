@@ -18,12 +18,14 @@
 <html>
 	<head>
 		<title>Log-in</title>
+		
 		<link rel='stylesheet' href=''>
 	</head>
 	<body>
 		<div class="login-screen">
 		<% Currencies.UpdateCurrencies(); %>
 		<%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
+		<% if(request.getAttribute("message")!=null){out.println(request.getAttribute("message"));} %>
 			<h1>Log-in</h1><br>
 			<form action="login" method="post">
 			<input type="text" name="username" placeholder="Username">
@@ -31,7 +33,7 @@
 			<input type="submit" name="login">			
 			</form>
     		<div class="login-options">
-    			<a href="Register.jsp">Register</a> • <a href="#">Forgot Password</a>
+    			<a href="Register.jsp">Register</a>
     		</div>
     	</div>
 		

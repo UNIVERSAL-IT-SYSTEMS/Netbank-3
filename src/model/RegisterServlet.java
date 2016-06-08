@@ -33,11 +33,13 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("message", "Passwords not matching");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
 			dispatcher.forward(request, response);
-			response.sendRedirect("Register.jsp");
 		} else {
 			String salt = Hash.getSalt();
 			servle.getDb().setters("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()+"','"+username
 			+"','"+name+"','"+address+"','"+language+"','"+country+"','"+Hash.SHA512(password,salt)+"','"+salt+"');");
+			request.setAttribute("message", "Registered");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
 		}
 		
 		out.close(); 

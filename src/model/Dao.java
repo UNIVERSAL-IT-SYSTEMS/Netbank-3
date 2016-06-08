@@ -3,16 +3,17 @@ package model;
 import java.sql.*;  
 
 public class Dao {
-	public static boolean loginValidate(String name, String pass){  
+	public static boolean loginValidate(String username, String password){  
 		boolean status = false;  
 		try{ 
-			Class.forName("oracle.jdbc.driver.OracleDriver");  
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost:1521:xe","system","oracle");  
 			PreparedStatement ps = con.prepareStatement(
-					"select * from userreg where name=? and pass=?");  
-			ps.setString(1,name);  
-			ps.setString(2,pass);  
+					"select * from userreg where name=? and pass=?");
+			
+			ps.setString(1,username);  
+			ps.setString(2,password);
 			
 			ResultSet rs=ps.executeQuery();  
 			status=rs.next();  
