@@ -18,9 +18,12 @@ public class DatabaseGet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString()+"\"='"+ID.toString()+"'");
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type+"\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
+			if(res == null) {
+				return null;
+			}
 			while(res.next()) {
 				accounts.add(new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), res.getDouble(3), res.getDouble(4), 
 					res.getDouble(5), Currency.getInstance(res.getString(6))));

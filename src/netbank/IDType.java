@@ -1,5 +1,5 @@
 package netbank;
 
 public enum IDType {
-	accID, cusID, empID, traID
+	ACCID, CUSID, EMPID, TRAID
 }

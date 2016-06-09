@@ -20,12 +20,12 @@
 			<input type="text" name="address" placeholder="Address"><br/>
 			Language: <select name="language">
 				<% for(int i = 0; i < Locale.getISOLanguages().length; i++) { %> 
-					<option value="<%=i%>"><%=Locale.getISOLanguages()[i]%></option>
+					<option value="<%=Locale.getISOLanguages()[i].toString()%>"><%=Locale.getISOLanguages()[i].toString()%></option>
 				<% } %>
 			</select><br/>
 			Country: <select name="country">
 				<% for(int i = 0; i < Locale.getISOCountries().length; i++) { %> 
-					<option value="<%=i%>"><%=Locale.getISOCountries()[i] %></option>
+					<option value="<%=Locale.getISOCountries()[i].toString()%>"><%=Locale.getISOCountries()[i].toString() %></option>
 				<% } %>
 			</select><br/>
 			<input type="submit" name="RegisterServlet">

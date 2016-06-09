@@ -83,7 +83,7 @@ public class Employee extends User {
 	}
 	
 	public void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		CustomerInf thisCustomer = DatabaseGet.getCustomer(IDType.cusID,newOwner);
+		CustomerInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
@@ -96,7 +96,7 @@ public class Employee extends User {
 			Double tempBalance = account.getBalance();
 			Double tempDebt = account.getDebt();
 
-			Account oneAccount = DatabaseGet.getAccounts(IDType.cusID, account.getOwnerID()).get(0);
+			Account oneAccount = DatabaseGet.getAccounts(IDType.CUSID, account.getOwnerID()).get(0);
 
 			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);
@@ -118,7 +118,7 @@ public class Employee extends User {
 	
 	public Boolean deleteCustomer(CustomerInf customer) {
 
-		ArrayList<Account> accounts =  DatabaseGet.getAccounts(IDType.cusID, customer.getID());
+		ArrayList<Account> accounts =  DatabaseGet.getAccounts(IDType.CUSID, customer.getID());
 		Boolean accountDeleted = true;
 		for (int i = 0; i < accounts.size(); i++) {
 			accountDeleted = deleteAccount(accounts.get(i));
