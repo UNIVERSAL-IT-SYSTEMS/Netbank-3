@@ -39,12 +39,13 @@ public class login extends HttpServlet {
 			if(Dao.loginValidate(res.getString(7),res.getString(8),password)) {
 				UUID id = UUID.fromString(res.getString(1));
 				ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID,id);
+				CustomerInf cust = DatabaseGet.getCustomer(username);
 				request.setAttribute("accounts", accounts); // add to request
-				request.setAttribute("customer", res); // add to request
+				request.setAttribute("customer", cust); // add to request
 				request.getSession().setAttribute("accounts", accounts); // add to session
-				request.getSession().setAttribute("customer", res); // add to session
+				request.getSession().setAttribute("customer", cust); // add to session
 				this.getServletConfig().getServletContext().setAttribute("accounts", accounts);
-				this.getServletConfig().getServletContext().setAttribute("customer", res);
+				this.getServletConfig().getServletContext().setAttribute("customer", cust);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
 				dispatcher.forward(request, response);
 			} else {

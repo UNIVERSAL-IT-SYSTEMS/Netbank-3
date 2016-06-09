@@ -40,7 +40,7 @@ public class DatabaseGet {
 	
 
 	public static EmployeeInf getEmployee(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.employees WHERE "+type+" = "+ID.toString());
+		ResultSet res = servle.getDb().getters("SELECT * FROM FROM DTUGRP04.\"employees\" WHERE "+type.toString()+" ='"+ID.toString()+"'");
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
 			return new EmployeeInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
@@ -53,7 +53,8 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.customers WHERE "+type+" = "+ID.toString());
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString()+" = '"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString()+" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
@@ -70,9 +71,10 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(String username) {
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		if(servle.getDb() == null) { servle.initDB(); };
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = 'Mtngs';");
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = 'Mtngs';");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		try {
 				if(res.next()) {
 					System.out.println("RETURNING USER INFO");
