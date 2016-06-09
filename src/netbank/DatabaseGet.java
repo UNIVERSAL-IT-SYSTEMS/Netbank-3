@@ -18,7 +18,7 @@ public class DatabaseGet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+"USRID"+"\"='"+ID.toString()+"'");
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString()+"\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			while(res.next()) {
@@ -34,6 +34,7 @@ public class DatabaseGet {
 		return null;
 	}
 	
+
 	public static EmployeeInf getEmployee(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.employees WHERE "+type+" = "+ID.toString());
 		try {
@@ -57,6 +58,25 @@ public class DatabaseGet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public static CustomerInf getCustomer(String username) {
+		if(servle.getDb() == null) { servle.initDB(); };
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE 'username' = '"+ username +"';");
+		try {
+			
+			if(res.next()) {
+				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
+				return new CustomerInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
+						res.getString(6), res.getString(7), res.getString(8));
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		return null;
 	}
 	
