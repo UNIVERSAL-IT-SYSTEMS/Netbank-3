@@ -11,13 +11,13 @@
 	<title>Menu</title>
 	<link rel='stylesheet' href=''>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Menu</title>
 </head>
 <body>
 	<div style="text-align: center">
 		<% ArrayList<Account> accounts = (ArrayList<Account>) request.getAttribute("accounts"); %>
 		<% CustomerInf cust = (CustomerInf) request.getAttribute("customer"); %>
-		Welcome <%= cust.getName() %>
+		Welcome <%= cust.getName() %> <br/>
+		<%= cust.getID() %>
 		<table border="1" style="width:100%">
 			<tr>
 				<td> Account ID </td>
@@ -25,11 +25,10 @@
 				<td> Currency </td>
 				<td> Debt </td>
 				<td> Interest </td>
-				<td> Owner ID </td>
 			</tr>
 		<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
 		<% if(accounts != null) { %>
-			<% for ( int i =0; i < accounts.size() ; i++) { %>
+			<% for ( int i =0; i < accounts.size(); i++) { %>
 				<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
 				<tr>
 					<td> <%=accounts.get(i).getAccountID().toString()%> </td>
@@ -37,18 +36,16 @@
 					<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
 					<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
 					<td> <%=accounts.get(i).getInterest()%>% </td>
-					<td> <%=accounts.get(i).getOwnerID()%> </td>
 				</tr>
 			<% } %>
 		<% } %>
 		</table>
 		
 			
-		<a href="Transaction.jsp">
-			<% String number = "123"; %>
-			<% session.setAttribute("number", number); %>
-			<button name="transaction" type="submit">Transaction</button>
-		</a>
+		<form action="Transaction.jsp" method="post">
+			<% session.setAttribute("cusID",cust.getID()); %>
+			<input type="submit" name="transaction" value="Transaction">		
+		</form>
 		<form action="WithdrawalServlet" method="post">
 			<button name="withdrawal" type="submit">Withdrawal</button>
 		</form>

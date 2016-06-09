@@ -18,8 +18,8 @@ public class DatabaseGet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE "+type.toString()+"='"+ID.toString()+"'");
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE "+type.toString()+"='"+ID.toString()+"'");
+		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			if(res == null) {
@@ -40,7 +40,7 @@ public class DatabaseGet {
 	
 
 	public static EmployeeInf getEmployee(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM FROM DTUGRP04.\"employees\" WHERE "+type.toString()+" ='"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM FROM DTUGRP04.\"employees\" WHERE \""+type.toString().toLowerCase()+"\" ='"+ID.toString()+"'");
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
 			return new EmployeeInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
@@ -53,8 +53,8 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString()+" = '"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString()+" = '"+ID.toString()+"'");
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString()+"\" = '"+ID.toString().toLowerCase()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString().toLowerCase()+" = '"+ID.toString()+"'");
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
 			return new CustomerInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
@@ -87,7 +87,7 @@ public class DatabaseGet {
 	}
 	
 	public static Transaction getTransaction(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE "+type+" = "+ID.toString());
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		try {
 			// 1 transactionID, 2 senderID, 3 receiverID, 4 amount, 5 currency 7 type, 8 timestamp
 			return new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), UUID.fromString(res.getString(3)), 

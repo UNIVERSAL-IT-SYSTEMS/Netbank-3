@@ -20,7 +20,7 @@ public class TransactionTest {
 	@Before
 	public void initiate() {
 		tr = new Transaction(UUID.randomUUID(),senderUUID,receiverUUID,4.0, Currency.getInstance(Locale.CANADA), 
-				 TransactionType.Transaction, 
+				 TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime()));
 	}
 
