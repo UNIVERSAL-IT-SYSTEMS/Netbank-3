@@ -18,32 +18,35 @@
 		<% CustomerInf cust = (CustomerInf) request.getAttribute("customer"); %>
 		Welcome <%= cust.getName() %> <br/>
 		<%= cust.getID() %>
-		<table border="1" style="width:100%">
-			<tr>
-				<td> Account ID </td>
-				<td> Balance </td>
-				<td> Currency </td>
-				<td> Debt </td>
-				<td> Interest </td>
-			</tr>
-		<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
-		<% if(accounts != null) { %>
-			<% for ( int i =0; i < accounts.size(); i++) { %>
-				<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
+		<form action="ShowTransactions" method="post">
+			<table border="1" style="width:100%">
 				<tr>
-					<td> <%=accounts.get(i).getAccountID().toString()%> </td>
-					<td> <%=numberFormat.format(accounts.get(i).getBalance())%> </td>
-					<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
-					<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
-					<td> <%=accounts.get(i).getInterest()%>% </td>
+					<td> Account ID </td>
+					<td> Balance </td>
+					<td> Currency </td>
+					<td> Debt </td>
+					<td> Interest </td>
+					<td>  </td>
 				</tr>
+			<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
+			<% if(accounts != null) { %>
+				<% for ( int i =0; i < accounts.size(); i++) { %>
+					<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
+					<tr>
+						<td> <%=accounts.get(i).getAccountID().toString()%> </td>
+						<td> <%=numberFormat.format(accounts.get(i).getBalance())%> </td>
+						<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
+						<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
+						<td> <%=accounts.get(i).getInterest()%>% </td>
+						<td> <button name="showtransactions" value="<%=accounts.get(i).getAccountID()%>">Transactions</button> </td>
+					</tr>
+				<% } %>
 			<% } %>
-		<% } %>
-		</table>
-		
+			</table>
+		</form>
 			
 		<form action="Transaction.jsp" method="post">
-			<% session.setAttribute("cusID",cust.getID()); %>
+			<% session.setAttribute("cusID", cust.getID()); %>
 			<input type="submit" name="transaction" value="Transaction">		
 		</form>
 		<form action="WithdrawalServlet" method="post">

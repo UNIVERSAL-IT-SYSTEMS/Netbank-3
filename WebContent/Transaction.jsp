@@ -16,7 +16,7 @@
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
 <%=id%>
 <% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID, id); %>
-<form action="TransactionServlet" method="post">
+<form action="TransactionServlet" method="get">
 	<table border="1" style="width:100%">
 		<tr>
 			<td> Account ID </td>
@@ -39,6 +39,7 @@
 	</table>
 	Amount: <input type="text" name="amount" placeholder="Amount"> <br/>
 	To: <input type="text" name="receiverID" placeholder="ID"> <br/>
+	<input type="hidden" name="custid" value="<%=id.toString()%>">
 	<input type="submit" name="transaction">
 </form>
 </div>

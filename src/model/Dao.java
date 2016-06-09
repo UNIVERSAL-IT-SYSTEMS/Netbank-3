@@ -1,10 +1,14 @@
 package model;
 
-import netbank.CustomerInf;
-import netbank.DatabaseGet;
-import netbank.Hash;  
+import java.util.ArrayList;
+import java.util.UUID;
+
+import netbank.*; 
 
 public class Dao {
+	
+	Customer custom;
+	
 	public static boolean loginValidate(String salt, String hash, String password) {  
 		try{ 
 			if(Hash.SHA512(password, salt).equals(hash)) {
@@ -27,5 +31,18 @@ public class Dao {
 			return true;
 		}
 	
+	}
+
+	public static boolean Transaction(String senderID, String amount, String receiverID) {
+		try {
+			UUID sID = UUID.fromString(senderID);
+			Double am = Double.parseDouble(amount);
+			UUID rID = UUID.fromString(receiverID);
+			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, sID);
+			Customer.transaction(sID, accounts.get(0), am, rID);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

@@ -17,27 +17,27 @@ import netbank.*;
 @WebServlet("/TransactionServlet")
 public class TransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private String message;
-	Customer cust;
-	
-	public void init() throws ServletException
-	  {
-	      // Do required initialization
-	      message = "Hello World";
-	  }
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String choice=request.getParameter("choice");
+		String amount=request.getParameter("amount");
+		String receiverID=request.getParameter("receiverID");
+		String custID=request.getParameter("custid");
 		out.println(choice);
-		response.setContentType("text/html");
-		doGet(request, response);
-		out.println("<h1>"+message+"</h1>");
+		out.println(amount);
+		out.println(receiverID);
+		out.println(custID);
+		if(Dao.Transaction(choice,amount,receiverID)) {
+			out.print("<h1>Success!</h1>");
+			out.print("<% session.setAttribute(\"cusID\", "+custID+"); %>");
+			out.print("<a href=\"MainMenu.jsp\">Back</a>");
+			out.close();
+		} else {
+			out.print("<h1>Failed</h1>");
+			out.print("<a href=\"Transaction.jsp\">Back</a>");
+			out.close();
+		}
 	}
-
 }

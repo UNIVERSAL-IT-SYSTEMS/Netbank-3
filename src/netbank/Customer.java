@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Customer extends User {
 	
-	public Boolean transaction(CustomerInf customer, Account account, Double amount, UUID recieverID) {
+	public static Boolean transaction(UUID senderID, Account account, Double amount, UUID recieverID) {
 			
 		Account receiveAccount = DatabaseGet.getAccounts(IDType.ACCID,recieverID).get(0);
 		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
@@ -32,7 +32,7 @@ public class Customer extends User {
 		}
 	}
 	
-	public Boolean withdrawal(CustomerInf customer, Account account, Double amount) {
+	public static Boolean withdrawal(CustomerInf customer, Account account, Double amount) {
 		if(account.belowZero(amount)) {
 			return false;
 		}
@@ -43,7 +43,7 @@ public class Customer extends User {
 		return true;
 	}
 	
-	public void ChangePassword(CustomerInf customer, String password) {
+	public static void ChangePassword(CustomerInf customer, String password) {
 		customer.setHash(Hash.SHA512(password, customer.getSalt()));
 		DatabaseSet.setCostumer(customer);
 	}
