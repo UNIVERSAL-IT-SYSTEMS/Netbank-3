@@ -41,10 +41,13 @@ public class DatabaseSet {
 		if(servle.getDb() == null) {
 			servle.initDB();
 		}
-		return servle.getDb().setters("INSERT INTO DTUGRP04.transaction SET sender="+trans.getSenderID().toString()
-				+ ", receiver="+trans.getReceiverID().toString()+", transtype="+trans.getTransactionType()
-				+ ", amount="+trans.getAmount()+", timestamp="+trans.getTimestamp()
-				+ ", currency="+trans.getCurrency()
-				+ "WHERE transid="+trans.getTransactionID());
+		System.out.println("INSERT INTO DTUGRP04.\"transaction\" VALUES ('"+trans.getTransactionID()
+				+ "','" + trans.getSenderID().toString() + "'," + trans.getTimestamp()
+				+ ",'" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+				+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"'");
+		return servle.getDb().setters("INSERT INTO DTUGRP04.\"transaction\" VALUES ('"+trans.getTransactionID()
+		+ "','" + trans.getSenderID().toString() + "," + trans.getTimestamp()
+		+ ",'" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+		+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"'");
 	}
 }
