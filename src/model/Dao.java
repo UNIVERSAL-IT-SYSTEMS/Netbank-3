@@ -42,6 +42,7 @@ public class Dao {
 			Customer.transaction(sID, accounts.get(0), am, rID);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

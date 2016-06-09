@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Transaction {
 	private TransactionType type;
-	private Timestamp currentTimestamp;
+	private long currentTimestamp;
 	private UUID transactionID;
 	private UUID sender;
 	private UUID receiver;
@@ -15,8 +15,7 @@ public class Transaction {
 	private Currency currency; // Receiver's currency.
 	
 	public Transaction(UUID transactionID, UUID sender, UUID receiver, Double amount, Currency currency,  
-			TransactionType type, 
-			Timestamp currenctTimestamp) {
+			TransactionType type, long currenctTimestamp) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
 		this.sender = sender;
@@ -26,7 +25,7 @@ public class Transaction {
 		this.transactionID = transactionID;
 	}
 	
-	public Timestamp getTimestamp() { return currentTimestamp; }
+	public long getTimestamp() { return currentTimestamp; }
 	public Double getAmount() { return amount.doubleValue(); }
 	public Currency getCurrency() { return currency; }
 	public UUID getTransactionID() { return transactionID; }
