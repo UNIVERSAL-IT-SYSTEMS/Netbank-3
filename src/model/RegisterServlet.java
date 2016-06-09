@@ -34,8 +34,8 @@ public class RegisterServlet extends HttpServlet {
 		String country=request.getParameter("country");
 		
 		// Check if username is not already taken
-		CustomerInf sameUsername = DatabaseGet.getCustomer(username);
-		if(sameUsername != null) {
+		//CustomerInf sameUsername = DatabaseGet.getCustomer(username);
+		if(Dao.userNameExists(username)){//sameUsername != null) {
 			request.setAttribute("message", "Username taken");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
 			dispatcher.forward(request, response);
@@ -61,7 +61,7 @@ public class RegisterServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		doGet(request, response);
+		//doGet(request, response);
 		//out.close(); 
 	}
 
