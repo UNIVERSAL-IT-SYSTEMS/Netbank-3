@@ -1,7 +1,7 @@
 package model;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +17,27 @@ import netbank.*;
 @WebServlet("/TransactionServlet")
 public class TransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private String message;
+	Customer cust;
+	
+	public void init() throws ServletException
+	  {
+	      // Do required initialization
+	      message = "Hello World";
+	  }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Account> accounts = (ArrayList<Account>) request.getAttribute("accounts");
-		//Customer.this.transaction(customer, account, amount, recieverID)
+		PrintWriter out = response.getWriter();
+		String choice=request.getParameter("choice");
+		out.println(choice);
+		response.setContentType("text/html");
 		doGet(request, response);
-		response.sendRedirect("MainMenu.jsp");
+		out.println("<h1>"+message+"</h1>");
 	}
 
 }

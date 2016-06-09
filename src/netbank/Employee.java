@@ -48,7 +48,7 @@ public class Employee extends User {
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, value, account.getCurrency(), 
-			TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(value); 
 		DatabaseSet.setAccount(account);
@@ -57,7 +57,7 @@ public class Employee extends User {
 	
 	public void addAccountDebt(Account account, Double value) { 
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(),account.getOwnerID(), null, value, account.getCurrency(), 
-			TransactionType.AddDebt, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			TransactionType.ADDDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.addDebt(value);
 		DatabaseSet.setAccount(account);
@@ -68,7 +68,7 @@ public class Employee extends User {
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, value, account.getCurrency(), 
-			TransactionType.SubtractDebt, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractDebt(value); 
 		DatabaseSet.setAccount(account);
@@ -77,7 +77,7 @@ public class Employee extends User {
 	
 	public void deposit(Account account, Double amount) {
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
-			TransactionType.Deposit, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			TransactionType.DEPOSIT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.addBalance(amount);
 		DatabaseSet.setAccount(account);
 	}

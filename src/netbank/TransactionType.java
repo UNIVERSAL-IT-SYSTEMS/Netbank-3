@@ -1,5 +1,5 @@
 package netbank;
 
 public enum TransactionType {
-	Withdrawal, Deposit, Transaction, AddDebt, SubtractDebt
+	WITHDRAWAL, DEPOSIT, TRANSACTION, ADDDEBT, SUBTRACTDEBT
 }

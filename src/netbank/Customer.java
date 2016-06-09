@@ -9,12 +9,12 @@ public class Customer extends User {
 	public Boolean transaction(CustomerInf customer, Account account, Double amount, UUID recieverID) {
 			
 		Account receiveAccount = DatabaseGet.getAccounts(IDType.ACCID,recieverID).get(0);
-		if(receiveAccount == null || account.belowZero(amount)) {
+		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
 			return false;
 		}
 		
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
-			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.Transaction, 
+			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(amount);
@@ -37,7 +37,7 @@ public class Customer extends User {
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),null, amount, account.getCurrency(), 
-			TransactionType.Withdrawal, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
 		return true;
