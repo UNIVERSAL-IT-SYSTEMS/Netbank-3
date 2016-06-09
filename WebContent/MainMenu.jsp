@@ -16,7 +16,8 @@
 <body>
 	<div style="text-align: center">
 		<% ArrayList<Account> accounts = (ArrayList<Account>) request.getAttribute("accounts"); %>
-		<% request.getAttribute("customer"); %>
+		<% CustomerInf cust = (CustomerInf) request.getAttribute("customer"); %>
+		Welcome <%= cust.getName() %>
 		<table border="1" style="width:100%">
 			<tr>
 				<td> Account ID </td>
@@ -42,11 +43,12 @@
 		<% } %>
 		</table>
 		
-		<form method="post" action="Transaction.jsp">
+			
+		<a href="Transaction.jsp">
 			<% String number = "123"; %>
-			<% session.setAttribute("userId", number); %>
-			<input type="button" value="transaction" />
-		</form>
+			<% session.setAttribute("number", number); %>
+			<button name="transaction" type="submit">Transaction</button>
+		</a>
 		<form action="WithdrawalServlet" method="post">
 			<button name="withdrawal" type="submit">Withdrawal</button>
 		</form>
