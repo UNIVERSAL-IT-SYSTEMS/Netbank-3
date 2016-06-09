@@ -55,9 +55,13 @@ public class DatabaseGet {
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.customers WHERE "+type+" = "+ID.toString());
 		try {
+			if(res.next()) {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
 			return new CustomerInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
 					res.getString(6), res.getString(7), res.getString(8));
+			} else {
+				return null;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,18 +71,19 @@ public class DatabaseGet {
 	
 	public static CustomerInf getCustomer(String username) {
 		if(servle.getDb() == null) { servle.initDB(); };
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE 'username' = '"+ username +"';");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = 'Mtngs';");
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = 'Mtngs';");
 		try {
-			
-			if(res.next()) {
-				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
-				return new CustomerInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
-						res.getString(6), res.getString(7), res.getString(8));
-			} else {
-				return null;
-			}
+				if(res.next()) {
+					System.out.println("RETURNING USER INFO");
+					// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
+					return new CustomerInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
+							res.getString(6), res.getString(7), res.getString(8));
+				} else {
+					return null;
+				}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("FAILED");
 			e.printStackTrace();
 		} 
 		return null;
