@@ -26,41 +26,29 @@ public class login extends HttpServlet {
 		Database db = null;
 		try {
 			db = new Database();
-			System.out.println("hey");
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String username=request.getParameter("username");
-		username = "jesper";
 		String password=request.getParameter("password");
-		password = "morten";
-		System.out.println(username+password);
-		ResultSet res = db.getters("SELECT * FROM \"DTUGRP04\".\"customers\" WHERE 'username'='"+ username +"';" );
-		System.out.println("DAO TIME");
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\"='"+username+"'");
 		try {
 			res.next();
-			System.out.println(res.getString(1));
 			if(Dao.loginValidate(res.getString(7),res.getString(8),password)) {
-				try {
-					UUID cusID = UUID.fromString(res.getString(1));
-					ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.cusID, cusID);
-					request.setAttribute("accounts", accounts); // add to request
-					request.setAttribute("customer", res); // add to request
-					request.getSession().setAttribute("accounts", accounts); // add to session
-					request.getSession().setAttribute("customer", res); // add to session
-					this.getServletConfig().getServletContext().setAttribute("accounts", accounts);
-					this.getServletConfig().getServletContext().setAttribute("customer", res);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
-					dispatcher.forward(request, response);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				UUID id = UUID.fromString(res.getString(1));
+				ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.cusID, UUID.fromString("b4266dd3-d099-4522-ab04-89f96895b963"));
+				request.setAttribute("accounts", accounts); // add to request
+				request.setAttribute("customer", res); // add to request
+				request.getSession().setAttribute("accounts", accounts); // add to session
+				request.getSession().setAttribute("customer", res); // add to session
+				this.getServletConfig().getServletContext().setAttribute("accounts", accounts);
+				this.getServletConfig().getServletContext().setAttribute("customer", res);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
+				dispatcher.forward(request, response);
 			} else {
-				out.print("Username or password error");
-				request.setAttribute("message", "Error");
+				request.setAttribute("message", "Username or password error");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 			}

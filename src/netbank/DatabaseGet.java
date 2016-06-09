@@ -9,12 +9,16 @@ import java.util.UUID;
 import model.servle;
 
 public class DatabaseGet {
-	
-	// type = accID, cusID, empID, traID
-	
-
+		
 	public static ArrayList<Account> getAccounts(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.accounts WHERE "+type+" = "+ID.toString());
+		Database db = null;
+		try {
+			db = new Database();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+"USRID"+"\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			while(res.next()) {

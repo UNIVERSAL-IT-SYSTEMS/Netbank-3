@@ -33,8 +33,13 @@ public class RegisterServlet extends HttpServlet {
 		String language=request.getParameter("language");
 		String country=request.getParameter("country");
 		
-		// Check if username is available
-		if(!password.equals(repeatpassword)) {
+		// Check if username is not already taken
+		CustomerInf sameUsername = DatabaseGet.getCustomer(username);
+		if(sameUsername != null) {
+			request.setAttribute("message", "Username taken");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
+			dispatcher.forward(request, response);
+		} else if(!password.equals(repeatpassword)) {
 			request.setAttribute("message", "Passwords not matching");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
 			dispatcher.forward(request, response);

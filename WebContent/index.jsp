@@ -10,7 +10,6 @@
 <%@page import="java.text.NumberFormat" %>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="java.util.Locale" %>
 <%@page import="java.sql.ResultSet" %>
 <%@page import="org.json.*;" %>
 <%@page language="java"

@@ -21,7 +21,7 @@ public class CustomerInf {
 		this.address = address;
 		this.language = language;
 		this.country = country;
-		this.location = new Locale.Builder().setLanguage(language).setRegion(country).build();
+		this.location = buildLocation(language,country);
 		this.ID = ID;
 		this.salt = salt;
 		this.hash = hash;
@@ -41,12 +41,15 @@ public class CustomerInf {
 	public void setAddress(String address) { this.address = address; }
 	public void setLanguage(String language) { 
 		this.language = language; 
-		location = new Locale.Builder().setLanguage(language).setRegion(country).build(); 
+		location = buildLocation(language,country);
 	}
 	public void setCountry(String country) { 
 		this.country = country; 
-		location = new Locale.Builder().setLanguage(language).setRegion(country).build(); 
+		location = buildLocation(language,country);
 	}
 	public void setHash(String hash) { this.hash = hash; }
 	
+	public Locale buildLocation(String language, String country) {
+		return new Locale.Builder().setLanguage(language).setRegion(country).build(); 
+	}
 }

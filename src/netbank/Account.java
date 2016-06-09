@@ -46,4 +46,5 @@ public class Account {
 		return false;
 	}
 	
-	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return false; } return true; } }
+	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return false; } return true; }
+}
