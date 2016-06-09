@@ -34,7 +34,7 @@ public class login extends HttpServlet {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		CustomerInf cust = DatabaseGet.getCustomer(username);
-		if(cust!=null&&Dao.loginValidate(cust.getSalt(),cust.getHash(),password)) {
+		if(cust != null && Dao.loginValidate(cust.getSalt(),cust.getHash(),password)) {
 			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID,cust.getID());
 			request.setAttribute("accounts", accounts); // add to request
 			request.setAttribute("customer", cust); // add to request

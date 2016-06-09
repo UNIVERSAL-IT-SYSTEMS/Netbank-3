@@ -54,6 +54,7 @@ public class DatabaseGet {
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString()+"\" = '"+ID.toString().toLowerCase()+"'");
+		if(servle.getDb() == null) {servle.initDB();}
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString().toLowerCase()+" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {

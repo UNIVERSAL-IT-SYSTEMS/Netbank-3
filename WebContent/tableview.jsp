@@ -3,6 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="netbank.*" %>
 <%@page import="model.*" %>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Currency"%>
 
 <%@page import="java.sql.ResultSet" %>
 <html>
@@ -44,6 +46,19 @@
 		<% } %>
 		</table>
 		<br><br>Accounts<br>
+		<%res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\""); %>
+		<form action="servle" method="post">
+		<select name="username">
+				<% while(res.next()) { %> 
+					<option value="<%=res.getString(2)%>"><%=res.getString(2)%></option>
+				<% } %>
+			</select>
+			<input type="text" name="balance" placeholder="Balance">
+			<input type="text" name="interest" placeholder="Interest">
+			<input type="text" name="debt" placeholder="debt">
+			<input type="text" name="currency" placeholder="currency">
+			<input type="submit" name="addaccount">
+		</form>
 		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\""); %>
 		<table>
 			<% while(res.next()) { %>
