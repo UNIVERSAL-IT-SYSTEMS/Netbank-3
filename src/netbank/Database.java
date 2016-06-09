@@ -8,6 +8,8 @@ import java.sql.Statement;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.eclipse.persistence.internal.queries.StatementQueryMechanism;
+
 public class Database {
 	
 	//@Resource(lookup = "jdbc/db2")
@@ -54,6 +56,7 @@ public class Database {
 			//connection = myDataSource.getConnection();
 			stmt = connection.createStatement();
 			stmt.execute(qwy);
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

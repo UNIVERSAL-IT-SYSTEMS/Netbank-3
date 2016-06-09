@@ -7,10 +7,14 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
-		return servle.getDb().setters("UPDATE DTUGRP04.accounts SET UsrID="+acc.getOwnerID().toString()
+		return servle.getDb().setters("INSERT INTO DTUGRP04.\"account\" VALUES ("
+				+ acc.getOwnerID().toString()
+				+ ","+acc.getBalance()+","+acc.getInterest()
+				+ ","+ acc.getDebt()+","+acc.getCurrency()
+				
+				+ ") ON DUPLICATE KEY UPDATE UsrID="+acc.getOwnerID().toString()
 				+ ", Balance="+acc.getBalance()+", Interest="+acc.getInterest()
-				+ ", Debt="+acc.getDebt()+", Currency="+acc.getCurrency()
-				+ "WHERE UsrID="+acc.getAccountID().toString());
+				+ ", Debt="+acc.getDebt()+", Currency="+acc.getCurrency() +";");
 	}
 	
 	public static boolean setEmployee(EmployeeInf emp) {
