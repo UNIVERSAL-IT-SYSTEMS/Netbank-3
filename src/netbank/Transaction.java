@@ -1,7 +1,6 @@
 package netbank;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Currency;
 import java.util.UUID;
 
