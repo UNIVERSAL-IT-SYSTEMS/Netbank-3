@@ -38,7 +38,10 @@ public class DatabaseSet {
 	}
 	
 	public static boolean setTransaction(Transaction trans) {
-		return servle.getDb().setters("UPDATE DTUGRP04.transaction SET sender="+trans.getSenderID().toString()
+		if(servle.getDb() == null) {
+			servle.initDB();
+		}
+		return servle.getDb().setters("INSERT INTO DTUGRP04.transaction SET sender="+trans.getSenderID().toString()
 				+ ", receiver="+trans.getReceiverID().toString()+", transtype="+trans.getTransactionType()
 				+ ", amount="+trans.getAmount()+", timestamp="+trans.getTimestamp()
 				+ ", currency="+trans.getCurrency()
