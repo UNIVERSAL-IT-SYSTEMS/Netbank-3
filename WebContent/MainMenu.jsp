@@ -1,3 +1,4 @@
+<%@page import="java.util.UUID"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="netbank.*" %>
@@ -14,8 +15,12 @@
 </head>
 <body>
 	<div style="text-align: center">
-		<% ArrayList<Account> accounts = (ArrayList<Account>) request.getAttribute("accounts"); %>
-		<% CustomerInf cust = (CustomerInf) request.getAttribute("customer"); %>
+		<% UUID cusid = (UUID) request.getAttribute("cusID"); %>
+		<% if(cusid==null){cusid = (UUID) session.getAttribute("cusID");} %>
+		<%=cusid %>
+		
+		<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID, cusid); %>
+		<% CustomerInf cust = DatabaseGet.getCustomer(IDType.CUSID, cusid); %>
 		Welcome <%= cust.getName() %> <br/>
 		<%= cust.getID() %>
 		<form action="ShowTransactions" method="post">
@@ -45,20 +50,22 @@
 			</table>
 		</form>
 			
-		<form action="Transaction.jsp" method="post">
+		<form action="Transaction.jsp">
 			<% session.setAttribute("cusID", cust.getID()); %>
 			<input type="submit" name="transaction" value="Transaction">		
 		</form>
-		<form action="WithdrawalServlet" method="post">
+		<form action="Withdrawal.jsp">
+			<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="withdrawal" type="submit">Withdrawal</button>
 		</form>
-		<form action="ChangePasswordServlet" method="post">
+		<form action="ChangePassword.jsp">
+		<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="changepassword" type="submit">Change password</button>
 		</form>
 		<div class="login-options">
 			<a href="index.jsp">Back to log-in</a>
 		</div>
-	
+		
 	</div>
 </body>
 </html>
