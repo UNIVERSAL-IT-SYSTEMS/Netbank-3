@@ -1,5 +1,8 @@
 package netbank;
 
+import java.text.SimpleDateFormat;
+
+import model.Dao;
 import model.servle;
 
 public class DatabaseSet {
@@ -7,10 +10,23 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
-		return servle.getDb().setters("UPDATE DTUGRP04.accounts SET UsrID="+acc.getOwnerID().toString()
-				+ ", Balance="+acc.getBalance()+", Interest="+acc.getInterest()
-				+ ", Debt="+acc.getDebt()+", Currency="+acc.getCurrency()
-				+ "WHERE UsrID="+acc.getAccountID().toString());
+		if(Dao.accountExists(IDType.ACCID, acc.getAccountID())) {
+			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
+					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
+					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
+			return servle.getDb().setters("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
+					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
+					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
+		} else {
+			System.out.println("INSERT INTO DTUGRP04.\"accounts\" VALUES ('"
+					+ acc.getOwnerID().toString()
+					+ "',"+acc.getBalance()+","+acc.getInterest()
+					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+";");
+			return servle.getDb().setters("INSERT INTO DTUGRP04.\"accounts\" VALUES ('"
+					+ acc.getOwnerID().toString()
+					+ "',"+acc.getBalance()+","+acc.getInterest()
+					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+";");
+		}
 	}
 	
 	public static boolean setEmployee(EmployeeInf emp) {
@@ -37,10 +53,13 @@ public class DatabaseSet {
 		if(servle.getDb() == null) {
 			servle.initDB();
 		}
-		return servle.getDb().setters("INSERT INTO DTUGRP04.transaction SET sender="+trans.getSenderID().toString()
-				+ ", receiver="+trans.getReceiverID().toString()+", transtype="+trans.getTransactionType()
-				+ ", amount="+trans.getAmount()+", timestamp="+trans.getTimestamp()
-				+ ", currency="+trans.getCurrency()
-				+ "WHERE transid="+trans.getTransactionID());
+		System.out.println("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
+				+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID().toString()
+				+ "','" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+				+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
+		return servle.getDb().setters("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
+		+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID().toString()
+		+ "','" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+		+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
 	}
 }

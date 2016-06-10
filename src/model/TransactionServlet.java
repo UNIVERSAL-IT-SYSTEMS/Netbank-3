@@ -29,6 +29,7 @@ public class TransactionServlet extends HttpServlet {
 		out.println(amount);
 		out.println(receiverID);
 		out.println(custID);
+		System.out.println("HAVE INFO - TRYING TO DO TRANSACTION");
 		if(Dao.Transaction(choice,amount,receiverID)) {
 			out.print("<h1>Success!</h1>");
 			out.print("<% session.setAttribute(\"cusID\", "+custID+"); %>");
