@@ -50,10 +50,25 @@ public class Dao {
 			System.out.println("GETTING ACCOUNTS");
 			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, sID);
 			System.out.println("PERFORMING TRANSACTION");
-			Customer.transaction(sID, accounts.get(0), am, rID);
-			return true;
+			return Customer.transaction(sID, accounts.get(0), am, rID);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static boolean Withdrawal(String senderID, String amount) {
+		try {
+			UUID sID = UUID.fromString(senderID);
+			Double am = Double.parseDouble(amount);
+			System.out.println("GETTING ACCOUNTS");
+			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, sID);
+			System.out.println("PERFORMING WITHDRAWAL");
+			return Customer.withdrawal(accounts.get(0), am);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 }

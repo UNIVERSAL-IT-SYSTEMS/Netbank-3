@@ -35,13 +35,7 @@ public class login extends HttpServlet {
 		String password=request.getParameter("password");
 		CustomerInf cust = DatabaseGet.getCustomer(username);
 		if(cust != null && Dao.loginValidate(cust.getSalt(),cust.getHash(),password)) {
-			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID,cust.getID());
-			request.setAttribute("accounts", accounts); // add to request
-			request.setAttribute("customer", cust); // add to request
-			request.getSession().setAttribute("accounts", accounts); // add to session
-			request.getSession().setAttribute("customer", cust); // add to session
-			this.getServletConfig().getServletContext().setAttribute("accounts", accounts);
-			this.getServletConfig().getServletContext().setAttribute("customer", cust);
+			request.setAttribute("cusID", cust.getID());
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
 			dispatcher.forward(request, response);
 		} else {

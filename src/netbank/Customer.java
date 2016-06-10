@@ -38,14 +38,20 @@ public class Customer extends User {
 		}
 	}
 	
-	public static Boolean withdrawal(CustomerInf customer, Account account, Double amount) {
+	public static Boolean withdrawal(Account account, Double amount) {
+		System.out.println(amount);
+		System.out.println(account.getBalance());
 		if(account.belowZero(amount)) {
 			return false;
 		}
+		System.out.println("Not below zero");
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),null, amount, account.getCurrency(), 
 			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		System.out.println("Transaction made");
 		account.subtractBalance(amount);
+		System.out.println("subracted");
 		DatabaseSet.setAccount(account);
+		System.out.println("set");
 		return true;
 	}
 	

@@ -53,8 +53,8 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString()+"\" = '"+ID.toString().toLowerCase()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString().toLowerCase()+" = '"+ID.toString()+"'");
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
