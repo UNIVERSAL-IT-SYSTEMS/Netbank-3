@@ -73,7 +73,6 @@ public class DatabaseGet {
 	public static CustomerInf getCustomer(String username) {
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		if(servle.getDb() == null) { servle.initDB(); };
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = 'Mtngs';");
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		try {
 				if(res.next()) {
@@ -91,18 +90,25 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static Transaction getTransaction(IDType type, UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
+	public static ArrayList<Transaction> getTransaction(UUID ID) {
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE (\"senderid\" = '"+ID.toString()+"' OR \"receiverid\" = '"+ID.toString() +"')");
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
 			// 1 transactionID, 2 senderID, 3 receiverID, 4 amount, 5 currency 7 type, 8 timestamp
-			return new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), UUID.fromString(res.getString(3)), 
-					res.getDouble(4), Currency.getInstance(res.getString(5)), TransactionType.valueOf(res.getString(6)), 
-					Timestamp.valueOf(res.getString(7)));
+			while(res.next()) {
+				transactions.add(new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), UUID.fromString(res.getString(3)), 
+						res.getDouble(4), Currency.getInstance(res.getString(5)), TransactionType.valueOf(res.getString(6)), 
+						Timestamp.valueOf(res.getString(7))));
+			}
+			
+			return transactions;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("getTransactions SQL ERROR");
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	
 	
 }
