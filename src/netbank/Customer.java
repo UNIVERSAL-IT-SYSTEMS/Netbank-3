@@ -14,7 +14,7 @@ public class Customer extends User {
 			return false;
 		}
 		System.out.println("here now");
-		System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
+		System.out.println(" , "+amount+" , "+Calendar.getInstance().getTime().getTime());
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
 			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 			Calendar.getInstance().getTime().getTime()));
