@@ -21,8 +21,7 @@ public class TransactionTest {
 	public void initiate() {
 		tr = new Transaction(UUID.randomUUID(),senderUUID,receiverUUID,4.0, Currency.getInstance(Locale.CANADA), 
 				 TransactionType.TRANSACTION, 
-				Calendar.getInstance().getTime().getTime());
-		//Timestamp
+				new Timestamp(Calendar.getInstance().getTime().getTime()));
 	}
 
 	@Test

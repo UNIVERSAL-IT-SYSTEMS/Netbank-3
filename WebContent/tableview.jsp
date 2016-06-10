@@ -72,6 +72,20 @@
 			</tr>
 			<% } %>
 		</table>
-
+		<br><br>Transactions<br>
+		<% res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"transactions\""); %>
+		<table>
+			<% while(res.next()) { %>
+			<tr>
+				<td><%= res.getString(1) %></td>
+				<td><%= res.getString(2) %></td>
+				<td><%= res.getString(3) %></td>
+				<td><%= res.getString(4) %></td>
+				<td><%= res.getString(5) %></td>
+				<td><%= res.getString(6) %></td>
+				<td><%= res.getString(7) %></td>
+		</tr>
+		<% } %>
+		</table>
 </body>
 </html>

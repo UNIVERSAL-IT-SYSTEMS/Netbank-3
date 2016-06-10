@@ -13,13 +13,14 @@ public class Customer extends User {
 		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
 			return false;
 		}
-		System.out.println("here now");
+		System.out.println("INSERTING TRANSACTION");
 		System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
 			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
-			Calendar.getInstance().getTime().getTime()));
-		System.out.println("here now2");
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
+		System.out.println("ADJUSTING LOCAL BALANCE");
 		account.subtractBalance(amount);
+		System.out.println("SETTING ACCOUNT");
 		DatabaseSet.setAccount(account);
 		System.out.println("here now3");
 		if(account.getCurrency() == receiveAccount.getCurrency()) {
@@ -42,7 +43,7 @@ public class Customer extends User {
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),null, amount, account.getCurrency(), 
-			TransactionType.WITHDRAWAL, Calendar.getInstance().getTime().getTime()));
+			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
 		return true;

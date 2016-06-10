@@ -54,7 +54,6 @@ public class DatabaseGet {
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString()+"\" = '"+ID.toString().toLowerCase()+"'");
-		if(servle.getDb() == null) {servle.initDB();}
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE "+type.toString().toLowerCase()+" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {
@@ -98,7 +97,7 @@ public class DatabaseGet {
 			// 1 transactionID, 2 senderID, 3 receiverID, 4 amount, 5 currency 7 type, 8 timestamp
 			return new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), UUID.fromString(res.getString(3)), 
 					res.getDouble(4), Currency.getInstance(res.getString(5)), TransactionType.valueOf(res.getString(6)), 
-					res.getLong(7));
+					Timestamp.valueOf(res.getString(7)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
