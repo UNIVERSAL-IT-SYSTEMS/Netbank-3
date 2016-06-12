@@ -54,12 +54,12 @@ public class DatabaseSet {
 			servle.initDB();
 		}
 		System.out.println("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
-				+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID().toString()
-				+ "','" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+				+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID()
+				+ "','" + trans.getReceiverID() +"'," + trans.getAmount() 
 				+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
 		return servle.getDb().setters("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
-		+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID().toString()
-		+ "','" + trans.getReceiverID().toString()+"'," + trans.getAmount() 
+		+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID()
+		+ "','" + trans.getReceiverID()+"'," + trans.getAmount() 
 		+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
 	}
 }

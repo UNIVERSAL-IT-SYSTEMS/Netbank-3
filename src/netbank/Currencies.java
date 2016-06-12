@@ -51,6 +51,6 @@ public class Currencies {
 	public static Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
 		Double oldAmount = getCurrency(newCurrency);
 		Double newAmount = getCurrency(oldCurrency);
-		return newAmount/oldAmount;
+		return oldAmount/newAmount;
 	}
 }

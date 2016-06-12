@@ -13,22 +13,6 @@ public class Employee extends User {
 		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
-	public void setCostumerName(CustomerInf customer, String name) { 
-		customer.setName(name); 
-		DatabaseSet.setCostumer(customer); 
-	}
-	
-	public void setCostumerAddress(CustomerInf customer, String address) { 
-		customer.setAddress(address); 
-		DatabaseSet.setCostumer(customer); 
-	}
-	
-	public void setCostumerLocation(CustomerInf customer, String language, String country) { 
-		customer.setLanguage(language);
-		customer.setCountry(country);
-		DatabaseSet.setCostumer(customer);
-	}
-	
 	public void setAccountInterest(Account account, Double interest) { 
 		account.setInterest(interest); 
 		DatabaseSet.setAccount(account);
@@ -116,22 +100,21 @@ public class Employee extends User {
 		return false;
 	}
 	
-	public Boolean deleteCustomer(CustomerInf customer) {
-
-		ArrayList<Account> accounts =  DatabaseGet.getAccounts(IDType.CUSID, customer.getID());
-		Boolean accountDeleted = true;
-		for (int i = 0; i < accounts.size(); i++) {
-			accountDeleted = deleteAccount(accounts.get(i));
-			if(!accountDeleted) {
-				return false;
-			}
-		}
-		// TODO: Delete the customer
-		return true;
-	}
-	
 	public void ChangePassword(EmployeeInf employee, String password) {
 		employee.setHash(Hash.SHA512(password, employee.getSalt()));
 		DatabaseSet.setEmployee(employee);
+	}
+	
+	public static void updateInterest() {
+		//Get all accounts one by one.
+		ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, UUID.randomUUID());
+		Account account = accounts.get(0);
+		while(accounts!=null) {
+			Double amount = account.getBalance()*(account.getInterest()/100);
+			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
+					TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
+			account.addBalance(amount);
+			DatabaseSet.setAccount(account);
+		}
 	}
 }

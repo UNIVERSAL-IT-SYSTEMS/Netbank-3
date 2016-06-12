@@ -7,17 +7,12 @@ import java.util.UUID;
 public class Customer extends User {
 	
 	public static Boolean transaction(UUID senderID, Account account, Double amount, UUID recieverID) {
-			
+		
 		Account receiveAccount = DatabaseGet.getAccounts(IDType.ACCID,recieverID).get(0);
 		System.out.println(receiveAccount.getCurrency());
 		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
 			return false;
 		}
-		System.out.println("INSERTING TRANSACTION");
-		System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
-			receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
-			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		System.out.println("ADJUSTING LOCAL BALANCE");
 		account.subtractBalance(amount);
 		System.out.println("SETTING ACCOUNT");
@@ -27,11 +22,22 @@ public class Customer extends User {
 			receiveAccount.addBalance(amount);
 			DatabaseSet.setAccount(receiveAccount);
 			System.out.println(account.getBalance());
+			System.out.println("INSERTING TRANSACTION");
+			System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
+			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
+				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
+				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
 		} else if (Currencies.isCurrencyConversionEnabled()) {
-			receiveAccount.addBalance(amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency()));
+			Double newAmount = amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency());
+			receiveAccount.addBalance(newAmount);
 			System.out.println(account.getBalance());
 			DatabaseSet.setAccount(receiveAccount);
+			System.out.println("INSERTING TRANSACTION");
+			System.out.println(" , "+newAmount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
+			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
+				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
+				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
 		} else {
 			return false;
