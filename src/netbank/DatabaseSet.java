@@ -33,19 +33,36 @@ public class DatabaseSet {
 		//Not finished since employee table has not been created
 		//After having finished the table in DataStudio, replace
 		//with relevant data
-		return servle.getDb().setters("UPDATE DTUGRP04.employee SET userid="+emp.getID().toString()
-				+ ", name="+emp.getName()+", address="+emp.getAddress()
-				+ ", password="+emp.getHash()+", salt="+emp.getSalt()
-				+ ", locale="+emp.getLocale().toString()
-				+ "WHERE userid="+emp.getID().toString());
+		if(Dao.userNameExists(emp.getUsername())) {
+			return servle.getDb().setters("UPDATE DTUGRP04.employee SET userid="+emp.getID().toString()
+					+ ", name="+emp.getName()+", address="+emp.getAddress()
+					+ ", password="+emp.getHash()+", salt="+emp.getSalt()
+					+ ", locale="+emp.getLocale().toString()
+					+ "WHERE userid="+emp.getID().toString());
+		} else {
+			return servle.getDb().setters("INSERT INTO DTUGRP04. VALUES ('"+emp.getID().toString()
+					+ "','"+emp.getName()+"','"+emp.getAddress()
+					+ "','"+emp.getHash()+", salt="+emp.getSalt()
+					+ ", locale="+emp.getLocale().toString()
+					+ "WHERE userid="+emp.getID().toString());
+		}
 	}
 	
 	public static boolean setCostumer(CustomerInf cust) {
-		return servle.getDb().setters("UPDATE DTUGRP04.customers SET userid="+cust.getID().toString()
-		+ ", name="+cust.getName()+", address="+cust.getAddress()
-		+ ", password="+cust.getHash()+", salt="+cust.getSalt()
-		+ ", locale="+cust.getLocale().toString()
-		+ "WHERE userid="+cust.getID().toString());
+		if(Dao.userNameExists(cust.getUsername())) {
+			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET userid="+cust.getID().toString()
+					+ ", name="+cust.getName()+", address="+cust.getAddress()
+					+ ", password="+cust.getHash()+", salt="+cust.getSalt()
+					+ ", locale="+cust.getLocale().toString()
+					+ "WHERE userid="+cust.getID().toString());
+		} else {
+			return servle.getDb().setters("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
+					+ "','"+cust.getName()+"','"+cust.getAddress()
+					+ "','"+cust.getHash()+", salt="+cust.getSalt()
+					+ ", locale="+cust.getLocale().toString()
+					+ "WHERE userid="+cust.getID().toString());
+		}
+		
 		
 	}
 	
