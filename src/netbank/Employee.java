@@ -103,17 +103,4 @@ public class Employee extends User {
 		employee.setHash(Hash.SHA512(password, employee.getSalt()));
 		DatabaseSet.setEmployee(employee);
 	}
-	
-	public static void updateInterest() {
-		//Get all accounts one by one.
-		ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, UUID.randomUUID());
-		Account account = accounts.get(0);
-		while(accounts!=null) {
-			Double amount = account.getBalance()*(account.getInterest()/100);
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
-					TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
-			account.addBalance(amount);
-			DatabaseSet.setAccount(account);
-		}
-	}
 }
