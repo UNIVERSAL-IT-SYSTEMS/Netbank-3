@@ -11,15 +11,9 @@ import model.servle;
 public class DatabaseGet {
 		
 	public static ArrayList<Account> getAccountsByUserID(UUID ID) {
-		Database db = null;
-		try {
-			db = new Database();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		if(servle.getDb() == null) { servle.initDB(); };
 		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			if(res == null) {
@@ -75,8 +69,8 @@ public class DatabaseGet {
 	}
 	
 	public static UserInf getUserByUsername(String username) {
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		if(servle.getDb() == null) { servle.initDB(); };
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		try {
 				if(res.next()) {
