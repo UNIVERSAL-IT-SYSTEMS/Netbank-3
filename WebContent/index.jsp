@@ -36,9 +36,9 @@
     	</div>
 		<% Currencies.UpdateCurrencies(); %>
 		<%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
+		<%= Currencies.changeCurrency(Currency.getInstance(Locale.GERMANY), Currency.getInstance(Locale.JAPAN))*100 %>
 		<br>
 		<a href="tableview.jsp">View tables</a>
 	</div>
-    	
 	</body>
 </html>

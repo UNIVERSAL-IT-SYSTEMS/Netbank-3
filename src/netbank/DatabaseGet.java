@@ -3,6 +3,7 @@ package netbank;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.UUID;
@@ -91,14 +92,15 @@ public class DatabaseGet {
 	}
 	
 	public static ArrayList<Transaction> getTransaction(UUID ID) {
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.transactions WHERE (\"senderid\" = '"+ID.toString()+"' OR \"receiverid\" = '"+ID.toString() +"')");
+		if(servle.getDb() == null) { servle.initDB(); };
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"transactions\" WHERE (\"senderid\" = '"+ID.toString()+"' OR \"receiverid\" = '"+ID.toString() +"')");
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
-			// 1 transactionID, 2 senderID, 3 receiverID, 4 amount, 5 currency 7 type, 8 timestamp
+			// 1 transactionID, 2 timestamp, 3 senderID, 4 receiverID, 5 amount, 6 type, 7 currency
 			while(res.next()) {
-				transactions.add(new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), UUID.fromString(res.getString(3)), 
-						res.getDouble(4), Currency.getInstance(res.getString(5)), TransactionType.valueOf(res.getString(6)), 
-						Timestamp.valueOf(res.getString(7))));
+				transactions.add(new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(3)), UUID.fromString(res.getString(4)), 
+						res.getDouble(5), Currency.getInstance(res.getString(7)), TransactionType.valueOf(res.getString(6)), 
+						Timestamp.valueOf(res.getString(2).substring(0, 23))));
 			}
 			
 			return transactions;

@@ -1,3 +1,5 @@
+<%@page import="java.sql.Date"%>
+<%@page import="java.sql.Timestamp"%>
 <%@page import="java.util.UUID"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,13 +19,14 @@
 	<div style="text-align: center">
 		<% UUID cusid = (UUID) request.getAttribute("cusID"); %>
 		<% if(cusid==null){cusid = (UUID) session.getAttribute("cusID");} %>
-		<%=cusid %>
+		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0,23) %><br>
 		
 		<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID, cusid); %>
 		<% CustomerInf cust = DatabaseGet.getCustomer(IDType.CUSID, cusid); %>
 		Welcome <%= cust.getName() %> <br/>
 		<%= cust.getID() %>
 		<form action="ShowTransactions" method="post">
+			<input type="hidden" name="cusID" value="<%=cusid%>">
 			<table border="1" style="width:100%">
 				<tr>
 					<td> Account ID </td>
@@ -59,7 +62,7 @@
 			<button name="withdrawal" type="submit">Withdrawal</button>
 		</form>
 		<form action="ChangePassword.jsp">
-		<% session.setAttribute("cusID", cust.getID()); %>
+			<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="changepassword" type="submit">Change password</button>
 		</form>
 		<div class="login-options">
