@@ -17,7 +17,7 @@ public class Customer extends User {
 		account.subtractBalance(amount);
 		System.out.println("SETTING ACCOUNT");
 		DatabaseSet.setAccount(account);
-		System.out.println("here now3");
+		System.out.println("here now");
 		if(account.getCurrency() == receiveAccount.getCurrency()) {
 			receiveAccount.addBalance(amount);
 			DatabaseSet.setAccount(receiveAccount);

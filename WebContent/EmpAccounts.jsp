@@ -67,7 +67,6 @@
 		<% } %>
 	<% } %>
 	</table>
-	
 </form>
 
 <h2>Transactions</h2>
@@ -85,13 +84,13 @@
 	<% if(transactions != null) { %>
 		<% for(int i = 0; i<transactions.size(); i++) { %>
 			<tr>
-				<td><% transactions.get(i).getAmount(); %></td>
-				<td><% transactions.get(i).getCurrency(); %></td>
-				<td><% transactions.get(i).getReceiverID(); %></td>
-				<td><% transactions.get(i).getSenderID(); %></td>
-				<td><% transactions.get(i).getTimestamp(); %></td>
-				<td><% transactions.get(i).getTransactionID(); %></td>
-				<td><% transactions.get(i).getTransactionType(); %></td>
+				<td><%= transactions.get(i).getAmount() %></td>
+				<td><%= transactions.get(i).getCurrency() %></td>
+				<td><%= transactions.get(i).getReceiverID() %></td>
+				<td><%= transactions.get(i).getSenderID() %></td>
+				<td><%= transactions.get(i).getTimestamp() %></td>
+				<td><%= transactions.get(i).getTransactionID() %></td>
+				<td><%= transactions.get(i).getTransactionType() %></td>
 			</tr>
 		<% } %>
 	<% } %>

@@ -12,7 +12,7 @@
 </head>
 <body>
 <% UUID empid = (UUID) request.getAttribute("empID"); %>
-<%  %>
+
 <h2>Search</h2>
 <form action="EmpAccounts" method="post">
 	<select name="IDType">
@@ -37,6 +37,20 @@
 	<input type="text" name="accid" placeholder="Account ID"/>
 	<input type="hidden" name="empid" value="<%=empid%>"/>
 	<input type="submit" name="search">		
+</form>
+
+<h2>New Account</h2>
+<form action="NewAccountServlet">
+	<input type="text" name="cusid" placeholder="Customer ID">
+	<input type="text" name="interest" placeholder="Interest">
+	<input type="text" name="currency" placeholder="Currency">
+	<input type="submit" name="newaccount">
+</form>
+
+<h2>Delete Account</h2>
+<form action="DeleteAccountServlet">
+	<input type="text" name="accID" placeholder="Account ID">
+	<input type="submit" name="deleteaccount">
 </form>
 
 </body>

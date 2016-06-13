@@ -49,8 +49,8 @@ public class Currencies {
 	public static Object[] getCurrencies() { return currencies.keySet().toArray(); }
 	
 	public static Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
-		Double oldAmount = getCurrency(newCurrency);
-		Double newAmount = getCurrency(oldCurrency);
-		return oldAmount/newAmount;
+		Double oldAmount = getCurrency(oldCurrency);
+		Double newAmount = getCurrency(newCurrency);
+		return newAmount/oldAmount;
 	}
 }

@@ -13,12 +13,12 @@ public class Employee extends User {
 		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
-	public void setAccountInterest(Account account, Double interest) { 
+	public static void setAccountInterest(Account account, Double interest) { 
 		account.setInterest(interest); 
 		DatabaseSet.setAccount(account);
 	}
 	
-	public Boolean setAccountCurrency(Account account, Currency currency) { 
+	public static Boolean setAccountCurrency(Account account, Currency currency) { 
 		if(account.setCurrency(currency)) {
 			DatabaseSet.setAccount(account);
 			return true;
@@ -27,7 +27,7 @@ public class Employee extends User {
 		}
 	}
 	
-	public Boolean subtractAccountBalance(Account account, Double value) { 
+	public static Boolean subtractAccountBalance(Account account, Double value) { 
 		if(account.belowZero(value)) {
 			return false;
 		}
@@ -39,7 +39,7 @@ public class Employee extends User {
 		return true;
 	}
 	
-	public void addAccountDebt(Account account, Double value) { 
+	public static void addAccountDebt(Account account, Double value) { 
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(),account.getOwnerID(), null, value, account.getCurrency(), 
 			TransactionType.ADDDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
@@ -47,7 +47,7 @@ public class Employee extends User {
 		DatabaseSet.setAccount(account);
 	}
 	
-	public Boolean subtractAccpountDebt(Account account, Double value) { 
+	public static Boolean subtractAccountDebt(Account account, Double value) { 
 		if(account.belowZero(value)) {
 			return false;
 		}
@@ -59,20 +59,20 @@ public class Employee extends User {
 		return true;
 	}
 	
-	public void deposit(Account account, Double amount) {
+	public static void deposit(Account account, Double amount) {
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
 			TransactionType.DEPOSIT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.addBalance(amount);
 		DatabaseSet.setAccount(account);
 	}
 	
-	public void changeOwnershipOfAccount(Account account, UUID newOwner) {
+	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
 		CustomerInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
 	
-	public Boolean deleteAccount(Account account) {
+	public static Boolean deleteAccount(Account account) {
 		if (account.getBalance() == 0 && account.getDebt() == 0) {
 			// TODO: Delete the account
 			return true;
@@ -100,7 +100,7 @@ public class Employee extends User {
 		return false;
 	}
 	
-	public void ChangePassword(EmployeeInf employee, String password) {
+	public static void ChangePassword(EmployeeInf employee, String password) {
 		employee.setHash(Hash.SHA512(password, employee.getSalt()));
 		DatabaseSet.setEmployee(employee);
 	}

@@ -21,7 +21,7 @@ public class CurrenciesTest {
 		assertNotEquals(0.0,Currencies.getCurrency(Currency.getInstance(Locale.CANADA)));
 		assertEquals(Currencies.getCurrency(Currency.getInstance(Locale.CANADA)) /
 				Currencies.getCurrency(Currency.getInstance(Locale.FRANCE)),
-				Currencies.changeCurrency(Currency.getInstance(Locale.CANADA), Currency.getInstance(Locale.FRANCE)),0);
+				Currencies.changeCurrency(Currency.getInstance(Locale.FRANCE), Currency.getInstance(Locale.CANADA)),0);
 		assertNotNull(Currencies.getCurrencies());
 	} 
 	

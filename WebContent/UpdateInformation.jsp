@@ -13,8 +13,8 @@
 </head>
 <body>
 <% String id=request.getParameter("updateinformation"); %>
-<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(id)); %>
-<form action="ChangeInformation.jsp">
+<% Account account = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(id)).get(0); %>
+<form action="ChangeInformationServlet.jsp">
 	<table border="1" style="width:100%">
 		<tr>
 			<td> Account ID </td>
@@ -22,29 +22,31 @@
 			<td> Currency </td>
 			<td> Debt </td>
 			<td> Interest </td>
+			<td> Owner ID </td>
 		</tr>
-	<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
-	<% if(accounts != null) { %>
-		<% for ( int i =0; i < accounts.size(); i++) { %>
-			<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
+		<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(); %>
+		<% if(account != null) { %>
+			<% numberFormat.setCurrency(account.getCurrency()); %>
 			<tr>
-				<td> <%=accounts.get(i).getAccountID().toString()%> </td>
-				<td> <%=numberFormat.format(accounts.get(i).getBalance())%> </td>
-				<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
-				<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
-				<td> <%=accounts.get(i).getInterest()%>% </td>
+				<td> <%=account.getAccountID().toString()%> </td>
+				<td> <%=numberFormat.format(account.getBalance())%> </td>
+				<td> <%=account.getCurrency().getDisplayName()%> </td>
+				<td> <%=numberFormat.format(account.getDebt())%> </td>
+				<td> <%=account.getInterest()%>% </td>
+				<td> <%=account.getOwnerID() %> </td>
 			</tr>
 			<tr>
 				<td> Can't change </td>
 				<td> Can't change </td>
-				<td> <input type="text" name="currency" placeholder="new Currency"> </td>
-				<td> Can't change </td>
-				<td> <input type="text" name="Interest" placeholder="new Interest"> </td>
+				<td> <input type="text" name="currency" placeholder="New currency"> </td>
+				<td> <input type="text" name="debt" placeholder="New debt"> </td>
+				<td> <input type="text" name="interest" placeholder="New interest"> </td>
+				<td> <input type="text" name="cusid" placeholder="New owner"> </td>
 			</tr>
 		<% } %>
-	<% } %>
 	</table>
-	<input type="submit" name="Change information">
+	<input type="hidden" name="accid" value="<%= account.getAccountID().toString() %>">
+	<input type="submit" name="changeinformation">
 </form>
 </body>
 </html>
