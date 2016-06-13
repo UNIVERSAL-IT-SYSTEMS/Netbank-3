@@ -8,10 +8,10 @@
 <%@page import="java.util.Currency"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Locale"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html>
 <head>
-	<title>Menu</title>
+	<title>Put-in</title>
 	<link rel='stylesheet' href=''>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
@@ -19,12 +19,12 @@
 	<div style="text-align: center">
 		<% UUID cusid = (UUID) request.getAttribute("cusID"); %>
 		<% if(cusid==null){cusid = (UUID) session.getAttribute("cusID");} %>
-		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0,23) %><br>
 		
-		<% ArrayList<Account> accounts = DatabaseGet.getAccounts(cusid); %>
-		<% UserInf cust = DatabaseGet.getUser(cusid); %>
-		Welcome <%= cust.getName() %> <br/>
-		<%= cust.getID() %>
+		<% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(cusid); %>
+		<% UserInf cust = DatabaseGet.getUserByUserID(cusid); %>
+		<h2><%= cust.getName() %></h2><br/>
+		<h5><%= cust.getID() %></h5><br/>
+		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0,23) %><br>
 		<form action="ShowTransactions" method="post">
 			<input type="hidden" name="cusID" value="<%=cusid%>">
 			<table border="1" style="width:100%">
@@ -65,9 +65,7 @@
 			<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="changepassword" type="submit">Change password</button>
 		</form>
-		<div class="login-options">
-			<a href="index.jsp">Back to log-in</a>
-		</div>
+		<a href="index.jsp">Back to log-in</a>
 		
 	</div>
 </body>

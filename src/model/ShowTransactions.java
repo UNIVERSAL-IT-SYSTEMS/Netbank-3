@@ -25,7 +25,7 @@ public class ShowTransactions extends HttpServlet {
 		String cusid=request.getParameter("cusID");
 		String accid=request.getParameter("showtransactions");
 		out.println(cusid+"<br>");
-		ArrayList<Transaction> transactions = DatabaseGet.getTransaction(UUID.fromString(accid));
+		ArrayList<Transaction> transactions = DatabaseGet.getTransactionByAccountID(UUID.fromString(accid));
 		out.println("<table border=\"1\" style=\"width:100%\">");
 		out.println("<tr>"+
 				"<td>Amount</td>"+

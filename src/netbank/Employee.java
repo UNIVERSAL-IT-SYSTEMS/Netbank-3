@@ -1,6 +1,5 @@
 package netbank;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.UUID;
@@ -8,8 +7,8 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public static void newAccount(UserInf customer, Double interest, Currency currency) {
-		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
+	public static void newAccount(UserInf user, Double interest, Currency currency) {
+		DatabaseSet.setAccount(new Account(UUID.randomUUID(), user.getID(), 0.0, interest, 0.0, currency));
 	}
 	
 	public static void setAccountInterest(Account account, Double interest) { 
@@ -66,7 +65,7 @@ public class Employee extends User {
 	}
 	
 	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		UserInf thisCustomer = DatabaseGet.getUser(newOwner);
+		UserInf thisCustomer = DatabaseGet.getUserByUserID(newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
@@ -79,7 +78,7 @@ public class Employee extends User {
 			Double tempBalance = account.getBalance();
 			Double tempDebt = account.getDebt();
 
-			Account oneAccount = DatabaseGet.getAccounts(account.getOwnerID()).get(0);
+			Account oneAccount = DatabaseGet.getAccountByAccountID(account.getOwnerID());
 
 			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);

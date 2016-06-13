@@ -5,10 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.annotation.Resource;
-import javax.sql.DataSource;
 
-import org.eclipse.persistence.internal.queries.StatementQueryMechanism;
 
 public class Database {
 	

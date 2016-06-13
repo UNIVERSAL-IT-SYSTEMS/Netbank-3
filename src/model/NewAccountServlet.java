@@ -28,7 +28,7 @@ public class NewAccountServlet extends HttpServlet {
 		String currency=request.getParameter("currency");
 		String empid=request.getParameter("empid");
 		
-		UserInf cust = DatabaseGet.getUser(UUID.fromString(cusid));
+		UserInf cust = DatabaseGet.getUserByUserID(UUID.fromString(cusid));
 		
 		Employee.newAccount(cust, Double.valueOf(interest), Currency.getInstance(currency));
 		

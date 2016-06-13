@@ -5,17 +5,17 @@
 <%@page import="java.text.NumberFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Put-in</title>
 </head>
 <body>
 <% String id=request.getParameter("id"); %>
 <% String empid=request.getParameter("empid"); %>
 <h2>Customer</h2>
-<% UserInf cust = DatabaseGet.getUser(UUID.fromString(id)); %>
+<% UserInf cust = DatabaseGet.getUserByUserID(UUID.fromString(id)); %>
 
 <table border="1" style="width:100%">
 	<tr>
@@ -40,7 +40,7 @@
 	<% } %>
 </table>
 <h2>Accounts</h2>
-<% ArrayList<Account> accounts = DatabaseGet.getAccounts(UUID.fromString(id)); %>
+<% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(UUID.fromString(id)); %>
 <form action="ChangeInformation.jsp">
 	<table border="1" style="width:100%">
 		<tr>
@@ -69,7 +69,7 @@
 </form>
 
 <h2>Transactions</h2>
-<% ArrayList<Transaction> transactions = DatabaseGet.getTransaction(UUID.fromString(id)); %>
+<% ArrayList<Transaction> transactions = DatabaseGet.getTransactionByAccountID(UUID.fromString(id)); %>
 <table border="1" style="width:100%">
 	<tr>
 		<td>Amount</td>

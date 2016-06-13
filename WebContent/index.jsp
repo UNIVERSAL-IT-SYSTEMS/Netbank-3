@@ -10,14 +10,12 @@
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.sql.ResultSet" %>
-<%@page import="org.json.*;" %>
+<%@page import="org.json.*" %>
 <%@page language="java"
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 	<head>
-		<title>Log-in</title>
-		
-		<link rel='stylesheet' href=''>
+		<title>Put-in</title>
 	</head>
 	<body>
 	<div style="text-align: center">
@@ -34,8 +32,6 @@
     		</div>
     	</div>
 		<% Currencies.UpdateCurrencies(); %>
-		<%= Currencies.getCurrency(Currency.getInstance(Locale.CHINA)) %>
-		<%= Currencies.changeCurrency(Currency.getInstance(Locale.GERMANY), Currency.getInstance(Locale.JAPAN))*100 %>
 		<br>
 		<a href="tableview.jsp">View tables</a>
 	</div>

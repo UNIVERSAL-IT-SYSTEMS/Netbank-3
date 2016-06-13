@@ -25,7 +25,7 @@ public class DeleteAccountServlet extends HttpServlet {
 		String accid=request.getParameter("accid");
 		String empid=request.getParameter("empid");
 		
-		Account account = DatabaseGet.getAccounts(UUID.fromString(accid)).get(0);
+		Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
 		
 		Employee.deleteAccount(account);
 		

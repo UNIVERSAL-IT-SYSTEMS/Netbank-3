@@ -2,9 +2,6 @@ package model;
 
 import netbank.*;
 import java.io.PrintWriter;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.UUID;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -23,17 +20,12 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Database db = null;
-		try {
-			db = new Database();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		servle.initDB();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		UserInf user = DatabaseGet.getUser(username);
+		UserInf user = DatabaseGet.getUserByUsername(username);
 		if(user != null && Dao.loginValidate(user.getSalt(),user.getHash(),password)) {
 			if(user.getIsEmployee()) {
 				request.setAttribute("empID", user.getID());

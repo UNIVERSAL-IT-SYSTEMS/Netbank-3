@@ -8,7 +8,7 @@ public class Customer extends User {
 	
 	public static Boolean transaction(UUID senderID, Account account, Double amount, UUID recieverID) {
 		
-		Account receiveAccount = DatabaseGet.getAccounts(recieverID).get(0);
+		Account receiveAccount = DatabaseGet.getAccountByAccountID(recieverID);
 		System.out.println(receiveAccount.getCurrency());
 		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
 			return false;

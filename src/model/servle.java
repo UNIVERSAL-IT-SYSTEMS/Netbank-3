@@ -143,7 +143,7 @@ public class servle extends HttpServlet {
 			+ "','"+Hash.getSalt()
 			+ "','"+request.getParameter("country")+ "');");
         } else if (request.getParameter("addaccount") != null){
-        	UserInf cust = DatabaseGet.getUser(request.getParameter("username"));
+        	UserInf cust = DatabaseGet.getUserByUsername(request.getParameter("username"));
         	db.setters("INSERT INTO \"DTUGRP04\".\"accounts\" VALUES ('"+UUID.randomUUID()
         			+ "','"+cust.getID()+"','"+request.getParameter("balance")
         			+ "','"+request.getParameter("interest")

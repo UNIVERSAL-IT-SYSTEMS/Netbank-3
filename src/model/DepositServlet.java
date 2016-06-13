@@ -26,7 +26,7 @@ public class DepositServlet extends HttpServlet {
 		String accid=request.getParameter("accid");
 		String empid=request.getParameter("empid");
 		
-		Account account = DatabaseGet.getAccounts(UUID.fromString(accid)).get(0);
+		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
 		
 		Double am = Double.valueOf(amount);
 		
