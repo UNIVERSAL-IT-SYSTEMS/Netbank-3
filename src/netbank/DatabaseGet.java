@@ -11,16 +11,10 @@ import model.servle;
 
 public class DatabaseGet {
 		
-	public static ArrayList<Account> getAccounts(IDType type, UUID ID) {
-		Database db = null;
-		try {
-			db = new Database();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
+	public static ArrayList<Account> getAccounts(UUID ID) {
+		if(servle.getDb() == null) { servle.initDB(); };
+		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			if(res == null) {
@@ -41,6 +35,7 @@ public class DatabaseGet {
 	
 
 	public static EmployeeInf getEmployee(IDType type, UUID ID) {
+		if(servle.getDb() == null) { servle.initDB(); };
 		ResultSet res = servle.getDb().getters("SELECT * FROM FROM DTUGRP04.\"employees\" WHERE \""+type.toString().toLowerCase()+"\" ='"+ID.toString()+"'");
 		try {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
@@ -54,6 +49,7 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(IDType type, UUID ID) {
+		if(servle.getDb() == null) { servle.initDB(); };
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		try {
@@ -72,6 +68,7 @@ public class DatabaseGet {
 	}
 	
 	public static CustomerInf getCustomer(String username) {
+		if(servle.getDb() == null) { servle.initDB(); };
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		if(servle.getDb() == null) { servle.initDB(); };
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
