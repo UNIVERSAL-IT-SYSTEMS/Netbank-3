@@ -14,9 +14,8 @@
 <body>
 <% String id=request.getParameter("id"); %>
 <% String empid=request.getParameter("empid"); %>
-<% String idtype=request.getParameter("IDType"); %>
 <h2>Customer</h2>
-<% CustomerInf cust = DatabaseGet.getCustomer(IDType.valueOf(idtype), UUID.fromString(id)); %>
+<% UserInf cust = DatabaseGet.getUser(UUID.fromString(id)); %>
 
 <table border="1" style="width:100%">
 	<tr>
@@ -41,7 +40,7 @@
 	<% } %>
 </table>
 <h2>Accounts</h2>
-<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.valueOf(idtype), UUID.fromString(id)); %>
+<% ArrayList<Account> accounts = DatabaseGet.getAccounts(UUID.fromString(id)); %>
 <form action="ChangeInformation.jsp">
 	<table border="1" style="width:100%">
 		<tr>

@@ -23,7 +23,7 @@ public class Dao {
 	}
 	
 	public static boolean userNameExists(String username) {
-		if(DatabaseGet.getUser(username) == null) {
+		if(DatabaseGet.getCustomer(username) == null) {
 			System.out.println("Username is ok");
 			return false;
 		} else {
@@ -32,8 +32,8 @@ public class Dao {
 		}
 	}
 	
-	public static boolean accountExists(IDType type, UUID accountID) {
-		if(DatabaseGet.getAccounts(type, accountID) == null) {
+	public static boolean accountExists(UUID accountID) {
+		if(DatabaseGet.getAccounts(accountID) == null) {
 			System.out.println("No account found");
 			return false;
 		} else {
@@ -48,7 +48,7 @@ public class Dao {
 			Double am = Double.parseDouble(amount);
 			UUID rID = UUID.fromString(receiverID);
 			System.out.println("GETTING ACCOUNTS");
-			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, sID);
+			ArrayList<Account> accounts = DatabaseGet.getAccounts(sID);
 			System.out.println("PERFORMING TRANSACTION");
 			return Customer.transaction(sID, accounts.get(0), am, rID);
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class Dao {
 			UUID sID = UUID.fromString(senderID);
 			Double am = Double.parseDouble(amount);
 			System.out.println("GETTING ACCOUNTS");
-			ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, sID);
+			ArrayList<Account> accounts = DatabaseGet.getAccounts(sID);
 			System.out.println("PERFORMING WITHDRAWAL");
 			return Customer.withdrawal(accounts.get(0), am);
 		} catch (Exception e) {

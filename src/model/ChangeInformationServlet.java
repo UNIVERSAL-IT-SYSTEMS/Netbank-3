@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import netbank.Account;
 import netbank.DatabaseGet;
 import netbank.Employee;
-import netbank.IDType;
 
 /**
  * Servlet implementation class ChangeInformationServlet
@@ -30,7 +29,7 @@ public class ChangeInformationServlet extends HttpServlet {
 		String debt=request.getParameter("debt");
 		String interest=request.getParameter("interest");
 		String cusid=request.getParameter("cusid");
-		Account account = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(accid)).get(0);
+		Account account = DatabaseGet.getAccounts(UUID.fromString(accid)).get(0);
 		if(balance!=null) {
 			setAccountBalance(Double.valueOf(balance), account);
 		}

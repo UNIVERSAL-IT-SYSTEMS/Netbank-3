@@ -66,7 +66,7 @@ public class Employee extends User {
 	}
 	
 	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		UserInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
+		UserInf thisCustomer = DatabaseGet.getUser(newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
@@ -79,7 +79,7 @@ public class Employee extends User {
 			Double tempBalance = account.getBalance();
 			Double tempDebt = account.getDebt();
 
-			Account oneAccount = DatabaseGet.getAccounts(IDType.CUSID, account.getOwnerID()).get(0);
+			Account oneAccount = DatabaseGet.getAccounts(account.getOwnerID()).get(0);
 
 			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
 				oneAccount.addBalance(tempBalance);

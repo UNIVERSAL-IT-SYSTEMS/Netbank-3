@@ -19,7 +19,7 @@ public class UserTest {
 		cusID = UUID.randomUUID();
 		accID = UUID.randomUUID();
 		acc = new Account(accID,cusID,2.0,  2.0, 40.0, Currency.getInstance(Locale.GERMANY));
-		cust = new UserInf( cusID ,"username","Alice", "testaddress", "da", "dk", Hash.getSalt(), Hash.SHA512("test", Hash.getSalt()));
+		cust = new UserInf( cusID ,"username","Alice", "testaddress", "da", "dk", Hash.getSalt(), Hash.SHA512("test", Hash.getSalt()),false);
 	}
 
 	@Test

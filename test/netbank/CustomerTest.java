@@ -26,7 +26,7 @@ public class CustomerTest {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test", salt);
 		account = new Account(accID,sender,2.0,2.0, 40.0, Currency.getInstance(Locale.GERMANY));
-		custInf = new UserInf(sender,"testuserid","test", "testaddress", "da", "dk", salt, hash);
+		custInf = new UserInf(sender,"testuserid","test", "testaddress", "da", "dk", salt, hash,false);
 	}
 
 	@Test

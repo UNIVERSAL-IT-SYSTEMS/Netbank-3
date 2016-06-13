@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import netbank.UserInf;
 import netbank.DatabaseGet;
 import netbank.Employee;
-import netbank.IDType;
 
 /**
  * Servlet implementation class NewAccountServlet
@@ -29,7 +28,7 @@ public class NewAccountServlet extends HttpServlet {
 		String currency=request.getParameter("currency");
 		String empid=request.getParameter("empid");
 		
-		UserInf cust = DatabaseGet.getCustomer(IDType.CUSID, UUID.fromString(cusid));
+		UserInf cust = DatabaseGet.getUser(UUID.fromString(cusid));
 		
 		Employee.newAccount(cust, Double.valueOf(interest), Currency.getInstance(currency));
 		

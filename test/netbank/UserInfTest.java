@@ -18,7 +18,7 @@ public class UserInfTest {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test123", salt);
 		ID = UUID.randomUUID();
-		cust = new UserInf(ID, "testusername","test", "testaddress", "da", "dk",  salt, hash);
+		cust = new UserInf(ID, "testusername","test", "testaddress", "da", "dk",  salt, hash,false);
 	}
 
 	@Test

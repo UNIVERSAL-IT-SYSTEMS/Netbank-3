@@ -21,8 +21,8 @@
 		<% if(cusid==null){cusid = (UUID) session.getAttribute("cusID");} %>
 		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0,23) %><br>
 		
-		<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID, cusid); %>
-		<% CustomerInf cust = DatabaseGet.getCustomer(IDType.CUSID, cusid); %>
+		<% ArrayList<Account> accounts = DatabaseGet.getAccounts(cusid); %>
+		<% UserInf cust = DatabaseGet.getUser(cusid); %>
 		Welcome <%= cust.getName() %> <br/>
 		<%= cust.getID() %>
 		<form action="ShowTransactions" method="post">
