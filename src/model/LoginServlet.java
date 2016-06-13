@@ -33,11 +33,17 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		UserInf cust = DatabaseGet.getUser(username);
-		if(cust != null && Dao.loginValidate(cust.getSalt(),cust.getHash(),password)) {
-			request.setAttribute("cusID", cust.getID());
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
-			dispatcher.forward(request, response);
+		UserInf user = DatabaseGet.getUser(username);
+		if(user != null && Dao.loginValidate(user.getSalt(),user.getHash(),password)) {
+			if(user.getIsEmployee()) {
+				request.setAttribute("empID", user.getID());
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				request.setAttribute("cusID", user.getID());
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
+				dispatcher.forward(request, response);
+			}
 		} else {
 			request.setAttribute("message", "Username or password error");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");

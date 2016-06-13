@@ -10,7 +10,7 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
-		if(Dao.accountExists(IDType.ACCID, acc.getAccountID())) {
+		if(Dao.accountExists(acc.getAccountID())) {
 			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
 					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");

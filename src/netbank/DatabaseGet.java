@@ -11,7 +11,7 @@ import model.servle;
 
 public class DatabaseGet {
 		
-	public static ArrayList<Account> getAccounts(IDType type, UUID ID) {
+	public static ArrayList<Account> getAccounts(UUID ID) {
 		Database db = null;
 		try {
 			db = new Database();
@@ -19,8 +19,8 @@ public class DatabaseGet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
-		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
+		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
+		ResultSet res = db.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			if(res == null) {
@@ -39,9 +39,9 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static UserInf getUser(IDType type, UUID ID) {
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
+	public static UserInf getUser(UUID ID) {
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {
 			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash, 9 isEmployee

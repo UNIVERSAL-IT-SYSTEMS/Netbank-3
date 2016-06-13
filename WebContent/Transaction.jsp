@@ -15,7 +15,7 @@
 <div>
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
 <%=id%>
-<% ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.CUSID, id); %>
+<% ArrayList<Account> accounts = DatabaseGet.getAccounts(id); %>
 <form action="TransactionServlet" method="get">
 	<table border="1" style="width:100%">
 		<tr>

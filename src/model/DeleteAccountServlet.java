@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import netbank.Account;
 import netbank.DatabaseGet;
 import netbank.Employee;
-import netbank.IDType;
 
 /**
  * Servlet implementation class DeleteAccountServlet
@@ -26,7 +25,7 @@ public class DeleteAccountServlet extends HttpServlet {
 		String accid=request.getParameter("accid");
 		String empid=request.getParameter("empid");
 		
-		Account account = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(accid)).get(0);
+		Account account = DatabaseGet.getAccounts(UUID.fromString(accid)).get(0);
 		
 		Employee.deleteAccount(account);
 		

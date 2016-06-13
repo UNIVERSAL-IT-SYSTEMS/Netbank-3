@@ -1,7 +1,6 @@
 <%@page import="java.util.Currency"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.NumberFormat"%>
-<%@page import="netbank.IDType"%>
 <%@page import="java.util.UUID"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,11 +15,6 @@
 
 <h2>Search</h2>
 <form action="EmpAccounts.jsp">
-	<select name="IDType">
-		<% for(int i = 0; i < IDType.values().length; i++) { %> 
-			<option value="<%=IDType.values()[i]%>"><%=IDType.values()[i]%></option>
-		<% } %>
-	</select>
 	<input type="text" name="id" placeholder="ID">
 	<input type="hidden" name="empid" value="<%=empid%>"/>
 	<input type="submit" name="search">

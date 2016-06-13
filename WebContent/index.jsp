@@ -6,7 +6,6 @@
 <%@page import="java.util.Currency"%>
 <%@page import="netbank.*" %>
 <%@page import="model.*" %>
-
 <%@page import="java.text.NumberFormat" %>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>

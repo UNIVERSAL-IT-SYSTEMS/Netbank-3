@@ -30,7 +30,7 @@ public class Currencies {
 					tempCurrencies.put(currencyNames[i], 
 						rates.getDouble(currencyNames[i].getCurrencyCode()));
 					rates.getDouble(currencyNames[i].getCurrencyCode());
-				} catch(JSONException e) {
+				} catch(Exception e) {
 					//System.err.println("Couldn't add: "+Currency.getAvailableCurrencies().toArray()[i]+e);
 				}
 			}
