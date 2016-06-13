@@ -3,13 +3,12 @@ package netbank;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
-import java.util.Locale;
 import java.util.UUID;
 import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public void newAccount(CustomerInf customer, Double interest, Currency currency) {
+	public static void newAccount(CustomerInf customer, Double interest, Currency currency) {
 		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
@@ -54,7 +53,7 @@ public class Employee extends User {
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, value, account.getCurrency(), 
 			TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
-		account.subtractDebt(value); 
+		account.subtractDebt(value);
 		DatabaseSet.setAccount(account);
 		return true;
 	}

@@ -25,11 +25,15 @@ public class ChangeInformationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accid=request.getParameter("accid");
+		String balance=request.getParameter("balance");
 		String currency=request.getParameter("currency");
 		String debt=request.getParameter("debt");
 		String interest=request.getParameter("interest");
 		String cusid=request.getParameter("cusid");
 		Account account = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(accid)).get(0);
+		if(balance!=null) {
+			setAccountBalance(Double.valueOf(balance), account);
+		}
 		if(interest!=null) {
 			setAccountInterest(Double.valueOf(interest), account);
 		}
@@ -37,9 +41,15 @@ public class ChangeInformationServlet extends HttpServlet {
 			setAccountCurrency(Currency.getInstance(currency),account);
 		}
 		if(debt!=null) {
-			setAccountDebt();
+			setAccountDebt(Double.valueOf(debt),account);
 		}
-		
+		if(cusid!=null) {
+			changeAccountOwner(account, UUID.fromString(cusid));
+		}
+	}
+
+	private void setAccountBalance(Double balance, Account account) {
+		Employee.subtractAccountBalance(account, balance);
 	}
 
 	private void setAccountInterest(Double interest, Account account) {
@@ -50,7 +60,16 @@ public class ChangeInformationServlet extends HttpServlet {
 		return Employee.setAccountCurrency(account, currency);
 	}
 	
-	private void setAccountDebt() {
+	private void setAccountDebt(Double amount, Account account) {
+		if(amount < 0) {
+			Employee.subtractAccountDebt(account, amount);
+		} else {
+			Employee.addAccountDebt(account, amount);
+		}
+	}
+
+	private void changeAccountOwner(Account account, UUID id) {
+		Employee.changeOwnershipOfAccount(account, id);
 	}
 
 }

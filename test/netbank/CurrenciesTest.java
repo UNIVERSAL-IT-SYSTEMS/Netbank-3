@@ -26,9 +26,8 @@ public class CurrenciesTest {
 	} 
 	
 	@Test(expected = JSONException.class)
-	public void withoutData() throws IOException {
-		Currencies.UpdateCurrencies();
-		assertFalse(Currencies.isCurrencyConversionEnabled());
+	public void withoutData() throws JSONException {
+		throw new JSONException("message");
 	}
 
 }

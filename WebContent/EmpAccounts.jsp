@@ -52,20 +52,20 @@
 			<td> Interest </td>
 			<td>  </td>
 		</tr>
-	<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
-	<% if(accounts != null) { %>
-		<% for ( int i =0; i < accounts.size(); i++) { %>
-			<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
-			<tr>
-				<td> <%=accounts.get(i).getAccountID().toString()%> </td>
-				<td> <%=numberFormat.format(accounts.get(i).getBalance())%> </td>
-				<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
-				<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
-				<td> <%=accounts.get(i).getInterest()%>% </td>
-				<td> <button name="updateinformation" value="<%=accounts.get(i).getAccountID()%>">Update information</button> </td>
-			</tr>
+		<% NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA); %>
+		<% if(accounts != null) { %>
+			<% for ( int i =0; i < accounts.size(); i++) { %>
+				<% numberFormat.setCurrency(accounts.get(i).getCurrency()); %>
+				<tr>
+					<td> <%=accounts.get(i).getAccountID().toString()%> </td>
+					<td> <%=numberFormat.format(accounts.get(i).getBalance())%> </td>
+					<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
+					<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
+					<td> <%=accounts.get(i).getInterest()%>% </td>
+					<td> <button name="updateinformation" value="<%=accounts.get(i).getAccountID()%>">Update information</button> </td>
+				</tr>
+			<% } %>
 		<% } %>
-	<% } %>
 	</table>
 </form>
 

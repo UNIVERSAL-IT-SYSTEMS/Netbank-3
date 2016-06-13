@@ -11,7 +11,6 @@ import org.junit.Test;
 
 public class CustomerTest { 
 	CustomerInf custInf;
-	Customer custom;
 	Account account;
 	UUID sender;
 	UUID receiver;
@@ -22,6 +21,7 @@ public class CustomerTest {
 	@Before
 	public void initiate() {
 		sender = UUID.randomUUID();
+		receiver = UUID.randomUUID();
 		accID = UUID.randomUUID();
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test", salt);
@@ -31,27 +31,29 @@ public class CustomerTest {
 
 	@Test
 	public void test() {
-		
+		Customer.transaction(sender, account, 3.0, receiver);
+		Customer.withdrawal(account, 400.0);
+		Customer.ChangePassword(custInf, "test123");
 	}
 	
 	@Test
 	public void AbstractUserClass() {
 		
-		assertEquals("test",custom.getName(custInf));
-		assertEquals("testaddress",custom.getAddress(custInf));
-		assertEquals("da",custom.getLanguage(custInf));
-		assertEquals("dk",custom.getCountry(custInf));
-		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(),custom.getLocale(custInf));
-		assertEquals(sender,custom.getID(custInf));
+		assertEquals("test",Customer.getName(custInf));
+		assertEquals("testaddress",Customer.getAddress(custInf));
+		assertEquals("da",Customer.getLanguage(custInf));
+		assertEquals("dk",Customer.getCountry(custInf));
+		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(),Customer.getLocale(custInf));
+		assertEquals(sender,Customer.getID(custInf));
 
-		assertEquals(2.0,custom.getAccountBalance(account),0.0);
-		assertEquals(2.0,custom.getAccountInterest(account),0.0);
-		assertEquals(40.0,custom.getAccountDebt(account),0.0);
-		assertEquals(sender,custom.getAccountOwnerID(account));
-		assertEquals(Currency.getInstance(Locale.GERMANY),custom.getAccountCurrency(account));
-		assertEquals(accID,custom.getAccountID(account));
+		assertEquals(2.0,Customer.getAccountBalance(account),0.0);
+		assertEquals(2.0,Customer.getAccountInterest(account),0.0);
+		assertEquals(40.0,Customer.getAccountDebt(account),0.0);
+		assertEquals(sender,Customer.getAccountOwnerID(account));
+		assertEquals(Currency.getInstance(Locale.GERMANY),Customer.getAccountCurrency(account));
+		assertEquals(accID,Customer.getAccountID(account));
 		
-		custom.ChangePassword(custInf, "123");
+		Customer.ChangePassword(custInf, "123");
 		assertEquals(Hash.SHA512("123", salt),custInf.getHash());
 	}
 

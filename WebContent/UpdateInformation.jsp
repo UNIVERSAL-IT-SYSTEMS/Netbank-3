@@ -1,6 +1,7 @@
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.util.UUID"%>
+<%@page import="java.util.Currency"%>
 <%@page import="netbank.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -37,9 +38,13 @@
 			</tr>
 			<tr>
 				<td> Can't change </td>
-				<td> Can't change </td>
-				<td> <input type="text" name="currency" placeholder="New currency"> </td>
-				<td> <input type="text" name="debt" placeholder="New debt"> </td>
+				<td> <input type="text" name="balance" placerholder="Subtract balance"> </td>
+				<td> <select name="currency">
+					<% for(int i = 0; i < Currency.getAvailableCurrencies().toArray().length; i++) { %> 
+						<option value="<%=Currency.getAvailableCurrencies().toArray()[i]%>"><%=Currency.getAvailableCurrencies().toArray()[i]%></option>
+					<% } %>
+				</select> </td>
+				<td> <input type="text" name="debt" placeholder="Add/subtract debt"> </td>
 				<td> <input type="text" name="interest" placeholder="New interest"> </td>
 				<td> <input type="text" name="cusid" placeholder="New owner"> </td>
 			</tr>
