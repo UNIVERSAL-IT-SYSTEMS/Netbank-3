@@ -23,7 +23,7 @@ public class Dao {
 	}
 	
 	public static boolean userNameExists(String username) {
-		if(DatabaseGet.getCustomer(username) == null) {
+		if(DatabaseGet.getUser(username) == null) {
 			System.out.println("Username is ok");
 			return false;
 		} else {

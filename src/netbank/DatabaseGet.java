@@ -14,7 +14,7 @@ public class DatabaseGet {
 	public static ArrayList<Account> getAccounts(UUID ID) {
 		if(servle.getDb() == null) { servle.initDB(); };
 		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \""+type.toString().toLowerCase()+"\"='"+ID.toString()+"'");
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
 			if(res == null) {

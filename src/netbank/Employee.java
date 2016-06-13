@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public static void newAccount(CustomerInf customer, Double interest, Currency currency) {
+	public static void newAccount(UserInf customer, Double interest, Currency currency) {
 		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
@@ -66,7 +66,7 @@ public class Employee extends User {
 	}
 	
 	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		CustomerInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
+		UserInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
@@ -97,23 +97,5 @@ public class Employee extends User {
 			}
 		}
 		return false;
-	}
-	
-	public static void ChangePassword(EmployeeInf employee, String password) {
-		employee.setHash(Hash.SHA512(password, employee.getSalt()));
-		DatabaseSet.setEmployee(employee);
-	}
-	
-	public static void updateInterest() {
-		//Get all accounts one by one.
-		ArrayList<Account> accounts = DatabaseGet.getAccounts(IDType.ACCID, UUID.randomUUID());
-		Account account = accounts.get(0);
-		while(accounts!=null) {
-			Double amount = account.getBalance()*(account.getInterest()/100);
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), null, amount, account.getCurrency(), 
-					TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
-			account.addBalance(amount);
-			DatabaseSet.setAccount(account);
-		}
 	}
 }

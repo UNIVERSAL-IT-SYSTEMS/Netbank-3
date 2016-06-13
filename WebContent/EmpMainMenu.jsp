@@ -26,12 +26,6 @@
 	<input type="submit" name="search">
 </form>
 
-<h2>Update interest</h2>
-<form action="UpdateInterestServlet" method="post">
-	<input type="hidden" name="empid" value="<%=empid%>"/>
-	<input type="submit" name="search">		
-</form>
-
 <h2>Deposit</h2>
 <form action="DepositServlet" method="post">
 	<input type="text" name="amount" placeholder="Amount"/>
