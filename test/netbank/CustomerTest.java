@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CustomerTest { 
-	CustomerInf custInf;
+	UserInf custInf;
 	Account account;
 	UUID sender;
 	UUID receiver;
@@ -26,7 +26,7 @@ public class CustomerTest {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test", salt);
 		account = new Account(accID,sender,2.0,2.0, 40.0, Currency.getInstance(Locale.GERMANY));
-		custInf = new CustomerInf(sender,"testuserid","test", "testaddress", "da", "dk", salt, hash);
+		custInf = new UserInf(sender,"testuserid","test", "testaddress", "da", "dk", salt, hash);
 	}
 
 	@Test

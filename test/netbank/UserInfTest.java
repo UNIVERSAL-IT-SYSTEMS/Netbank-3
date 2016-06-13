@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CustomerInfTest {
-	CustomerInf cust;
+public class UserInfTest {
+	UserInf cust;
 	Account acc;
 	String salt;
 	String hash;
@@ -18,7 +18,7 @@ public class CustomerInfTest {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test123", salt);
 		ID = UUID.randomUUID();
-		cust = new CustomerInf(ID, "testusername","test", "testaddress", "da", "dk",  salt, hash);
+		cust = new UserInf(ID, "testusername","test", "testaddress", "da", "dk",  salt, hash);
 	}
 
 	@Test

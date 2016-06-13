@@ -3,7 +3,7 @@ package netbank;
 import java.util.Locale;
 import java.util.UUID;
 
-public class CustomerInf {
+public class UserInf {
 	
 	private String username;
 	private String name;
@@ -15,7 +15,7 @@ public class CustomerInf {
 	private String salt;
 	private String hash;
 
-	public CustomerInf(UUID ID, String username, String name, String address, String language, String country, String salt, String hash) {
+	public UserInf(UUID ID, String username, String name, String address, String language, String country, String salt, String hash) {
 		this.username = username;
 		this.name = name;
 		this.address = address;

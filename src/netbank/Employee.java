@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public static void newAccount(CustomerInf customer, Double interest, Currency currency) {
+	public static void newAccount(UserInf customer, Double interest, Currency currency) {
 		DatabaseSet.setAccount(new Account(UUID.randomUUID(), customer.getID(), 0.0, interest, 0.0, currency));
 	}
 	
@@ -66,7 +66,7 @@ public class Employee extends User {
 	}
 	
 	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		CustomerInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
+		UserInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}
@@ -97,10 +97,5 @@ public class Employee extends User {
 			}
 		}
 		return false;
-	}
-	
-	public static void ChangePassword(EmployeeInf employee, String password) {
-		employee.setHash(Hash.SHA512(password, employee.getSalt()));
-		DatabaseSet.setEmployee(employee);
 	}
 }

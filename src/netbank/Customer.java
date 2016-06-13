@@ -60,9 +60,4 @@ public class Customer extends User {
 		System.out.println("set");
 		return true;
 	}
-	
-	public static void ChangePassword(CustomerInf customer, String password) {
-		customer.setHash(Hash.SHA512(password, customer.getSalt()));
-		DatabaseSet.setCostumer(customer);
-	}
 }

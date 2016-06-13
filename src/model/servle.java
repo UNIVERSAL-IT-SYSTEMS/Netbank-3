@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import netbank.CustomerInf;
+import netbank.UserInf;
 import netbank.Database;
 import netbank.DatabaseGet;
 import netbank.Hash;
@@ -143,7 +143,7 @@ public class servle extends HttpServlet {
 			+ "','"+Hash.getSalt()
 			+ "','"+request.getParameter("country")+ "');");
         } else if (request.getParameter("addaccount") != null){
-        	CustomerInf cust = DatabaseGet.getCustomer(request.getParameter("username"));
+        	UserInf cust = DatabaseGet.getUser(request.getParameter("username"));
         	db.setters("INSERT INTO \"DTUGRP04\".\"accounts\" VALUES ('"+UUID.randomUUID()
         			+ "','"+cust.getID()+"','"+request.getParameter("balance")
         			+ "','"+request.getParameter("interest")

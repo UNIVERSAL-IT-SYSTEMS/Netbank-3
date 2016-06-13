@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		CustomerInf cust = DatabaseGet.getCustomer(username);
+		UserInf cust = DatabaseGet.getUser(username);
 		if(cust != null && Dao.loginValidate(cust.getSalt(),cust.getHash(),password)) {
 			request.setAttribute("cusID", cust.getID());
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
