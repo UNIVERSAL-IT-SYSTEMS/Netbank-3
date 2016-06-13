@@ -30,7 +30,7 @@ public class ChangePasswordServlet extends HttpServlet {
 		out.println(newpass);
 		out.println(repeat);
 		out.println(id);
-		UserInf cust = DatabaseGet.getCustomer(IDType.CUSID,UUID.fromString(id));
+		UserInf cust = DatabaseGet.getUser(IDType.CUSID,UUID.fromString(id));
 		if(Dao.loginValidate(cust.getSalt(), cust.getHash(), old) && newpass.equals(repeat)) {
 			Customer.ChangePassword(cust, newpass);
 			out.print("<h1>Success!</h1>");

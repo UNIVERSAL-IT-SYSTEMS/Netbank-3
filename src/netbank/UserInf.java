@@ -14,8 +14,9 @@ public class UserInf {
 	private UUID ID;
 	private String salt;
 	private String hash;
+	private Boolean employee;
 
-	public UserInf(UUID ID, String username, String name, String address, String language, String country, String salt, String hash) {
+	public UserInf(UUID ID, String username, String name, String address, String language, String country, String salt, String hash, Boolean employee) {
 		this.username = username;
 		this.name = name;
 		this.address = address;
@@ -25,6 +26,7 @@ public class UserInf {
 		this.ID = ID;
 		this.salt = salt;
 		this.hash = hash;
+		this.employee = employee;
 	}
 	
 	public String getUsername() { return username; }

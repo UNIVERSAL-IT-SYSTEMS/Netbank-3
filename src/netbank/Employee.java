@@ -66,7 +66,7 @@ public class Employee extends User {
 	}
 	
 	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
-		UserInf thisCustomer = DatabaseGet.getCustomer(IDType.CUSID,newOwner);
+		UserInf thisCustomer = DatabaseGet.getUser(IDType.CUSID,newOwner);
 		account.setOwnerID(thisCustomer.getID());
 		DatabaseSet.setAccount(account);
 	}

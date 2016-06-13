@@ -39,14 +39,14 @@ public class DatabaseGet {
 		return null;
 	}
 	
-	public static UserInf getCustomer(IDType type, UUID ID) {
+	public static UserInf getUser(IDType type, UUID ID) {
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \""+type.toString().toLowerCase()+"\" = '"+ID.toString()+"'");
 		try {
 			if(res.next()) {
-			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
+			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash, 9 isEmployee
 			return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
-					res.getString(6), res.getString(7), res.getString(8));
+					res.getString(6), res.getString(7), res.getString(8), res.getBoolean(9));
 			} else {
 				return null;
 			}
@@ -64,9 +64,9 @@ public class DatabaseGet {
 		try {
 				if(res.next()) {
 					System.out.println("RETURNING USER INFO");
-					// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash
+					// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash, 9 isEmployee
 					return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
-							res.getString(6), res.getString(7), res.getString(8));
+							res.getString(6), res.getString(7), res.getString(8), res.getBoolean(9));
 				} else {
 					return null;
 				}
