@@ -47,15 +47,11 @@ public class DatabaseSet {
 		} else {
 			String emp = cust.getIsEmployee() ? "1" : "0";
 			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
-					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
-					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
-					+ "','"+cust.getSalt() + "','" + cust.getHash()
-					+ "','" + emp +"')");
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
+					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
 			return servle.getDb().setters("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
-					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
-					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
-					+ "','"+cust.getSalt() + "','" + cust.getHash()
-					+ "','" + emp +"')");
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
+					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
 		}
 		
 		

@@ -46,12 +46,8 @@ public class RegisterServlet extends HttpServlet {
 			try {
 				Database db = new Database();
 				String salt = Hash.getSalt();
-				db.setters("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()+"','"+username
-				+"','"+name+"','"+address+"','"+language+"','"+country+"','"+salt+"','"+Hash.SHA512(password,salt)+"');");
-				
-				System.out.println("INSERT INTO \"DTUGRP04\".\"customers\" VALUES ('"+UUID.randomUUID()+"','"+username
-						+"','"+name+"','"+address+"','"+language+"','"+country+"','"+salt+"','"+Hash.SHA512(password,salt)+"');");
-				
+				DatabaseSet.setUser(new UserInf(UUID.randomUUID(), username, name, address, 
+						language, country, salt, Hash.SHA512(password,salt), false));
 				request.setAttribute("message", "Registered");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
