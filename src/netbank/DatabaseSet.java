@@ -34,14 +34,20 @@ public class DatabaseSet {
 	}
 	
 	public static boolean setUser(UserInf cust) {
-		if(DatabaseGet.getUserByUsername(cust.getUsername()) != null) {
-			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET userid="+cust.getID().toString()
-					+ ", name="+cust.getName()+", address="+cust.getAddress()
-					+ ", password="+cust.getHash()+", salt="+cust.getSalt()
-					+ ", locale="+cust.getLocale().toString()
-					+ "WHERE userid="+cust.getID().toString());
+		if(servle.getDb() == null) { servle.initDB(); }
+		if(Dao.userNameExists(cust.getUsername())) {
+			//"INSERT INTO DTUGRP04.\"customers\" VALUES ('?','?')";
+			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
+					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
+					+ "','"+cust.getSalt() + "','" + cust.getHash()
+					+ "','" + (cust.getIsEmployee() ? 1 : 0)+ "')");
+			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"userid\"='"+cust.getID().toString()
+					+ "', \"name\"='"+cust.getUsername() + "', \"name\"='"+cust.getName()+"', \"address\"='"+cust.getAddress()
+					+ "', \"language\"='"+cust.getLanguage() + "', \"country\"='"+cust.getCountry()
+					+ "', \"salt\"='"+cust.getSalt() + "', \"hash\"='"+cust.getHash()
+					+ "' WHERE \"userid\"='"+cust.getID().toString() + "'");
 		} else {
-			System.out.println("HELLO?!!?");
 			String emp = cust.getIsEmployee() ? "1" : "0";
 			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
 					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
@@ -82,4 +88,8 @@ public class DatabaseSet {
 		return done;
 	}
 	
+	public static boolean removeCustomer(UserInf cust) {
+		System.out.println("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
+		return servle.getDb().setters("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
+	}
 }
