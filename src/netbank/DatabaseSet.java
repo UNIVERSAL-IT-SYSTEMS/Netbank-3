@@ -69,8 +69,8 @@ public class DatabaseSet {
 		+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
 	}
 	
-	public static boolean removeCustomer(UserInf cust) {
-		System.out.println("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
-		return servle.getDb().setters("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
+	public static boolean removeAccount(Account acc) {
+		System.out.println("DELETE FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+acc.getAccountID()+"'");
+		return servle.getDb().setters("DELETE FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+acc.getAccountID()+"'");
 	}
 }
