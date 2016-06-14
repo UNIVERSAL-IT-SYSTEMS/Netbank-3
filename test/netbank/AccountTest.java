@@ -51,8 +51,10 @@ public class AccountTest {
 
 	@Test
 	public void BelowZero() {
-		assertFalse(account.belowZero(1.0));
-		assertTrue(account.belowZero(200.0));
+		assertFalse(account.belowZeroBalance(1.0));
+		assertTrue(account.belowZeroBalance(200.0));
+		assertFalse(account.belowZeroDebt(1.0));
+		assertTrue(account.belowZeroDebt(200.0));
 	}
 
 }

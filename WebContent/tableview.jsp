@@ -27,8 +27,6 @@
 		if (servle.getDb() == null) {
 			servle.initDB();
 		}
-	%>
-	<%
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.Sample");
 	%>
 	<table>

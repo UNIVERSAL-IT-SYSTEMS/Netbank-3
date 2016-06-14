@@ -83,8 +83,15 @@ public class Account {
 		currency = newCurrency;
 	}
 
-	public Boolean belowZero(Double value) {
+	public Boolean belowZeroBalance(Double value) {
 		if ((balance.doubleValue() - value) >= 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	public Boolean belowZeroDebt(Double value) {
+		if ((debt.doubleValue() - value) >= 0) {
 			return false;
 		}
 		return true;

@@ -10,7 +10,7 @@ public class Customer extends User {
 
 		Account receiveAccount = DatabaseGet.getAccountByAccountID(recieverID);
 		System.out.println(receiveAccount.getCurrency());
-		if (receiveAccount == null || account.belowZero(amount) || amount < 0
+		if (receiveAccount == null || account.belowZeroBalance(amount) || amount < 0
 				|| DatabaseGet.getCurrency(account.getCurrency()) == null) {
 			return false;
 		}
@@ -35,7 +35,7 @@ public class Customer extends User {
 	}
 
 	public static Boolean withdrawal(Account account, Double amount) {
-		if (account.belowZero(amount)) {
+		if (account.belowZeroBalance(amount)) {
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), account.getAccountID(),

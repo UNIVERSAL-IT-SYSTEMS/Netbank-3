@@ -11,12 +11,12 @@
 	<%
 		UUID id = (UUID) session.getAttribute("cusID");
 	%>
+	<h5><%=id%></h5>
 	<%
 		if (session == null || session.getAttribute("cusID") == null) {
 			response.sendRedirect("/Netbank/index.jsp");
 		}
 	%>
-	<%=id%>
 	<form action="ChangePasswordServlet" method="post">
 		<input type="password" name="oldpassword" placeholder="Old password"
 			required> <input type="password" name="newpassword"

@@ -18,21 +18,16 @@
 <body>
 	<%
 		UUID cusid = (UUID) session.getAttribute("cusID");
-	%>
-	<%
 		if (session == null || session.getAttribute("cusID") == null)
 			response.sendRedirect("/Netbank/index.jsp");
+		ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(cusid);
+		UserInf cust = DatabaseGet.getUserByUserID(cusid);
 	%>
 	<div style="text-align: center">
-		<%
-			ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(cusid);
-		%>
-		<%
-			UserInf cust = DatabaseGet.getUserByUserID(cusid);
-		%>
-		<h2><%=cust.getName()%></h2>
+
 		<h5><%=cust.getID()%></h5>
-		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0, 23)%><br>
+		<h2><%=cust.getName()%></h2>
+		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0, 16)%><br>
 		<form action="ShowTransactions" method="post">
 			<table border="1" style="width: 100%">
 				<tr>
@@ -45,15 +40,9 @@
 				</tr>
 				<%
 					NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA);
-				%>
-				<%
 					if (accounts != null) {
-				%>
-				<%
-					for (int i = 0; i < accounts.size(); i++) {
-				%>
-				<%
-					numberFormat.setCurrency(accounts.get(i).getCurrency());
+						for (int i = 0; i < accounts.size(); i++) {
+							numberFormat.setCurrency(accounts.get(i).getCurrency());
 				%>
 				<tr>
 					<td><%=accounts.get(i).getAccountID().toString()%></td>
@@ -67,9 +56,7 @@
 					</td>
 				</tr>
 				<%
-					}
-				%>
-				<%
+						}
 					}
 				%>
 			</table>

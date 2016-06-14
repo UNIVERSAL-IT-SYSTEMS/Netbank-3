@@ -16,18 +16,17 @@
 <body>
 	<%
 		UUID empid = (UUID) session.getAttribute("empID");
-	%>
-	<%
 		if (session == null || session.getAttribute("empID") == null)
 			response.sendRedirect("/Netbank/index.jsp");
+			
 	%>
-	<h5><%=empid%></h5>
-	<%
-		if (request.getAttribute("message") != null) {
-			out.println(request.getAttribute("message"));
-		}
-	%>
-	<div>
+	<div style="text-align: center">
+		<h5><%=empid%></h5>
+		<%
+			if (request.getAttribute("message") != null) {
+				out.println(request.getAttribute("message"));
+			}
+		%>
 		<h2>Search</h2>
 		<form action="EmpAccounts.jsp">
 			<input type="text" name="id" placeholder="ID" required> <input
@@ -49,8 +48,6 @@
 				placeholder="Interest" required> <select name="currency">
 				<%
 					Object[] currencies = DatabaseGet.getCurrencies().keySet().toArray();
-				%>
-				<%
 					for (int i = 0; i < currencies.length; i++) {
 				%>
 				<option value="<%=currencies[i].toString()%>"><%=currencies[i].toString()%></option>

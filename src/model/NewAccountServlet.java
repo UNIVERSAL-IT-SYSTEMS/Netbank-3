@@ -35,9 +35,7 @@ public class NewAccountServlet extends HttpServlet {
 		String interest = request.getParameter("interest");
 		String currency = request.getParameter("currency");
 
-		UserInf cust = DatabaseGet.getUserByUserID(UUID.fromString(cusid));
-
-		if (Employee.newAccount(cust, Double.valueOf(interest), Currency.getInstance(currency))) {
+		if (Employee.newAccount(UUID.fromString(cusid), Double.valueOf(interest), Currency.getInstance(currency))) {
 			request.setAttribute("message", "Created new account");
 		} else {
 			request.setAttribute("message", "Failed at creating new account");

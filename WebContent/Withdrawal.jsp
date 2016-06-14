@@ -12,18 +12,14 @@
 <title>Put-in</title>
 </head>
 <body>
-	<div>
+	<div style="text-align: center">
 		<%
 			UUID id = (UUID) session.getAttribute("cusID");
-		%>
-		<%
 			if (session == null || session.getAttribute("cusID") == null)
 				response.sendRedirect("/Netbank/index.jsp");
-		%>
-		<%=id%>
-		<%
 			ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(id);
 		%>
+		<h5><%=id%></h5>
 		<form action="WithdrawalServlet" method="get">
 			<table border="1" style="width: 100%">
 				<tr>
@@ -34,15 +30,9 @@
 				</tr>
 				<%
 					NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.CANADA);
-				%>
-				<%
 					if (accounts != null) {
-				%>
-				<%
-					for (int i = 0; i < accounts.size(); i++) {
-				%>
-				<%
-					numberFormat.setCurrency(accounts.get(i).getCurrency());
+						for (int i = 0; i < accounts.size(); i++) {
+							numberFormat.setCurrency(accounts.get(i).getCurrency());
 				%>
 				<tr>
 					<td><%=accounts.get(i).getAccountID().toString()%></td>
@@ -52,9 +42,7 @@
 						value="<%=accounts.get(i).getAccountID()%>"></td>
 				</tr>
 				<%
-					}
-				%>
-				<%
+						}
 					}
 				%>
 			</table>
