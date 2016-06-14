@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <%@page import="netbank.*" %>
 <%@page import="model.*" %>
 <%@page import="java.util.Locale"%>
@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Put-in</title>
 </head>
 <body>
 		<div class="login-screen">
@@ -42,6 +42,9 @@
 				<td><%= res.getString(2) %></td>
 				<td><%= res.getString(3) %></td>
 				<td><%= res.getString(4) %></td>
+				<td><%= res.getString(5) %></td>
+				<td><%= res.getString(6) %></td>
+				<td><%= res.getString(9) %></td>
 		</tr>
 		<% } %>
 		</table>

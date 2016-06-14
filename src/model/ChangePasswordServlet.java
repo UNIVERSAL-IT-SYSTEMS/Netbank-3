@@ -26,20 +26,14 @@ public class ChangePasswordServlet extends HttpServlet {
 		String newpass=request.getParameter("newpassword");
 		String repeat=request.getParameter("repeatednewpassword");
 		String id= request.getParameter("cusID");
-		
-		out.println(newpass);
-		out.println(repeat);
-		out.println(id);
-		UserInf cust = DatabaseGet.getUser(UUID.fromString(id));
-		if(Dao.loginValidate(cust.getSalt(), cust.getHash(), old) && newpass.equals(repeat)) {
-			Customer.ChangePassword(cust, newpass);
+		UserInf user = DatabaseGet.getUserByUserID(UUID.fromString(id));
+		if(Dao.loginValidate(user.getSalt(), user.getHash(), old) && newpass.equals(repeat)) {
+			Customer.ChangePassword(user, newpass);
 			out.print("<h1>Success!</h1>");
-			out.print("<% session.setAttribute(\"cusID\", "+id+"); %>");
 			out.print("<a href=\"MainMenu.jsp\">Back</a>");
 			out.close();
 		} else {
 			out.print("<h1>Failed</h1>");
-			out.print("<% session.setAttribute(\"cusID\", "+id+"); %>");
 			out.print("<a href=\"ChangePassword.jsp\">Back</a>");
 			out.close();
 		}

@@ -29,7 +29,7 @@ public class ChangeInformationServlet extends HttpServlet {
 		String debt=request.getParameter("debt");
 		String interest=request.getParameter("interest");
 		String cusid=request.getParameter("cusid");
-		Account account = DatabaseGet.getAccounts(UUID.fromString(accid)).get(0);
+		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
 		if(balance!=null) {
 			setAccountBalance(Double.valueOf(balance), account);
 		}

@@ -6,12 +6,12 @@ import java.util.UUID;
 
 public abstract class User {
 	
-	public static String getName(UserInf customer) { return customer.getName(); }
-	public static String getAddress(UserInf customer) { return customer.getAddress(); }
-	public static String getLanguage(UserInf customer) { return customer.getLanguage(); }
-	public static String getCountry(UserInf customer) { return customer.getCountry(); }
-	public static Locale getLocale(UserInf customer) { return customer.getLocale(); }
-	public static UUID getID(UserInf customer) { return customer.getID(); }
+	public static String getName(UserInf user) { return user.getName(); }
+	public static String getAddress(UserInf user) { return user.getAddress(); }
+	public static String getLanguage(UserInf user) { return user.getLanguage(); }
+	public static String getCountry(UserInf user) { return user.getCountry(); }
+	public static Locale getLocale(UserInf user) { return user.getLocale(); }
+	public static UUID getID(UserInf user) { return user.getID(); }
 
 	public static Double getAccountBalance(Account account) { return account.getBalance(); }
 	public static Double getAccountInterest(Account account) { return account.getInterest(); }

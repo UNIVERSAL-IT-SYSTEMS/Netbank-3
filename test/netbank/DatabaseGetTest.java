@@ -30,7 +30,7 @@ public class DatabaseGetTest {
 
 	@Test
 	public void test() {
-		DatabaseGet.getAccounts(UUID.fromString("b4266dd3-d099-4522-ab04-89f96895b963"));
+		DatabaseGet.getAccountsByUserID(UUID.fromString("b4266dd3-d099-4522-ab04-89f96895b963"));
 	}
 
 }

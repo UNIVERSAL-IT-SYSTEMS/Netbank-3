@@ -6,15 +6,15 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Put-in</title>
 </head>
 <body>
 <% String id=request.getParameter("updateinformation"); %>
-<% Account account = DatabaseGet.getAccounts(UUID.fromString(id)).get(0); %>
+<% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(id)); %>
 <form action="ChangeInformationServlet.jsp">
 	<table border="1" style="width:100%">
 		<tr>
@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td> Can't change </td>
-				<td> <input type="text" name="balance" placerholder="Subtract balance"> </td>
+				<td> <input type="text" name="balance" placeholder="Subtract balance"> </td>
 				<td> <select name="currency">
 					<% for(int i = 0; i < Currency.getAvailableCurrencies().toArray().length; i++) { %> 
 						<option value="<%=Currency.getAvailableCurrencies().toArray()[i]%>"><%=Currency.getAvailableCurrencies().toArray()[i]%></option>

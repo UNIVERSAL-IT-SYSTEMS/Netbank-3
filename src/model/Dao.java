@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import netbank.*; 
@@ -23,7 +22,7 @@ public class Dao {
 	}
 	
 	public static boolean userNameExists(String username) {
-		if(DatabaseGet.getCustomer(username) == null) {
+		if(DatabaseGet.getUserByUsername(username) == null) {
 			System.out.println("Username is ok");
 			return false;
 		} else {
@@ -33,7 +32,7 @@ public class Dao {
 	}
 	
 	public static boolean accountExists(UUID accountID) {
-		if(DatabaseGet.getAccounts(accountID) == null) {
+		if(DatabaseGet.getAccountsByUserID(accountID) == null) {
 			System.out.println("No account found");
 			return false;
 		} else {
@@ -48,9 +47,9 @@ public class Dao {
 			Double am = Double.parseDouble(amount);
 			UUID rID = UUID.fromString(receiverID);
 			System.out.println("GETTING ACCOUNTS");
-			ArrayList<Account> accounts = DatabaseGet.getAccounts(sID);
+			Account account = DatabaseGet.getAccountByAccountID(sID);
 			System.out.println("PERFORMING TRANSACTION");
-			return Customer.transaction(sID, accounts.get(0), am, rID);
+			return Customer.transaction(sID, account, am, rID);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -62,9 +61,9 @@ public class Dao {
 			UUID sID = UUID.fromString(senderID);
 			Double am = Double.parseDouble(amount);
 			System.out.println("GETTING ACCOUNTS");
-			ArrayList<Account> accounts = DatabaseGet.getAccounts(sID);
+			Account account = DatabaseGet.getAccountByAccountID(sID);
 			System.out.println("PERFORMING WITHDRAWAL");
-			return Customer.withdrawal(accounts.get(0), am);
+			return Customer.withdrawal(account, am);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

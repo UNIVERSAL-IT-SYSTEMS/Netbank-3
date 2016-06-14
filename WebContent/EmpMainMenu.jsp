@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Put-in</title>
 </head>
 <body>
 <% UUID empid = (UUID) request.getAttribute("empID"); %>
@@ -47,6 +47,8 @@
 	<input type="hidden" name="empid" value="<%=empid%>"/>
 	<input type="submit" name="deleteaccount">
 </form>
+
+<a href="index.jsp">Back to log-in</a>
 
 </body>
 </html>
