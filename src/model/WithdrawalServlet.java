@@ -16,19 +16,21 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/WithdrawalServlet")
 public class WithdrawalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("cusID") == null) {
-			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("/index.jsp").forward(request,response);
+			// Forward the control to login.jsp if authentication fails or
+			// session expires
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		String choice=request.getParameter("choice");
-		String amount=request.getParameter("amount");
+		String choice = request.getParameter("choice");
+		String amount = request.getParameter("amount");
 		System.out.println("HAVE INFO - TRYING TO DO WITHDRAWAL");
-		if(Dao.Withdrawal(choice,amount)) {
+		if (Dao.Withdrawal(choice, amount)) {
 			out.print("<h1>Success!</h1>");
 			out.print("<a href=\"MainMenu.jsp\">Back</a>");
 			out.close();

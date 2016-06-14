@@ -18,29 +18,27 @@ import netbank.Currencies;
 @WebServlet("/UpdateCurrenciesServlet")
 public class UpdateCurrenciesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("empID") == null) {
-			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("/index.jsp").forward(request,response);
+			// Forward the control to login.jsp if authentication fails or
+			// session expires
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		if(Currencies.UpdateCurrencies()) {
+		if (Currencies.UpdateCurrencies()) {
 			out.println("<h2>Success!</h2>");
-			out.print("</form>"+
-					"<form name=\"Menu\" action=\"EmpMainMenu.jsp\">"+
-						"<input type=\"submit\" value=\"Back to Menu\" />"+
-					"</form>");
+			out.print("</form>" + "<form name=\"Menu\" action=\"EmpMainMenu.jsp\">"
+					+ "<input type=\"submit\" value=\"Back to Menu\" />" + "</form>");
 		} else {
 			out.println("<h2>Failed!</h2>");
-			out.print("</form>"+
-					"<form name=\"Menu\" action=\"EmpMainMenu.jsp\">"+
-						"<input type=\"submit\" value=\"Back to Menu\" />"+
-					"</form>");
+			out.print("</form>" + "<form name=\"Menu\" action=\"EmpMainMenu.jsp\">"
+					+ "<input type=\"submit\" value=\"Back to Menu\" />" + "</form>");
 		}
-		
+
 	}
 
 }

@@ -15,21 +15,19 @@ import org.junit.Test;
 import model.servle;
 
 public class DatabaseGetTest {
-	
+
 	Account account;
 	UserInf user;
-	
-	
+
 	@Before
 	public void initiate() {
 		System.out.println(UUID.randomUUID());
-		account = new Account(UUID.fromString("b4266dd3-d099-4522-ab04-89f96895b963"), UUID.fromString("52070c04-ac28-4426-adf7-2ea3597994f4"),2.0, 3.0, 0.0, Currency.getInstance("DKK"));
-		
+		account = new Account(UUID.fromString("b4266dd3-d099-4522-ab04-89f96895b963"),
+				UUID.fromString("52070c04-ac28-4426-adf7-2ea3597994f4"), 2.0, 3.0, 0.0, Currency.getInstance("DKK"));
+
 		servle.initDB();
 
 	}
-	
-	
 
 	@Test
 	public void test() {

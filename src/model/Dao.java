@@ -2,25 +2,25 @@ package model;
 
 import java.util.UUID;
 
-import netbank.*; 
+import netbank.*;
 
 public class Dao {
-		
-	public static boolean loginValidate(String salt, String hash, String password) {  
-		try{ 
-			if(Hash.SHA512(password, salt).equals(hash)) {
+
+	public static boolean loginValidate(String salt, String hash, String password) {
+		try {
+			if (Hash.SHA512(password, salt).equals(hash)) {
 				return true;
 			} else {
 				return false;
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
-		}  
-		return false;  
+		}
+		return false;
 	}
-	
+
 	public static boolean userNameExists(String username) {
-		if(DatabaseGet.getUserByUsername(username) == null) {
+		if (DatabaseGet.getUserByUsername(username) == null) {
 			System.out.println("Username is ok");
 			return false;
 		} else {
@@ -28,9 +28,9 @@ public class Dao {
 			return true;
 		}
 	}
-	
+
 	public static boolean accountExists(UUID accountID) {
-		if(DatabaseGet.getAccountByAccountID(accountID) == null) {
+		if (DatabaseGet.getAccountByAccountID(accountID) == null) {
 			System.out.println("No account found");
 			return false;
 		} else {
@@ -38,7 +38,7 @@ public class Dao {
 			return true;
 		}
 	}
-	
+
 	public static boolean Transaction(String senderID, String amount, String receiverID) {
 		try {
 			UUID sID = UUID.fromString(senderID);

@@ -21,20 +21,22 @@ import netbank.Employee;
 @WebServlet("/DepositServlet")
 public class DepositServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("empID") == null) {
-			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("/index.jsp").forward(request,response);
+			// Forward the control to login.jsp if authentication fails or
+			// session expires
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
-		String amount=request.getParameter("amount");
-		String accid=request.getParameter("accid");
+		String amount = request.getParameter("amount");
+		String accid = request.getParameter("accid");
 		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
 		Double am = Double.valueOf(amount);
 		System.out.println(am);
-		if(am > 0) {
-			if(Employee.deposit(account, am)) {
+		if (am > 0) {
+			if (Employee.deposit(account, am)) {
 				request.setAttribute("message", "Successfully deposited");
 			} else {
 				request.setAttribute("message", "Deposit failed");
@@ -42,10 +44,7 @@ public class DepositServlet extends HttpServlet {
 		} else {
 			request.setAttribute("message", "Only positive numbers accepted");
 		}
-		
-		
-		
-		
+
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}

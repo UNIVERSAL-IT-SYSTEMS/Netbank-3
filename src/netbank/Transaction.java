@@ -13,8 +13,8 @@ public class Transaction {
 	private UUID receiver;
 	private BigDecimal amount;
 	private Currency currency; // Receiver's currency.
-	
-	public Transaction(UUID transactionID, UUID sender, UUID receiver, Double amount, Currency currency,  
+
+	public Transaction(UUID transactionID, UUID sender, UUID receiver, Double amount, Currency currency,
 			TransactionType type, Timestamp currenctTimestamp) {
 		this.amount = BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_FLOOR);
 		this.currency = currency;
@@ -24,13 +24,33 @@ public class Transaction {
 		this.currentTimestamp = currenctTimestamp;
 		this.transactionID = transactionID;
 	}
-	
-	public Timestamp getTimestamp() { return currentTimestamp; }
-	public Double getAmount() { return amount.doubleValue(); }
-	public Currency getCurrency() { return currency; }
-	public UUID getTransactionID() { return transactionID; }
-	public UUID getSenderID() { return sender; }
-	public UUID getReceiverID() { return receiver; }
-	public TransactionType getTransactionType() { return type; }
-	
+
+	public Timestamp getTimestamp() {
+		return currentTimestamp;
+	}
+
+	public Double getAmount() {
+		return amount.doubleValue();
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public UUID getTransactionID() {
+		return transactionID;
+	}
+
+	public UUID getSenderID() {
+		return sender;
+	}
+
+	public UUID getReceiverID() {
+		return receiver;
+	}
+
+	public TransactionType getTransactionType() {
+		return type;
+	}
+
 }

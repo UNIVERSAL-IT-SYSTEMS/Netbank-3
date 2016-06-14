@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class HashTest {
-	
+
 	String salt;
-	
+
 	@Before
 	public void initiate() {
 		salt = Hash.getSalt();

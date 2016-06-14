@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setAttribute("message", "Logged out");
 		request.getSession().invalidate();
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
 	}
 
 }

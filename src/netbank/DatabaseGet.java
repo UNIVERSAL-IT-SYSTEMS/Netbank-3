@@ -10,20 +10,25 @@ import java.util.UUID;
 import model.servle;
 
 public class DatabaseGet {
-		
+
 	public static ArrayList<Account> getAccountsByUserID(UUID ID) {
-		if(servle.getDb() == null) { servle.initDB(); };
-		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='"+ID.toString()+"'");
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='" + ID.toString() + "'");
+		ResultSet res = servle.getDb()
+				.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='" + ID.toString() + "'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
-			if(res == null) {
+			if (res == null) {
 				return null;
 			}
-			while(res.next()) {
-				// 1 accountID, 2 ownerID, 3 balance, 4 interest, 5 debt, 7 currency
-				accounts.add(new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), res.getDouble(3), res.getDouble(4), 
-					res.getDouble(5), Currency.getInstance(res.getString(6))));
+			while (res.next()) {
+				// 1 accountID, 2 ownerID, 3 balance, 4 interest, 5 debt, 7
+				// currency
+				accounts.add(new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)),
+						res.getDouble(3), res.getDouble(4), res.getDouble(5), Currency.getInstance(res.getString(6))));
 			}
 			return accounts;
 		} catch (SQLException e) {
@@ -32,17 +37,22 @@ public class DatabaseGet {
 		}
 		return null;
 	}
-	
+
 	public static Account getAccountByAccountID(UUID ID) {
-		if(servle.getDb() == null) { servle.initDB(); };
-		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+ID.toString()+"'");
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='" + ID.toString() + "'");
+		ResultSet res = servle.getDb()
+				.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='" + ID.toString() + "'");
 		try {
-			if(res.next()) {
-				
-				// 1 accountID, 2 ownerID, 3 balance, 4 interest, 5 debt, 7 currency
-				return new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)), res.getDouble(3), res.getDouble(4), 
-					res.getDouble(5), Currency.getInstance(res.getString(6)));
+			if (res.next()) {
+
+				// 1 accountID, 2 ownerID, 3 balance, 4 interest, 5 debt, 7
+				// currency
+				return new Account(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(2)),
+						res.getDouble(3), res.getDouble(4), res.getDouble(5), Currency.getInstance(res.getString(6)));
 			} else {
 				return null;
 			}
@@ -52,17 +62,23 @@ public class DatabaseGet {
 		}
 		return null;
 	}
-	
+
 	public static UserInf getUserByUserID(UUID ID) {
-		if(servle.getDb() == null) { servle.initDB(); };
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '"+ID.toString()+"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '"+ID.toString()+"'");
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '" + ID.toString() + "'");
+		ResultSet res = servle.getDb()
+				.getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '" + ID.toString() + "'");
 		try {
-			if(res.next()) {
-			// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash, 9 isEmployee
-			Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
-			return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
-					res.getString(6), res.getString(7), res.getString(8), isEmployee);
+			if (res.next()) {
+				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7
+				// salt, 8 hash, 9 isEmployee
+				Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
+				return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3),
+						res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8),
+						isEmployee);
 			} else {
 				return null;
 			}
@@ -72,42 +88,51 @@ public class DatabaseGet {
 		}
 		return null;
 	}
-	
+
 	public static UserInf getUserByUsername(String username) {
-		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
+		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '" + username + "'");
+		ResultSet res = servle.getDb()
+				.getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '" + username + "'");
 		try {
-				if(res.next()) {
-					System.out.println("RETURNING USER INFO");
-					// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7 salt, 8 hash, 9 isEmployee
-					Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
-					return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3), res.getString(4), res.getString(5), 
-							res.getString(6), res.getString(7), res.getString(8), isEmployee);
-				} else {
-					return null;
-				}
+			if (res.next()) {
+				System.out.println("RETURNING USER INFO");
+				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7
+				// salt, 8 hash, 9 isEmployee
+				Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
+				return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3),
+						res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8),
+						isEmployee);
+			} else {
+				return null;
+			}
 		} catch (SQLException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
-	
+
 	public static ArrayList<Transaction> getTransactionByAccountID(UUID ID) {
-		if(servle.getDb() == null) { servle.initDB(); };
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"transactions\" WHERE (\"senderid\" = '"+ID.toString()+"' OR \"receiverid\" = '"+ID.toString() +"')");
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"transactions\" WHERE (\"senderid\" = '"
+				+ ID.toString() + "' OR \"receiverid\" = '" + ID.toString() + "')");
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
-			if(res == null) {
+			if (res == null) {
 				return null;
 			}
-			// 1 transactionID, 2 timestamp, 3 senderID, 4 receiverID, 5 amount, 6 type, 7 currency
-			while(res.next()) {
-				transactions.add(new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(3)), UUID.fromString(res.getString(4)), 
-						res.getDouble(5), Currency.getInstance(res.getString(7)), TransactionType.valueOf(res.getString(6)), 
+			// 1 transactionID, 2 timestamp, 3 senderID, 4 receiverID, 5 amount,
+			// 6 type, 7 currency
+			while (res.next()) {
+				transactions.add(new Transaction(UUID.fromString(res.getString(1)), UUID.fromString(res.getString(3)),
+						UUID.fromString(res.getString(4)), res.getDouble(5), Currency.getInstance(res.getString(7)),
+						TransactionType.valueOf(res.getString(6)),
 						Timestamp.valueOf(res.getString(2).substring(0, 23))));
 			}
-			
+
 			return transactions;
 		} catch (SQLException e) {
 			System.out.println("getTransactions SQL ERROR");
@@ -115,12 +140,16 @@ public class DatabaseGet {
 		}
 		return null;
 	}
-	
+
 	public static Double getCurrency(Currency currency) {
-		if(servle.getDb() == null) { servle.initDB(); };
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"currencies\" WHERE \"currency\" = '"+ currency.getCurrencyCode() +"'");
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		ResultSet res = servle.getDb().getters(
+				"SELECT * FROM DTUGRP04.\"currencies\" WHERE \"currency\" = '" + currency.getCurrencyCode() + "'");
 		try {
-			if(res.next()) {
+			if (res.next()) {
 				System.out.println("RETURNING DOUBLE RATE");
 				// 1 CurrencyCode, 2 rate
 				return res.getDouble(2);
@@ -131,24 +160,27 @@ public class DatabaseGet {
 		} catch (SQLException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
-	
-	public static HashMap<Currency,Double> getCurrencies() {
-		if(servle.getDb() == null) { servle.initDB(); };
-		HashMap<Currency,Double> currencies = new HashMap<Currency,Double>();
+
+	public static HashMap<Currency, Double> getCurrencies() {
+		if (servle.getDb() == null) {
+			servle.initDB();
+		}
+		;
+		HashMap<Currency, Double> currencies = new HashMap<Currency, Double>();
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"currencies\"");
 		try {
-			while(res.next()) {
+			while (res.next()) {
 				currencies.put(Currency.getInstance(res.getString(1)), res.getDouble(2));
 			}
 			return currencies;
 		} catch (SQLException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
-	
+
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  * Servlet implementation class login
  */
@@ -24,18 +23,18 @@ public class LoginServlet extends HttpServlet {
 		servle.initDB();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String username=request.getParameter("username");
-		String password=request.getParameter("password");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		UserInf user = DatabaseGet.getUserByUsername(username);
-		if(user != null && Dao.loginValidate(user.getSalt(),user.getHash(),password)) {
-			if(user.getIsEmployee()) {
-				HttpSession session=request.getSession();
-				session.setAttribute("empID",user.getID());
+		if (user != null && Dao.loginValidate(user.getSalt(), user.getHash(), password)) {
+			if (user.getIsEmployee()) {
+				HttpSession session = request.getSession();
+				session.setAttribute("empID", user.getID());
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 				dispatcher.forward(request, response);
 			} else {
-				HttpSession session=request.getSession();
-				session.setAttribute("cusID",user.getID());
+				HttpSession session = request.getSession();
+				session.setAttribute("cusID", user.getID());
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
 				dispatcher.forward(request, response);
 			}
@@ -44,6 +43,6 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
-		out.close(); 
+		out.close();
 	}
 }

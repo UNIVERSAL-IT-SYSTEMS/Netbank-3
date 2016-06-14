@@ -12,41 +12,41 @@ public class UserInfTest {
 	String salt;
 	String hash;
 	UUID ID;
-	
+
 	@Before
 	public void initiate() {
 		salt = Hash.getSalt();
 		hash = Hash.SHA512("test123", salt);
 		ID = UUID.randomUUID();
-		cust = new UserInf(ID, "testusername","test", "testaddress", "da", "dk",  salt, hash,false);
+		cust = new UserInf(ID, "testusername", "test", "testaddress", "da", "dk", salt, hash, false);
 	}
 
 	@Test
 	public void newCustomer() {
-		assertEquals("test",cust.getName());
-		assertEquals("testaddress",cust.getAddress());
-		assertEquals(ID,cust.getID());
-		assertEquals(salt,cust.getSalt());
-		assertEquals(hash,cust.getHash());
-		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(),cust.getLocale());
-		assertEquals("da",cust.getLanguage());
-		assertEquals("dk",cust.getCountry());
+		assertEquals("test", cust.getName());
+		assertEquals("testaddress", cust.getAddress());
+		assertEquals(ID, cust.getID());
+		assertEquals(salt, cust.getSalt());
+		assertEquals(hash, cust.getHash());
+		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(), cust.getLocale());
+		assertEquals("da", cust.getLanguage());
+		assertEquals("dk", cust.getCountry());
 	}
-	
+
 	@Test
 	public void ChangeInformation() {
 		cust.setName("Alice");
-		assertEquals("Alice",cust.getName());
+		assertEquals("Alice", cust.getName());
 		cust.setAddress("new place");
-		assertEquals("new place",cust.getAddress());
+		assertEquals("new place", cust.getAddress());
 		String hash = Hash.SHA512("test1", salt);
 		cust.setHash(hash);
-		assertEquals(hash,cust.getHash());
+		assertEquals(hash, cust.getHash());
 		cust.setLanguage("en");
-		assertEquals("en",cust.getLanguage());
-		assertEquals(new Locale.Builder().setLanguage("en").setRegion("dk").build(),cust.getLocale());
+		assertEquals("en", cust.getLanguage());
+		assertEquals(new Locale.Builder().setLanguage("en").setRegion("dk").build(), cust.getLocale());
 		cust.setCountry("us");
-		assertEquals("us",cust.getCountry());
-		assertEquals(new Locale.Builder().setLanguage("en").setRegion("us").build(),cust.getLocale());
+		assertEquals("us", cust.getCountry());
+		assertEquals(new Locale.Builder().setLanguage("en").setRegion("us").build(), cust.getLocale());
 	}
 }

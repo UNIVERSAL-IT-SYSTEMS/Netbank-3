@@ -22,22 +22,24 @@ import netbank.Employee;
 public class DeleteAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("empsID") == null) {
-			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("/index.jsp").forward(request,response);
+			// Forward the control to login.jsp if authentication fails or
+			// session expires
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
-		String accid=request.getParameter("accid");
-		
+		String accid = request.getParameter("accid");
+
 		Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
-		
-		if(Employee.deleteAccount(account)) {
-			request.setAttribute("message", "Deleted account "+accid);
+
+		if (Employee.deleteAccount(account)) {
+			request.setAttribute("message", "Deleted account " + accid);
 		} else {
-			request.setAttribute("message", "Could not delete account "+accid);
+			request.setAttribute("message", "Could not delete account " + accid);
 		}
-		
+
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}
