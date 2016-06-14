@@ -164,6 +164,9 @@ public class servle extends HttpServlet {
 	}
 	
 	public static Database getDb() {
+		if(db == null) {
+			initDB();
+		}
 		return db;
 	}
 	

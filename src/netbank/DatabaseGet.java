@@ -69,7 +69,6 @@ public class DatabaseGet {
 	}
 	
 	public static UserInf getUserByUsername(String username) {
-		if(servle.getDb() == null) { servle.initDB(); };
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '"+ username +"'");
 		try {
