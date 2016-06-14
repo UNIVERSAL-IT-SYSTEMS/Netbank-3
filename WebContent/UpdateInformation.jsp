@@ -14,7 +14,7 @@
 </head>
 <body>
 <% String id=request.getParameter("updateinformation"); %>
-<% Account account = DatabaseGet.getAccounts(IDType.ACCID, UUID.fromString(id)).get(0); %>
+<% Account account = DatabaseGet.getAccounts(UUID.fromString(id)).get(0); %>
 <form action="ChangeInformationServlet.jsp">
 	<table border="1" style="width:100%">
 		<tr>

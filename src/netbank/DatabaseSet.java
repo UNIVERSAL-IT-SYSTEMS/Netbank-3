@@ -10,6 +10,7 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
+		if(servle.getDb() == null) { servle.initDB(); }
 		if(Dao.accountExists(acc.getAccountID())) {
 			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
@@ -30,27 +31,40 @@ public class DatabaseSet {
 	}
 	
 	public static boolean setUser(UserInf cust) {
+		if(servle.getDb() == null) { servle.initDB(); }
 		if(Dao.userNameExists(cust.getUsername())) {
-			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET userid="+cust.getID().toString()
-					+ ", name="+cust.getName()+", address="+cust.getAddress()
-					+ ", password="+cust.getHash()+", salt="+cust.getSalt()
-					+ ", locale="+cust.getLocale().toString()
-					+ "WHERE userid="+cust.getID().toString());
+			//"INSERT INTO DTUGRP04.\"customers\" VALUES ('?','?')";
+			System.out.println("HELLO??");
+			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
+					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
+					+ "','"+cust.getSalt() + "','" + cust.getHash()
+					+ "','" + (cust.getIsEmployee() ? 1 : 0)+ "')");
+			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"userid\"='"+cust.getID().toString()
+					+ "', \"name\"='"+cust.getUsername() + "', \"name\"='"+cust.getName()+"', \"address\"='"+cust.getAddress()
+					+ "', \"language\"='"+cust.getLanguage() + "', \"country\"='"+cust.getCountry()
+					+ "', \"salt\"='"+cust.getSalt() + "', \"hash\"='"+cust.getHash()
+					+ "' WHERE \"userid\"='"+cust.getID().toString() + "'");
 		} else {
+			System.out.println("HELLO?!!?");
+			String emp = cust.getIsEmployee() ? "1" : "0";
+			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
+					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
+					+ "','"+cust.getSalt() + "','" + cust.getHash()
+					+ "','" + emp +"')");
 			return servle.getDb().setters("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
-					+ "','"+cust.getName()+"','"+cust.getAddress()
-					+ "','"+cust.getHash()+", salt="+cust.getSalt()
-					+ ", locale="+cust.getLocale().toString()
-					+ "WHERE userid="+cust.getID().toString());
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
+					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
+					+ "','"+cust.getSalt() + "','" + cust.getHash()
+					+ "','" + emp +"')");
 		}
 		
 		
 	}
 	
 	public static boolean setTransaction(Transaction trans) {
-		if(servle.getDb() == null) {
-			servle.initDB();
-		}
+		if(servle.getDb() == null) { servle.initDB(); }
 		System.out.println("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
 				+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID()
 				+ "','" + trans.getReceiverID() +"'," + trans.getAmount() 
