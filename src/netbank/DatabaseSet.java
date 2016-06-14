@@ -10,7 +10,8 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
-		if(DatabaseGet.getAccountsByUserID(acc.getAccountID()) != null) {
+		if(servle.getDb() == null) { servle.initDB(); }
+		if(Dao.accountExists(acc.getAccountID())) {
 			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
 					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
@@ -49,9 +50,7 @@ public class DatabaseSet {
 	}
 	
 	public static boolean setTransaction(Transaction trans) {
-		if(servle.getDb() == null) {
-			servle.initDB();
-		}
+		if(servle.getDb() == null) { servle.initDB(); }
 		System.out.println("INSERT INTO DTUGRP04.\"transactions\" VALUES ('"+trans.getTransactionID()
 				+ "','" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(trans.getTimestamp())+ "','" + trans.getSenderID()
 				+ "','" + trans.getReceiverID() +"'," + trans.getAmount() 
