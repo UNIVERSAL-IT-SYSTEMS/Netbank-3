@@ -16,17 +16,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
+<% UUID cusid = (UUID) session.getAttribute("cusID"); %>
+<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
+<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
 	<div style="text-align: center">
-		<% UUID cusid = (UUID) request.getAttribute("cusID"); %>
-		<% if(cusid==null){cusid = (UUID) session.getAttribute("cusID");} %>
-		
 		<% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(cusid); %>
 		<% UserInf cust = DatabaseGet.getUserByUserID(cusid); %>
-		<h2><%= cust.getName() %></h2><br/>
-		<h5><%= cust.getID() %></h5><br/>
+		<h2><%= cust.getName() %></h2>
+		<h5><%= cust.getID() %></h5>
 		<%=new Timestamp(new java.util.Date().getTime()).toString().substring(0,23) %><br>
 		<form action="ShowTransactions" method="post">
-			<input type="hidden" name="cusID" value="<%=cusid%>">
 			<table border="1" style="width:100%">
 				<tr>
 					<td> Account ID </td>
@@ -54,15 +53,12 @@
 		</form>
 			
 		<form action="Transaction.jsp">
-			<% session.setAttribute("cusID", cust.getID()); %>
 			<input type="submit" name="transaction" value="Transaction">		
 		</form>
 		<form action="Withdrawal.jsp">
-			<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="withdrawal" type="submit">Withdrawal</button>
 		</form>
 		<form action="ChangePassword.jsp">
-			<% session.setAttribute("cusID", cust.getID()); %>
 			<button name="changepassword" type="submit">Change password</button>
 		</form>
 		<a href="index.jsp">Back to log-in</a>

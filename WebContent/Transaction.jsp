@@ -14,6 +14,8 @@
 <body>
 <div>
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
+<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
+<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
 <%=id%>
 <% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(id); %>
 <form action="TransactionServlet" method="get">
@@ -37,13 +39,11 @@
 			<% } %>
 		<% } %>
 	</table>
-	Amount: <input type="text" name="amount" placeholder="Amount"> <br/>
-	To: <input type="text" name="receiverID" placeholder="ID"> <br/>
-	<input type="hidden" name="custID" value="<%=id.toString()%>">
+	Amount: <input type="number" name="amount" placeholder="Amount" required> <br/>
+	To: <input type="text" name="receiverID" placeholder="ID" required> <br/>
 	<input type="submit" name="transaction">
 </form>
 <form name="Menu" action="MainMenu.jsp">
-	<input type="hidden" name="cusID" value="<%=id%>"/>
 	<input type="submit" value="Back to Menu" />
 </form>
 </div>

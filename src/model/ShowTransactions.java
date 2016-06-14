@@ -22,9 +22,7 @@ public class ShowTransactions extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		String cusid=request.getParameter("cusID");
 		String accid=request.getParameter("showtransactions");
-		out.println(cusid+"<br>");
 		ArrayList<Transaction> transactions = DatabaseGet.getTransactionByAccountID(UUID.fromString(accid));
 		out.println("<table border=\"1\" style=\"width:100%\">");
 		out.println("<tr>"+
@@ -50,7 +48,6 @@ public class ShowTransactions extends HttpServlet {
 		out.println("</table>");
 		out.print("</form>"+
 			"<form name=\"Menu\" action=\"MainMenu.jsp\">"+
-				"<input type=\"hidden\" name=\"cusID\" value="+cusid+"/>"+
 				"<input type=\"submit\" value=\"Back to Menu\" />"+
 			"</form>");
 		out.close();

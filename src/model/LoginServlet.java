@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -28,11 +29,13 @@ public class LoginServlet extends HttpServlet {
 		UserInf user = DatabaseGet.getUserByUsername(username);
 		if(user != null && Dao.loginValidate(user.getSalt(),user.getHash(),password)) {
 			if(user.getIsEmployee()) {
-				request.setAttribute("empID", user.getID());
+				HttpSession session=request.getSession();
+				session.setAttribute("empID",user.getID());
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 				dispatcher.forward(request, response);
 			} else {
-				request.setAttribute("cusID", user.getID());
+				HttpSession session=request.getSession();
+				session.setAttribute("cusID",user.getID());
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
 				dispatcher.forward(request, response);
 			}

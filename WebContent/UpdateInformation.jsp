@@ -13,9 +13,12 @@
 <title>Put-in</title>
 </head>
 <body>
-<% String id=request.getParameter("updateinformation"); %>
+<% String id=request.getParameter("accid"); %>
+<% UUID empid = (UUID) session.getAttribute("empID"); %>
+<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
+<% if(session.getAttribute("empID")==null) response.sendRedirect("/Netbank/index.jsp");%>
 <% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(id)); %>
-<form action="ChangeInformationServlet.jsp">
+<form action="ChangeInformationServlet" method="post">
 	<table border="1" style="width:100%">
 		<tr>
 			<td> Account ID </td>
@@ -38,14 +41,14 @@
 			</tr>
 			<tr>
 				<td> Can't change </td>
-				<td> <input type="text" name="balance" placeholder="Subtract balance"> </td>
+				<td> <input type="number" name="balance" placeholder="Subtract balance"> </td>
 				<td> <select name="currency">
 					<% for(int i = 0; i < Currency.getAvailableCurrencies().toArray().length; i++) { %> 
 						<option value="<%=Currency.getAvailableCurrencies().toArray()[i]%>"><%=Currency.getAvailableCurrencies().toArray()[i]%></option>
 					<% } %>
 				</select> </td>
-				<td> <input type="text" name="debt" placeholder="Add/subtract debt"> </td>
-				<td> <input type="text" name="interest" placeholder="New interest"> </td>
+				<td> <input type="number" name="debt" placeholder="Add/subtract debt"> </td>
+				<td> <input type="number" name="interest" placeholder="New interest"> </td>
 				<td> <input type="text" name="cusid" placeholder="New owner"> </td>
 			</tr>
 		<% } %>

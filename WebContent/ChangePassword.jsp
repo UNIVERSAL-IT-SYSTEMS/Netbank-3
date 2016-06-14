@@ -9,16 +9,17 @@
 </head>
 <body>
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
+<% if (session ==  null ) { response.sendRedirect("/Netbank/index.jsp"); } %>
+<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
 <%=id%>
 <form action="ChangePasswordServlet" method="post">
-	<input type="password" name="oldpassword" placeholder="Old password">
-	<input type="password" name="newpassword" placeholder="New password">
-	<input type="password" name="repeatednewpassword" placeholder="Repeat new password">
+	<input type="password" name="oldpassword" placeholder="Old password" required>
+	<input type="password" name="newpassword" placeholder="New password" required>
+	<input type="password" name="repeatednewpassword" placeholder="Repeat new password" required>
 	<input type="hidden" name="cusID" value="<%=id%>"/>
 	<input type="submit" name="login">			
 </form>
 <form name="Menu" action="MainMenu.jsp">
-	<input type="hidden" name="cusID" value="<%=id%>"/>
 	<input type="submit" value="Back to Menu" />
 </form>
 </body>

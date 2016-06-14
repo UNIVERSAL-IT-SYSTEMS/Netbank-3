@@ -24,21 +24,16 @@ public class DepositServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String amount=request.getParameter("amount");
 		String accid=request.getParameter("accid");
-		String empid=request.getParameter("empid");
-		
 		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
-		
 		Double am = Double.valueOf(amount);
-		
-		if(am < 0) {
+		System.out.println(am);
+		if(am > 0) {
+			System.out.println("over 0");
 			Employee.deposit(account, am);
-		} else {
-			Employee.subtractAccountBalance(account, am);
 		}
 		
 		
 		
-		request.setAttribute("empid", empid);
 		request.setAttribute("message", "Successfully deposited");
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);

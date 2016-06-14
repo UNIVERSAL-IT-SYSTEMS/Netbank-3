@@ -23,13 +23,11 @@ public class DeleteAccountServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accid=request.getParameter("accid");
-		String empid=request.getParameter("empid");
 		
 		Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
 		
 		Employee.deleteAccount(account);
 		
-		request.setAttribute("empid", empid);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}

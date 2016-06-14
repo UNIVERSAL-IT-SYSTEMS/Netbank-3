@@ -10,7 +10,7 @@ public class Customer extends User {
 		
 		Account receiveAccount = DatabaseGet.getAccountByAccountID(recieverID);
 		System.out.println(receiveAccount.getCurrency());
-		if(receiveAccount == null || account.belowZero(amount) || amount < 0) {
+		if(receiveAccount == null || account.belowZero(amount) || amount < 0 || DatabaseGet.getCurrency(account.getCurrency()) == null) {
 			return false;
 		}
 		System.out.println("ADJUSTING LOCAL BALANCE");
@@ -28,7 +28,7 @@ public class Customer extends User {
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
-		} else if (Currencies.isCurrencyConversionEnabled()) {
+		} else {
 			Double newAmount = amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency());
 			receiveAccount.addBalance(newAmount);
 			System.out.println(account.getBalance());
@@ -39,8 +39,6 @@ public class Customer extends User {
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
-		} else {
-			return false;
 		}
 	}
 	
@@ -51,7 +49,7 @@ public class Customer extends User {
 			return false;
 		}
 		System.out.println("Not below zero");
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),null, amount, account.getCurrency(), 
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),account.getOwnerID(), amount, account.getCurrency(), 
 			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
 		System.out.println("Transaction made");
 		account.subtractBalance(amount);
