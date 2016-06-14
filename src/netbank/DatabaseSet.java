@@ -34,7 +34,6 @@ public class DatabaseSet {
 		if(servle.getDb() == null) { servle.initDB(); }
 		if(Dao.userNameExists(cust.getUsername())) {
 			//"INSERT INTO DTUGRP04.\"customers\" VALUES ('?','?')";
-			System.out.println("HELLO??");
 			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
 					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
 					+ "','"+cust.getLanguage() + "','"+cust.getCountry()
@@ -46,7 +45,6 @@ public class DatabaseSet {
 					+ "', \"salt\"='"+cust.getSalt() + "', \"hash\"='"+cust.getHash()
 					+ "' WHERE \"userid\"='"+cust.getID().toString() + "'");
 		} else {
-			System.out.println("HELLO?!!?");
 			String emp = cust.getIsEmployee() ? "1" : "0";
 			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
 					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()
