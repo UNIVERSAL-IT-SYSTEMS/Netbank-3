@@ -13,11 +13,11 @@
 	<h1>Register</h1><br>
 	<% if(request.getAttribute("message")!=null){out.println(request.getAttribute("message"));} %>
 		<form action="RegisterServlet" method="post">
-			<input type="text" name="username" placeholder="Username"><br/>
-			<input type="password" name="password" placeholder="Password"><br/>
-			<input type="password" name="repeatpassword" placeholder="Repeat password"><br/>
-			<input type="text" name="name" placeholder="Name"><br/>
-			<input type="text" name="address" placeholder="Address"><br/>
+			<input type="text" name="username" placeholder="Username" required><br/>
+			<input type="password" name="password" placeholder="Password" required><br/>
+			<input type="password" name="repeatpassword" placeholder="Repeat password" required><br/>
+			<input type="text" name="name" placeholder="Name" required><br/>
+			<input type="text" name="address" placeholder="Address" required><br/>
 			Language: <select name="language">
 				<% for(int i = 0; i < Locale.getISOLanguages().length; i++) { %> 
 					<option value="<%=Locale.getISOLanguages()[i].toString()%>"><%=Locale.getISOLanguages()[i].toString()%></option>

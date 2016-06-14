@@ -1,6 +1,9 @@
 package netbank;
 
 import java.text.SimpleDateFormat;
+import java.util.Currency;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import model.Dao;
 import model.servle;
@@ -12,21 +15,21 @@ public class DatabaseSet {
 	public static boolean setAccount(Account acc) {
 		if(servle.getDb() == null) { servle.initDB(); }
 		if(Dao.accountExists(acc.getAccountID())) {
-			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
+			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
 					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
-			return servle.getDb().setters("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
+			return servle.getDb().setters("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
 					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
 		} else {
-			System.out.println("INSERT INTO DTUGRP04.\"accounts\" VALUES ('"
-					+ acc.getOwnerID().toString()
+			System.out.println("INSERT INTO DTUGRP04.\"accounts\" VALUES ('" + acc.getAccountID()
+					+ "','"+ acc.getOwnerID().toString()
 					+ "',"+acc.getBalance()+","+acc.getInterest()
-					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+";");
-			return servle.getDb().setters("INSERT INTO DTUGRP04.\"accounts\" VALUES ('"
-					+ acc.getOwnerID().toString()
+					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+"')");
+			return servle.getDb().setters("INSERT INTO DTUGRP04.\"accounts\" VALUES ('" + acc.getAccountID()
+					+ "','"+ acc.getOwnerID().toString()
 					+ "',"+acc.getBalance()+","+acc.getInterest()
-					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+";");
+					+ ","+ acc.getDebt()+",'"+acc.getCurrency()+"')");
 		}
 	}
 	
@@ -51,7 +54,7 @@ public class DatabaseSet {
 					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
 			return servle.getDb().setters("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
 					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
-					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
+					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+emp+"')");
 		}
 		
 		
@@ -72,5 +75,21 @@ public class DatabaseSet {
 	public static boolean removeAccount(Account acc) {
 		System.out.println("DELETE FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+acc.getAccountID()+"'");
 		return servle.getDb().setters("DELETE FROM DTUGRP04.\"accounts\" WHERE \"accid\"='"+acc.getAccountID()+"'");
+	}
+	
+	public static boolean setCurrencies(Hashtable<Currency, Double> currencies) {
+		if(servle.getDb() == null) { servle.initDB(); }
+		Enumeration<Currency> e = currencies.keys();
+		Boolean done = false;
+		while(e.hasMoreElements()) {
+			Currency key = e.nextElement();
+			if(DatabaseGet.getCurrency(key) != null) {
+				servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"currency\"='"+key+"', \"rate\"="+currencies.get(key)+";");
+			} else {
+				System.out.println("INSERT INTO DTUGRP04.\"currencies\" VALUES ('"+key+"',"+currencies.get(key)+")");
+				done = servle.getDb().setters("INSERT INTO DTUGRP04.\"currencies\" VALUES ('"+key+"','"+currencies.get(key)+"')");
+			}
+		}
+		return done;
 	}
 }

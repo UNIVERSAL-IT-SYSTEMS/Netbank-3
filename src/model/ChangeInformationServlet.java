@@ -29,20 +29,22 @@ public class ChangeInformationServlet extends HttpServlet {
 		String debt=request.getParameter("debt");
 		String interest=request.getParameter("interest");
 		String cusid=request.getParameter("cusid");
+		System.out.println("accid = "+accid);
+		System.out.println("cusid = "+cusid);
 		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
-		if(balance!=null) {
+		if(!balance.isEmpty()) {
 			setAccountBalance(Double.valueOf(balance), account);
 		}
-		if(interest!=null) {
+		if(!interest.isEmpty()) {
 			setAccountInterest(Double.valueOf(interest), account);
 		}
-		if(currency!=null) {
+		if(currency != account.getCurrency().getCurrencyCode()) {
 			setAccountCurrency(Currency.getInstance(currency),account);
 		}
-		if(debt!=null) {
+		if(!debt.isEmpty()) {
 			setAccountDebt(Double.valueOf(debt),account);
 		}
-		if(cusid!=null) {
+		if(!cusid.isEmpty()) {
 			changeAccountOwner(account, UUID.fromString(cusid));
 		}
 	}
@@ -55,8 +57,8 @@ public class ChangeInformationServlet extends HttpServlet {
 		Employee.setAccountInterest(account, interest);
 	}
 	
-	private boolean setAccountCurrency(Currency currency, Account account) {
-		return Employee.setAccountCurrency(account, currency);
+	private void setAccountCurrency(Currency currency, Account account) {
+		Employee.setAccountCurrency(account, currency);
 	}
 	
 	private void setAccountDebt(Double amount, Account account) {

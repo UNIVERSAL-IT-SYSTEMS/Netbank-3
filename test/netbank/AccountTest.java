@@ -52,7 +52,7 @@ public class AccountTest {
 		account.setOwnerID(newID);
 		assertEquals(newID,account.getOwnerID());
 		
-		assertTrue(account.setCurrency(Currency.getInstance(Locale.CHINA)));
+		account.setCurrency(Currency.getInstance(Locale.CHINA));
 	}
 	
 	@Test

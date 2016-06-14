@@ -30,7 +30,7 @@ public class Dao {
 	}
 	
 	public static boolean accountExists(UUID accountID) {
-		if(DatabaseGet.getAccountsByUserID(accountID) == null) {
+		if(DatabaseGet.getAccountByAccountID(accountID) == null) {
 			System.out.println("No account found");
 			return false;
 		} else {

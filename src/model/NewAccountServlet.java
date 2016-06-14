@@ -26,13 +26,11 @@ public class NewAccountServlet extends HttpServlet {
 		String cusid=request.getParameter("cusid");
 		String interest=request.getParameter("interest");
 		String currency=request.getParameter("currency");
-		String empid=request.getParameter("empid");
 		
 		UserInf cust = DatabaseGet.getUserByUserID(UUID.fromString(cusid));
 		
 		Employee.newAccount(cust, Double.valueOf(interest), Currency.getInstance(currency));
 		
-		request.setAttribute("empid", empid);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}

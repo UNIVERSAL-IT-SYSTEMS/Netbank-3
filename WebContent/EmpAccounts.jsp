@@ -13,7 +13,12 @@
 </head>
 <body>
 <% String id=request.getParameter("id"); %>
-<% String empid=request.getParameter("empid"); %>
+<% UUID empid = (UUID) session.getAttribute("empID"); %>
+<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
+<% if(session.getAttribute("empID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+
+<%=id %>
+<%=empid %>
 <h2>Customer</h2>
 <% UserInf cust = DatabaseGet.getUserByUserID(UUID.fromString(id)); %>
 
@@ -39,9 +44,12 @@
 		</tr>
 	<% } %>
 </table>
+
 <h2>Accounts</h2>
 <% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(UUID.fromString(id)); %>
-<form action="ChangeInformation.jsp">
+<% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(id)); %>
+<% if(account!=null) { accounts.add(account); } %>
+<form action="UpdateInformation.jsp">
 	<table border="1" style="width:100%">
 		<tr>
 			<td> Account ID </td>
@@ -61,7 +69,7 @@
 					<td> <%=accounts.get(i).getCurrency().getDisplayName()%> </td>
 					<td> <%=numberFormat.format(accounts.get(i).getDebt())%> </td>
 					<td> <%=accounts.get(i).getInterest()%>% </td>
-					<td> <button name="updateinformation" value="<%=accounts.get(i).getAccountID()%>">Update information</button> </td>
+					<td> <button name="accid" value="<%=accounts.get(i).getAccountID()%>">Update information</button> </td>
 				</tr>
 			<% } %>
 		<% } %>
@@ -94,6 +102,9 @@
 		<% } %>
 	<% } %>
 </table>
+<form name="Menu" action="EmpMainMenu.jsp">
+	<input type="submit" value="Back to Menu" />
+</form>
 
 </body>
 </html>

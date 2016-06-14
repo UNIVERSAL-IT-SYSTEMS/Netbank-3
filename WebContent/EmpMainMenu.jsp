@@ -11,40 +11,38 @@
 <title>Put-in</title>
 </head>
 <body>
-<% UUID empid = (UUID) request.getAttribute("empID"); %>
-
+<% UUID empid = (UUID) session.getAttribute("empID"); %>
+<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
+<% if(session.getAttribute("empID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<%=empid %>
 <h2>Search</h2>
 <form action="EmpAccounts.jsp">
-	<input type="text" name="id" placeholder="ID">
-	<input type="hidden" name="empid" value="<%=empid%>"/>
+	<input type="text" name="id" placeholder="ID" required>
 	<input type="submit" name="search">
 </form>
 
 <h2>Deposit</h2>
 <form action="DepositServlet" method="post">
-	<input type="text" name="amount" placeholder="Amount"/>
-	<input type="text" name="accid" placeholder="Account ID"/>
-	<input type="hidden" name="empid" value="<%=empid%>"/>
+	<input type="number" name="amount" placeholder="Amount"required/>
+	<input type="text" name="accid" placeholder="Account ID"required/>
 	<input type="submit" name="search">		
 </form>
 
 <h2>New Account</h2>
 <form action="NewAccountServlet" method="post">
-	<input type="text" name="cusid" placeholder="Customer ID">
-	<input type="text" name="interest" placeholder="Interest">
+	<input type="text" name="cusid" placeholder="Customer ID"required>
+	<input type="number" name="interest" placeholder="Interest"required>
 	<select name="currency">
 		<% for(int i = 0; i < Currency.getAvailableCurrencies().toArray().length; i++) { %> 
 			<option value="<%=Currency.getAvailableCurrencies().toArray()[i]%>"><%=Currency.getAvailableCurrencies().toArray()[i]%></option>
 		<% } %>
 	</select>
-	<input type="hidden" name="empid" value="<%=empid%>"/>
 	<input type="submit" name="newaccount">
 </form>
 
 <h2>Delete Account</h2>
 <form action="DeleteAccountServlet" method="post">
-	<input type="text" name="accID" placeholder="Account ID">
-	<input type="hidden" name="empid" value="<%=empid%>"/>
+	<input type="text" name="accID" placeholder="Account ID"required>
 	<input type="submit" name="deleteaccount">
 </form>
 
