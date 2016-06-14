@@ -7,70 +7,73 @@ import java.sql.Timestamp;
 
 public class Employee extends User {
 	
-	public static void newAccount(UserInf user, Double interest, Currency currency) {
-		DatabaseSet.setAccount(new Account(UUID.randomUUID(), user.getID(), 0.0, interest, 0.0, currency));
+	public static Boolean newAccount(UserInf user, Double interest, Currency currency) {
+		return DatabaseSet.setAccount(new Account(UUID.randomUUID(), user.getID(), 0.0, interest, 0.0, currency));
 	}
 	
-	public static void setAccountInterest(Account account, Double interest) { 
+	public static Boolean setAccountInterest(Account account, Double interest) { 
 		account.setInterest(interest); 
-		DatabaseSet.setAccount(account);
+		return DatabaseSet.setAccount(account);
 	}
 	
-	public static void setAccountCurrency(Account account, Currency currency) { 
+	public static Boolean setAccountCurrency(Account account, Currency currency) { 
 		account.setCurrency(currency);
-		DatabaseSet.setAccount(account);
+		return DatabaseSet.setAccount(account);
 	}
 	
 	public static Boolean subtractAccountBalance(Account account, Double value) { 
-		System.out.println(value);
+		Boolean setBoth;
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+		setBoth = DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 			account.getAccountID(), value, account.getCurrency(), TransactionType.WITHDRAWAL, 
 			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(value); 
-		DatabaseSet.setAccount(account);
-		return true;
+		setBoth = DatabaseSet.setAccount(account);
+		return setBoth;
 	}
 	
-	public static void addAccountDebt(Account account, Double value) { 
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+	public static Boolean addAccountDebt(Account account, Double value) { 
+		Boolean setBoth;
+		setBoth = DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 			account.getAccountID(), value, account.getCurrency(), TransactionType.ADDDEBT, 
 			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.addDebt(value);
-		DatabaseSet.setAccount(account);
+		setBoth = DatabaseSet.setAccount(account);
+		return setBoth;
 	}
 	
-	public static Boolean subtractAccountDebt(Account account, Double value) { 
+	public static Boolean subtractAccountDebt(Account account, Double value) {
+		Boolean setBoth;
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+		setBoth = DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 			account.getAccountID(), value, account.getCurrency(), TransactionType.SUBTRACTDEBT, 
 			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractDebt(value);
-		DatabaseSet.setAccount(account);
-		return true;
+		setBoth = DatabaseSet.setAccount(account);
+		return setBoth;
 	}
 	
-	public static void deposit(Account account, Double amount) {
+	public static Boolean deposit(Account account, Double amount) {
 		System.out.println("making transaction");
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 			account.getAccountID(), amount, account.getCurrency(), TransactionType.DEPOSIT, 
 			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.addBalance(amount);
 		System.out.println("Hello "+amount);
-		DatabaseSet.setAccount(account);
+		return DatabaseSet.setAccount(account);
 	}
 	
-	public static void changeOwnershipOfAccount(Account account, UUID newOwner) {
+	public static Boolean changeOwnershipOfAccount(Account account, UUID newOwner) {
 		UserInf thisCustomer = DatabaseGet.getUserByUserID(newOwner);
 		account.setOwnerID(thisCustomer.getID());
-		DatabaseSet.setAccount(account);
+		return DatabaseSet.setAccount(account);
 	}
 	
 	public static Boolean deleteAccount(Account account) {

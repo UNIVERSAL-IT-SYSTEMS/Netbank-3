@@ -15,7 +15,6 @@
 <% String id=request.getParameter("id"); %>
 <% UUID empid = (UUID) session.getAttribute("empID"); %>
 <% if (session == null || session.getAttribute("empID") == null) response.sendRedirect("/Netbank/index.jsp");%>
-
 <%=id %>
 <%=empid %>
 <h2>Customer</h2>
@@ -76,7 +75,7 @@
 </form>
 
 <% ArrayList<Transaction> transactions = DatabaseGet.getTransactionByAccountID(UUID.fromString(id)); %>
-
+<h2>Transactions</h2>
 <table border="1" style="width:100%">
 	<tr>
 		<td>Amount</td>

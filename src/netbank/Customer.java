@@ -13,17 +13,11 @@ public class Customer extends User {
 		if(receiveAccount == null || account.belowZero(amount) || amount < 0 || DatabaseGet.getCurrency(account.getCurrency()) == null) {
 			return false;
 		}
-		System.out.println("ADJUSTING LOCAL BALANCE");
 		account.subtractBalance(amount);
-		System.out.println("SETTING ACCOUNT");
 		DatabaseSet.setAccount(account);
-		System.out.println("here now");
 		if(account.getCurrency() == receiveAccount.getCurrency()) {
 			receiveAccount.addBalance(amount);
 			DatabaseSet.setAccount(receiveAccount);
-			System.out.println(account.getBalance());
-			System.out.println("INSERTING TRANSACTION");
-			System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
 			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
@@ -31,10 +25,7 @@ public class Customer extends User {
 		} else {
 			Double newAmount = amount*Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency());
 			receiveAccount.addBalance(newAmount);
-			System.out.println(account.getBalance());
 			DatabaseSet.setAccount(receiveAccount);
-			System.out.println("INSERTING TRANSACTION");
-			System.out.println(" , "+newAmount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
 			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
@@ -43,20 +34,14 @@ public class Customer extends User {
 	}
 	
 	public static Boolean withdrawal(Account account, Double amount) {
-		System.out.println(amount);
-		System.out.println(account.getBalance());
 		if(account.belowZero(amount)) {
 			return false;
 		}
-		System.out.println("Not below zero");
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 				account.getAccountID(), amount, account.getCurrency(), TransactionType.WITHDRAWAL, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
-		System.out.println("Transaction made");
 		account.subtractBalance(amount);
-		System.out.println("subracted");
 		DatabaseSet.setAccount(account);
-		System.out.println("set");
 		return true;
 	}
 }

@@ -13,10 +13,10 @@
 <title>Put-in</title>
 </head>
 <body>
-<% String id=request.getParameter("accid"); %>
+<% String accid=request.getParameter("accid"); %>
 <% UUID empid = (UUID) session.getAttribute("empID"); %>
 <% if (session == null || session.getAttribute("empID") == null) response.sendRedirect("/Netbank/index.jsp");%>
-<% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(id)); %>
+<% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid)); %>
 <form action="ChangeInformationServlet" method="post">
 	<table border="1" style="width:100%">
 		<tr>
@@ -40,14 +40,16 @@
 			</tr>
 			<tr>
 				<td> Can't change </td>
-				<td> <input type="number" name="balance" placeholder="Subtract balance"> </td>
+				<td> <input type="number" step="any" name="balance" placeholder="Subtract balance"> </td>
 				<td> <select name="currency">
-					<% for(int i = 0; i < Currency.getAvailableCurrencies().toArray().length; i++) { %> 
-						<option value="<%=Currency.getAvailableCurrencies().toArray()[i]%>"><%=Currency.getAvailableCurrencies().toArray()[i]%></option>
+					<option value="dontchange" selected="selected"></option>
+					<% Object[] currencies = DatabaseGet.getCurrencies().keySet().toArray(); %>
+					<% for(int i = 0; i < currencies.length; i++) { %> 
+						<option value="<%=currencies[i].toString()%>"><%=currencies[i].toString()%></option>
 					<% } %>
 				</select> </td>
-				<td> <input type="number" name="debt" placeholder="Add/subtract debt"> </td>
-				<td> <input type="number" name="interest" placeholder="New interest"> </td>
+				<td> <input type="number" step="any" name="debt" placeholder="Add/subtract debt"> </td>
+				<td> <input type="number" step="any" name="interest" placeholder="New interest"> </td>
 				<td> <input type="text" name="cusid" placeholder="New owner"> </td>
 			</tr>
 		<% } %>

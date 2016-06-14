@@ -37,10 +37,16 @@ public class Account {
 	public void setInterest(Double value) { interest = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_FLOOR); }
 	public void setOwnerID(UUID newOwner) { ownerID = newOwner; }
 	public void setCurrency(Currency newCurrency) {
-		currency = newCurrency; 
-		balance = balance.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
-		debt = debt.multiply(BigDecimal.valueOf(Currencies.changeCurrency(currency, newCurrency))).setScale(2, BigDecimal.ROUND_FLOOR);
+		Double tempBalance = balance.doubleValue();
+		tempBalance = tempBalance*Currencies.changeCurrency(currency, newCurrency);
+		balance = BigDecimal.valueOf(tempBalance).setScale(2, BigDecimal.ROUND_FLOOR);
+		System.out.println("New balance: "+balance);
+		Double tempDebt = debt.doubleValue();
+		tempDebt = tempDebt*Currencies.changeCurrency(currency, newCurrency);
+		debt = BigDecimal.valueOf(tempDebt).setScale(2, BigDecimal.ROUND_FLOOR);
+		System.out.println("New debt: "+debt);
 		System.out.println(balance+" , "+debt);
+		currency = newCurrency; 
 	}
 	
 	public Boolean belowZero(Double value) { if((balance.doubleValue()-value) >= 0) { return false; } return true; }

@@ -41,6 +41,7 @@ public class Currencies {
 	public static Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
 		Double oldAmount = DatabaseGet.getCurrency(oldCurrency);
 		Double newAmount = DatabaseGet.getCurrency(newCurrency);
+		System.out.println("Ratio: "+newAmount/oldAmount);
 		return newAmount/oldAmount;
 	}
 }

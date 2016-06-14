@@ -26,7 +26,7 @@ public class DepositServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("empID") == null) {
 			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("Netbank/index.jsp").forward(request,response);
+			request.getRequestDispatcher("/index.jsp").forward(request,response);
 		}
 		String amount=request.getParameter("amount");
 		String accid=request.getParameter("accid");
@@ -34,13 +34,18 @@ public class DepositServlet extends HttpServlet {
 		Double am = Double.valueOf(amount);
 		System.out.println(am);
 		if(am > 0) {
-			System.out.println("over 0");
-			Employee.deposit(account, am);
+			if(Employee.deposit(account, am)) {
+				request.setAttribute("message", "Successfully deposited");
+			} else {
+				request.setAttribute("message", "Deposit failed");
+			}
+		} else {
+			request.setAttribute("message", "Only positive numbers accepted");
 		}
 		
 		
 		
-		request.setAttribute("message", "Successfully deposited");
+		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}

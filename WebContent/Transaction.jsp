@@ -38,7 +38,7 @@
 			<% } %>
 		<% } %>
 	</table>
-	Amount: <input type="number" name="amount" placeholder="Amount" required> <br/>
+	Amount: <input type="number" step="any" name="amount" placeholder="Amount" required> <br/>
 	To: <input type="text" name="receiverID" placeholder="ID" required> <br/>
 	<input type="submit" name="transaction">
 </form>

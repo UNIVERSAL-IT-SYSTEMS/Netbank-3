@@ -26,13 +26,17 @@ public class DeleteAccountServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("empsID") == null) {
 			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("Netbank/index.jsp").forward(request,response);
+			request.getRequestDispatcher("/index.jsp").forward(request,response);
 		}
 		String accid=request.getParameter("accid");
 		
 		Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
 		
-		Employee.deleteAccount(account);
+		if(Employee.deleteAccount(account)) {
+			request.setAttribute("message", "Deleted account "+accid);
+		} else {
+			request.setAttribute("message", "Could not delete account "+accid);
+		}
 		
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);

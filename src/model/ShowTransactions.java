@@ -24,7 +24,7 @@ public class ShowTransactions extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session == null || session.getAttribute("cusID") == null) {
 			// Forward the control to login.jsp if authentication fails or session expires
-			request.getRequestDispatcher("Netbank/index.jsp").forward(request,response);
+			request.getRequestDispatcher("/index.jsp").forward(request,response);
 		}
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();

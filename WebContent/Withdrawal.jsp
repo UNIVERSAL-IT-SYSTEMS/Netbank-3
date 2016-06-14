@@ -38,7 +38,7 @@
 			<% } %>
 		<% } %>
 	</table>
-	Amount: <input type="text" name="amount" placeholder="Amount"> <br/>
+	Amount: <input type="number" step="any" name="amount" placeholder="Amount"> <br/>
 	<input type="submit" name="withdrawal">
 </form>
 <form name="Menu" action="MainMenu.jsp">
