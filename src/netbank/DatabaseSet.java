@@ -10,7 +10,7 @@ public class DatabaseSet {
 	//
 	
 	public static boolean setAccount(Account acc) {
-		if(Dao.accountExists(acc.getAccountID())) {
+		if(DatabaseGet.getAccountsByUserID(acc.getAccountID()) != null) {
 			System.out.println("UPDATE DTUGRP04.\"accounts\" SET \"cusid\"='"+acc.getOwnerID().toString()
 					+ "', \"balance\"="+acc.getBalance()+", \"interest\"="+acc.getInterest()
 					+ ", \"debt\"="+acc.getDebt()+", CURRENCY='"+acc.getCurrency() +"' WHERE \"accid\"='"+ acc.getAccountID() + "';");
@@ -30,18 +30,19 @@ public class DatabaseSet {
 	}
 	
 	public static boolean setUser(UserInf cust) {
-		if(Dao.userNameExists(cust.getUsername())) {
+		if(DatabaseGet.getUserByUsername(cust.getUsername()) != null) {
 			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET userid="+cust.getID().toString()
 					+ ", name="+cust.getName()+", address="+cust.getAddress()
 					+ ", password="+cust.getHash()+", salt="+cust.getSalt()
 					+ ", locale="+cust.getLocale().toString()
 					+ "WHERE userid="+cust.getID().toString());
 		} else {
+			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
+					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
 			return servle.getDb().setters("INSERT INTO DTUGRP04.\"customers\" VALUES ('"+cust.getID().toString()
-					+ "','"+cust.getName()+"','"+cust.getAddress()
-					+ "','"+cust.getHash()+", salt="+cust.getSalt()
-					+ ", locale="+cust.getLocale().toString()
-					+ "WHERE userid="+cust.getID().toString());
+					+ "','"+cust.getUsername()+"','"+cust.getName()+"','"+cust.getAddress()+"','"+cust.getLanguage()
+					+ "','"+cust.getCountry()+ "','"+cust.getSalt()+"','"+cust.getHash()+"','"+cust.getIsEmployee()+"')");
 		}
 		
 		

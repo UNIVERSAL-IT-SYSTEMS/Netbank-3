@@ -38,7 +38,7 @@ public class UserInf {
 	public UUID getID() { return ID; }
 	public String getSalt() { return salt; }
 	public String getHash() { return hash; }
-	public Boolean getIsEmployee() { return isEmployee; }
+	public int getIsEmployee() { if(isEmployee) { return 1; } return 0; }
 
 	public void setName(String name) { this.name = name; }
 	public void setAddress(String address) { this.address = address; }

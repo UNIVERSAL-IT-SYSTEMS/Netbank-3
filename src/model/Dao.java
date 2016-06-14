@@ -5,9 +5,7 @@ import java.util.UUID;
 import netbank.*; 
 
 public class Dao {
-	
-	Customer custom;
-	
+		
 	public static boolean loginValidate(String salt, String hash, String password) {  
 		try{ 
 			if(Hash.SHA512(password, salt).equals(hash)) {
