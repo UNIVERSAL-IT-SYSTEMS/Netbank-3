@@ -68,4 +68,9 @@ public class DatabaseSet {
 		+ "','" + trans.getReceiverID()+"'," + trans.getAmount() 
 		+ ",'" + trans.getTransactionType() + "','" + trans.getCurrency()+"')");
 	}
+	
+	public static boolean removeCustomer(UserInf cust) {
+		System.out.println("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
+		return servle.getDb().setters("DELTE FROM DTUGRP04.\"customers\" WHERE \"cusid\"='"+cust.getID()+"'");
+	}
 }
