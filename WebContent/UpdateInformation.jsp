@@ -15,8 +15,7 @@
 <body>
 <% String id=request.getParameter("accid"); %>
 <% UUID empid = (UUID) session.getAttribute("empID"); %>
-<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
-<% if(session.getAttribute("empID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<% if (session == null || session.getAttribute("empID") == null) response.sendRedirect("/Netbank/index.jsp");%>
 <% Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(id)); %>
 <form action="ChangeInformationServlet" method="post">
 	<table border="1" style="width:100%">

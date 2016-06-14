@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.sun.jmx.snmp.Timestamp;
 
 
 public class Database {
@@ -54,6 +57,30 @@ public class Database {
 			stmt = connection.createStatement();
 			stmt.execute(qwy);
 			
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean setters(ArrayList<String> qwy) {
+		try {
+			connection = DriverManager.getConnection(url, user, password);
+			//connection = myDataSource.getConnection();
+			stmt = connection.createStatement();
+			System.out.println(new Timestamp());
+			for(int i = 0; i<qwy.size(); i++) {
+				stmt.addBatch(qwy.get(i));
+			}
+			int[] executedAll = stmt.executeBatch();
+			System.out.println(new Timestamp());
+			Boolean did = false;
+			for(int i = 0; i<executedAll.length; i++) {
+				if(executedAll[i]==0) {
+					return false;
+				}
+			}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

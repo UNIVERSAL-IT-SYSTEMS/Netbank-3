@@ -9,8 +9,7 @@
 </head>
 <body>
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
-<% if (session ==  null ) { response.sendRedirect("/Netbank/index.jsp"); } %>
-<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<% if (session == null || session.getAttribute("cusID") == null) { response.sendRedirect("/Netbank/index.jsp"); } %>
 <%=id%>
 <form action="ChangePasswordServlet" method="post">
 	<input type="password" name="oldpassword" placeholder="Old password" required>

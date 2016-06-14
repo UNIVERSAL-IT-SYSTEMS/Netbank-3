@@ -19,11 +19,6 @@ public class AccountTest {
 		cusID = UUID.randomUUID();
 		accID = UUID.randomUUID();
 		account = new Account(accID,cusID,2.0, 2.0, 40.0, Currency.getInstance(Locale.GERMANY));
-		try {
-			Currencies.UpdateCurrencies();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Test

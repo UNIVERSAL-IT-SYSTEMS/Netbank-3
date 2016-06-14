@@ -1,8 +1,10 @@
 package netbank;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import model.Dao;
@@ -80,16 +82,18 @@ public class DatabaseSet {
 	public static boolean setCurrencies(Hashtable<Currency, Double> currencies) {
 		if(servle.getDb() == null) { servle.initDB(); }
 		Enumeration<Currency> e = currencies.keys();
-		Boolean done = false;
+		ArrayList<String> qwy = new ArrayList<String>();
+		HashMap<Currency, Double> databaseCurrencies = DatabaseGet.getCurrencies();
 		while(e.hasMoreElements()) {
 			Currency key = e.nextElement();
-			if(DatabaseGet.getCurrency(key) != null) {
-				servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"currency\"='"+key+"', \"rate\"="+currencies.get(key)+";");
+			if(databaseCurrencies.get(key) != null) {
+				System.out.println("UPDATE DTUGRP04.\"currencies\" SET \"rate\"="+currencies.get(key)+" WHERE \"currency\"='"+key.getCurrencyCode()+"';");
+				qwy.add("UPDATE DTUGRP04.\"currencies\" SET \"rate\"="+currencies.get(key)+" WHERE \"currency\"='"+key.getCurrencyCode()+"';");
 			} else {
 				System.out.println("INSERT INTO DTUGRP04.\"currencies\" VALUES ('"+key+"',"+currencies.get(key)+")");
-				done = servle.getDb().setters("INSERT INTO DTUGRP04.\"currencies\" VALUES ('"+key+"','"+currencies.get(key)+"')");
+				qwy.add("INSERT INTO DTUGRP04.\"currencies\" VALUES ('"+key+"','"+currencies.get(key)+"')");
 			}
 		}
-		return done;
+		return servle.getDb().setters(qwy);
 	}
 }

@@ -12,8 +12,7 @@
 </head>
 <body>
 <% UUID empid = (UUID) session.getAttribute("empID"); %>
-<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
-<% if(session.getAttribute("empID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<% if (session == null || session.getAttribute("empID") == null) response.sendRedirect("/Netbank/index.jsp");%>
 <%=empid %>
 <h2>Search</h2>
 <form action="EmpAccounts.jsp">
@@ -46,7 +45,14 @@
 	<input type="submit" name="deleteaccount">
 </form>
 
-<a href="index.jsp">Back to log-in</a>
+<h2>Update Currencies</h2>
+<form action="UpdateCurrenciesServlet" method="post">
+	<input type="submit" name="update">
+</form>
+
+<form action="LogoutServlet" method="post">
+    <input type="submit" value="Logout" />
+</form>
 
 </body>
 </html>

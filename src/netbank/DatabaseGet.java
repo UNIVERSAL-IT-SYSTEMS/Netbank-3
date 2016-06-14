@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.UUID;
 import model.servle;
 
@@ -127,6 +128,22 @@ public class DatabaseGet {
 				System.out.println("Currency doesn't exist");
 				return null;
 			}
+		} catch (SQLException e) {
+			System.out.println("FAILED");
+			e.printStackTrace();
+		} 
+		return null;
+	}
+	
+	public static HashMap<Currency,Double> getCurrencies() {
+		if(servle.getDb() == null) { servle.initDB(); };
+		HashMap<Currency,Double> currencies = new HashMap<Currency,Double>();
+		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"currencies\"");
+		try {
+			while(res.next()) {
+				currencies.put(Currency.getInstance(res.getString(1)), res.getDouble(2));
+			}
+			return currencies;
 		} catch (SQLException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();

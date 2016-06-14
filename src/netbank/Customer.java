@@ -24,7 +24,7 @@ public class Customer extends User {
 			System.out.println(account.getBalance());
 			System.out.println("INSERTING TRANSACTION");
 			System.out.println(" , "+amount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
+			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
@@ -35,7 +35,7 @@ public class Customer extends User {
 			DatabaseSet.setAccount(receiveAccount);
 			System.out.println("INSERTING TRANSACTION");
 			System.out.println(" , "+newAmount+" , "+new Timestamp(Calendar.getInstance().getTime().getTime()));
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), 
+			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
 				receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION, 
 				new Timestamp(Calendar.getInstance().getTime().getTime())));
 			return true;
@@ -49,8 +49,9 @@ public class Customer extends User {
 			return false;
 		}
 		System.out.println("Not below zero");
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(),account.getOwnerID(), amount, account.getCurrency(), 
-			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+				account.getAccountID(), amount, account.getCurrency(), TransactionType.WITHDRAWAL, 
+				new Timestamp(Calendar.getInstance().getTime().getTime())));
 		System.out.println("Transaction made");
 		account.subtractBalance(amount);
 		System.out.println("subracted");

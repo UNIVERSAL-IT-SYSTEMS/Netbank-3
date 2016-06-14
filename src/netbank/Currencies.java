@@ -9,7 +9,7 @@ import org.json.*;
 
 public class Currencies {
 	
-	public static void UpdateCurrencies() throws IOException {
+	public static Boolean UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> currencies = new Hashtable<Currency, Double>();
 		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
 		Currency[] currencyNames = Currency.getAvailableCurrencies().toArray(new Currency[Currency.getAvailableCurrencies().size()]);
@@ -31,9 +31,10 @@ public class Currencies {
 					//System.err.println("Couldn't add: "+Currency.getAvailableCurrencies().toArray()[i]+e);
 				}
 			}
-			DatabaseSet.setCurrencies(currencies);
+			return DatabaseSet.setCurrencies(currencies);
 		} catch(JSONException e) {
 			System.err.println("Failed to retrieve currencies. "+e);
+			return false;
 		}
 	}
 				

@@ -21,7 +21,7 @@ public class CurrenciesTest {
 		assertEquals(DatabaseGet.getCurrency(Currency.getInstance(Locale.CANADA)) /
 				DatabaseGet.getCurrency(Currency.getInstance(Locale.FRANCE)),
 				Currencies.changeCurrency(Currency.getInstance(Locale.FRANCE), Currency.getInstance(Locale.CANADA)),0);
-	} 
+	}  
 	
 	@Test(expected = JSONException.class)
 	public void withoutData() throws JSONException {

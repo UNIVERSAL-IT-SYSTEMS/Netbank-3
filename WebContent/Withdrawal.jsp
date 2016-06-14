@@ -14,8 +14,7 @@
 <body>
 <div>
 <%UUID id = (UUID) session.getAttribute("cusID"); %>
-<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
-<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<% if (session == null || session.getAttribute("cusID") == null ) response.sendRedirect("/Netbank/index.jsp");%>
 <%=id%>
 <% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(id); %>
 <form action="WithdrawalServlet" method="get">

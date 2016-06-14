@@ -17,8 +17,7 @@
 </head>
 <body>
 <% UUID cusid = (UUID) session.getAttribute("cusID"); %>
-<% if (session ==  null ) response.sendRedirect("/Netbank/index.jsp");%>
-<% if(session.getAttribute("cusID")==null) response.sendRedirect("/Netbank/index.jsp");%>
+<% if (session == null || session.getAttribute("cusID") == null) response.sendRedirect("/Netbank/index.jsp");%>
 	<div style="text-align: center">
 		<% ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(cusid); %>
 		<% UserInf cust = DatabaseGet.getUserByUserID(cusid); %>
@@ -61,7 +60,9 @@
 		<form action="ChangePassword.jsp">
 			<button name="changepassword" type="submit">Change password</button>
 		</form>
-		<a href="index.jsp">Back to log-in</a>
+		<form action="LogoutServlet" method="post">
+   			 <input type="submit" value="Logout" />
+		</form>
 		
 	</div>
 </body>

@@ -26,8 +26,9 @@ public class Employee extends User {
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), account.getOwnerID(), value, account.getCurrency(), 
-			TransactionType.WITHDRAWAL, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+			account.getAccountID(), value, account.getCurrency(), TransactionType.WITHDRAWAL, 
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractBalance(value); 
 		DatabaseSet.setAccount(account);
@@ -35,8 +36,9 @@ public class Employee extends User {
 	}
 	
 	public static void addAccountDebt(Account account, Double value) { 
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(),account.getOwnerID(), account.getOwnerID(), value, account.getCurrency(), 
-			TransactionType.ADDDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+			account.getAccountID(), value, account.getCurrency(), TransactionType.ADDDEBT, 
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.addDebt(value);
 		DatabaseSet.setAccount(account);
@@ -46,8 +48,9 @@ public class Employee extends User {
 		if(account.belowZero(value)) {
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), account.getOwnerID(), value, account.getCurrency(), 
-			TransactionType.SUBTRACTDEBT, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+			account.getAccountID(), value, account.getCurrency(), TransactionType.SUBTRACTDEBT, 
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		
 		account.subtractDebt(value);
 		DatabaseSet.setAccount(account);
@@ -56,8 +59,9 @@ public class Employee extends User {
 	
 	public static void deposit(Account account, Double amount) {
 		System.out.println("making transaction");
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getOwnerID(), account.getOwnerID(), amount, account.getCurrency(), 
-			TransactionType.DEPOSIT, new Timestamp(Calendar.getInstance().getTime().getTime())));
+		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), 
+			account.getAccountID(), amount, account.getCurrency(), TransactionType.DEPOSIT, 
+			new Timestamp(Calendar.getInstance().getTime().getTime())));
 		account.addBalance(amount);
 		System.out.println("Hello "+amount);
 		DatabaseSet.setAccount(account);
@@ -71,7 +75,7 @@ public class Employee extends User {
 	
 	public static Boolean deleteAccount(Account account) {
 		if (account.getBalance() == 0 && account.getDebt() == 0) {
-			// TODO: Delete the account
+			DatabaseSet.removeAccount(account);
 			return true;
 		} else {
 			Double tempBalance = account.getBalance();
@@ -83,14 +87,14 @@ public class Employee extends User {
 				oneAccount.addBalance(tempBalance);
 				oneAccount.addDebt(tempDebt);
 				DatabaseSet.setAccount(oneAccount);
-				// TODO: Delete the account
+				DatabaseSet.removeAccount(account);
 				return true;
 			} else if (oneAccount != null) {
 				Double cur = Currencies.changeCurrency(account.getCurrency(), oneAccount.getCurrency());
 				oneAccount.addBalance(tempBalance*cur);
 				oneAccount.addDebt(tempBalance*cur);
 				DatabaseSet.setAccount(oneAccount);
-				// TODO: Delete the account.
+				DatabaseSet.removeAccount(account);
 				return true;
 			}
 		}
