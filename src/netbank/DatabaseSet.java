@@ -43,15 +43,14 @@ public class DatabaseSet {
 		}
 		if (Dao.userNameExists(cust.getUsername())) {
 			// "INSERT INTO DTUGRP04.\"customers\" VALUES ('?','?')";
-			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('" + cust.getID().toString() + "','"
-					+ cust.getUsername() + "','" + cust.getName() + "','" + cust.getAddress() + "','"
-					+ cust.getLanguage() + "','" + cust.getCountry() + "','" + cust.getSalt() + "','" + cust.getHash()
-					+ "','" + (cust.getIsEmployee() ? 1 : 0) + "')");
-			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"userid\"='" + cust.getID().toString()
-					+ "', \"name\"='" + cust.getUsername() + "', \"name\"='" + cust.getName() + "', \"address\"='"
+			System.out.println("UPDATE DTUGRP04.\"customers\" SET \"username\"='" + cust.getUsername() + "', \"name\"='" + cust.getName() + "', \"address\"='"
 					+ cust.getAddress() + "', \"language\"='" + cust.getLanguage() + "', \"country\"='"
 					+ cust.getCountry() + "', \"salt\"='" + cust.getSalt() + "', \"hash\"='" + cust.getHash()
 					+ "' WHERE \"userid\"='" + cust.getID().toString() + "'");
+			return servle.getDb().setters("UPDATE DTUGRP04.\"customers\" SET \"username\"='" + cust.getUsername() + "', \"name\"='" + cust.getName() + "', \"address\"='"
+					+ cust.getAddress() + "', \"language\"='" + cust.getLanguage() + "', \"country\"='"
+					+ cust.getCountry() + "', \"salt\"='" + cust.getSalt() + "', \"hash\"='" + cust.getHash()
+					+ "' WHERE \"cusid\"='" + cust.getID().toString() + "'");
 		} else {
 			String emp = cust.getIsEmployee() ? "1" : "0";
 			System.out.println("INSERT INTO DTUGRP04.\"customers\" VALUES ('" + cust.getID().toString() + "','"

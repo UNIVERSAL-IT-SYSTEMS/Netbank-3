@@ -1,5 +1,6 @@
 package netbank;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.UUID;
@@ -60,8 +61,6 @@ public class Employee extends User {
 				new Timestamp(Calendar.getInstance().getTime().getTime())))) {
 			return false;
 		}
-		
-		System.out.println("hesdfre");
 		account.subtractDebt(value);
 		return DatabaseSet.setAccount(account);
 	}
@@ -79,7 +78,11 @@ public class Employee extends User {
 
 	public static Boolean changeOwnershipOfAccount(Account account, UUID newOwner) {
 		UserInf thisCustomer = DatabaseGet.getUserByUserID(newOwner);
-		account.setOwnerID(thisCustomer.getID());
+		try {
+			account.setOwnerID(thisCustomer.getID());
+		} catch (Exception e) {
+			return false;
+		}
 		return DatabaseSet.setAccount(account);
 	}
 
@@ -89,20 +92,29 @@ public class Employee extends User {
 		} else {
 			Double tempBalance = account.getBalance();
 			Double tempDebt = account.getDebt();
-			Account oneAccount = DatabaseGet.getAccountByAccountID(account.getAccountID());
-			if (oneAccount != null && account.getCurrency() == oneAccount.getCurrency()) {
-				oneAccount.addBalance(tempBalance);
-				oneAccount.addDebt(tempDebt);
+			ArrayList<Account> accounts = DatabaseGet.getAccountsByUserID(account.getOwnerID());
+			Account oneAccount = null;
+			for(int i = 0; i<accounts.size();i++) {
+				oneAccount = accounts.get(i);
+				if(!oneAccount.getAccountID().toString().equals(account.getAccountID().toString())) {
+					break;
+				}
+			}
+			if(oneAccount.getAccountID().toString().equals(account.getAccountID().toString())) {
+				return false;
+			}
+			if (account.getCurrency().equals(oneAccount.getCurrency())) {
+				Employee.deposit(oneAccount, tempBalance);
+				Employee.addAccountDebt(oneAccount, tempDebt);
 				if(!DatabaseSet.setAccount(oneAccount)) { return false; }
 				return DatabaseSet.removeAccount(account);
-			} else if (oneAccount != null) {
+			} else {
 				Double cur = Currencies.changeCurrency(account.getCurrency(), oneAccount.getCurrency());
-				oneAccount.addBalance(tempBalance * cur);
-				oneAccount.addDebt(tempBalance * cur);
+				Employee.deposit(oneAccount, tempBalance*cur);
+				Employee.addAccountDebt(oneAccount, tempDebt*cur);
 				if(!DatabaseSet.setAccount(oneAccount)) { return false; }
 				return DatabaseSet.removeAccount(account);
 			}
 		}
-		return false;
 	}
 }

@@ -30,7 +30,7 @@ public class TransactionTest {
 		assertEquals(Currency.getInstance(Locale.CANADA),tr.getCurrency());
 		assertEquals(senderUUID,tr.getSenderID());
 		assertEquals(receiverUUID,tr.getReceiverID());
-		assertEquals(TransactionType.valueOf("Transaction"),tr.getTransactionType());
+		assertEquals(TransactionType.valueOf("TRANSACTION"),tr.getTransactionType());
 		assertNotNull(tr.getTransactionID());
 		assertNotNull(tr.getTimestamp());
 	}

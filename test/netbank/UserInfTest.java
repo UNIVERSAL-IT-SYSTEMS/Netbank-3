@@ -23,6 +23,7 @@ public class UserInfTest {
 
 	@Test
 	public void newCustomer() {
+		assertEquals("testusername",cust.getUsername());
 		assertEquals("test", cust.getName());
 		assertEquals("testaddress", cust.getAddress());
 		assertEquals(ID, cust.getID());
@@ -31,10 +32,11 @@ public class UserInfTest {
 		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(), cust.getLocale());
 		assertEquals("da", cust.getLanguage());
 		assertEquals("dk", cust.getCountry());
+		assertFalse(cust.getIsEmployee());
 	}
 
 	@Test
-	public void ChangeInformation() {
+	public void ChangeInformation() { 
 		cust.setName("Alice");
 		assertEquals("Alice", cust.getName());
 		cust.setAddress("new place");

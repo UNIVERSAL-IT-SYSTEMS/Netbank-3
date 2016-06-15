@@ -17,6 +17,7 @@ public class Currencies {
 		try {
 			Scanner scan = new Scanner(url.openStream());
 			String text = new String();
+			
 			while (scan.hasNext()) {
 				text += scan.nextLine();
 			}

@@ -54,8 +54,8 @@ public abstract class User {
 		return account.getAccountID();
 	}
 
-	public static void ChangePassword(UserInf user, String password) {
+	public static Boolean ChangePassword(UserInf user, String password) {
 		user.setHash(Hash.SHA512(password, user.getSalt()));
-		DatabaseSet.setUser(user);
+		return DatabaseSet.setUser(user);
 	}
 }

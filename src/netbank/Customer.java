@@ -6,16 +6,20 @@ import java.util.UUID;
 
 public class Customer extends User {
 
-	public static Boolean transaction(UUID senderID, Account account, Double amount, UUID recieverID) {
+	public static Boolean transaction(UUID senderID, Account account, Double amount, UUID receiverID) {
 
-		Account receiveAccount = DatabaseGet.getAccountByAccountID(recieverID);
-		System.out.println(receiveAccount.getCurrency());
-		if (receiveAccount == null || account.belowZeroBalance(amount) || amount < 0
-				|| DatabaseGet.getCurrency(account.getCurrency()) == null) {
+		if (account.belowZeroBalance(amount) || amount < 0) {
 			return false;
+		}
+		Account receiveAccount = DatabaseGet.getAccountByAccountID(receiverID);
+		if(receiveAccount == null) {
+			return false;
+		} else if(senderID.toString().equals(receiverID.toString())) {
+			return true;
 		}
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
+		
 		if (account.getCurrency() == receiveAccount.getCurrency()) {
 			receiveAccount.addBalance(amount);
 			DatabaseSet.setAccount(receiveAccount);
@@ -35,7 +39,9 @@ public class Customer extends User {
 	}
 
 	public static Boolean withdrawal(Account account, Double amount) {
-		if (account.belowZeroBalance(amount)) {
+		System.out.println(account.getBalance());
+		System.out.println(amount);
+		if (account.belowZeroBalance(amount) || amount < 0) { 
 			return false;
 		}
 		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), account.getAccountID(),
