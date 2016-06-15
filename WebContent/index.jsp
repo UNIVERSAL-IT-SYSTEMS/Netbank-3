@@ -36,7 +36,6 @@
 				<a href="Register.jsp">Register</a>
 			</div>
 		</div>
-		<br> <a href="tableview.jsp">View tables</a>
 	</div>
 </body>
 </html>
