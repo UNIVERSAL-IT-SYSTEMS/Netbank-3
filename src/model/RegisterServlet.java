@@ -44,18 +44,12 @@ public class RegisterServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			try {
-				Database db = new Database();
-				String salt = Hash.getSalt();
-				DatabaseSet.setUser(new UserInf(UUID.randomUUID(), username, name, address, language, country, salt,
-						Hash.SHA512(password, salt), false));
-				request.setAttribute("message", "Registered");
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
-				dispatcher.forward(request, response);
-			} catch (SQLException e) {
-				System.out.println("FAILED");
-				e.printStackTrace();
-			}
+			String salt = Hash.getSalt();
+			DatabaseSet.setUser(new UserInf(UUID.randomUUID(), username, name, address, language, country, salt,
+					Hash.SHA512(password, salt), false));
+			request.setAttribute("message", "Registered");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
 		}
 		// doGet(request, response);
 		// out.close();

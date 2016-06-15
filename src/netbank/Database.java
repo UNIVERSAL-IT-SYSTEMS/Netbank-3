@@ -13,22 +13,15 @@ public class Database {
 
 	// @Resource(lookup = "jdbc/db2")
 	// private DataSource myDataSource;
+	private static Connection connection;
+	private static Statement stmt;
 
-	Connection connection;
-	Statement stmt;
+	private static String name = "com.ibm.db2.jcc.DB2Driver";
+	private static String user = "DTU09";
+	private static String password = "FAGP2016";
+	private static String url = "jdbc:db2://192.86.32.54:5040/DALLASB:retrieveMessagesFromServerOnGetMessage=true;emulateParameterMetaDataForZCalls=1;";
 
-	private String name = "com.ibm.db2.jcc.DB2Driver";
-	private String user = "DTU09";
-	private String password = "FAGP2016";
-	private String url = "jdbc:db2://192.86.32.54:5040/DALLASB:retrieveMessagesFromServerOnGetMessage=true;emulateParameterMetaDataForZCalls=1;";
-
-	// DataSource dats
-	public Database() throws SQLException {
-		// myDataSource = dats;
-
-	}
-
-	public ResultSet getters(String qwy) {
+	public static ResultSet getters(String qwy) {
 		ResultSet res = null;
 		try {
 			Class.forName(name);
@@ -48,7 +41,7 @@ public class Database {
 		return null;
 	}
 
-	public boolean setters(String qwy) {
+	public static boolean setters(String qwy) {
 		try {
 			connection = DriverManager.getConnection(url, user, password);
 			// connection = myDataSource.getConnection();
@@ -62,7 +55,7 @@ public class Database {
 		return false;
 	}
 
-	public boolean setters(ArrayList<String> qwy) {
+	public static boolean setters(ArrayList<String> qwy) {
 		try {
 			connection = DriverManager.getConnection(url, user, password);
 			// connection = myDataSource.getConnection();
@@ -73,7 +66,6 @@ public class Database {
 			}
 			int[] executedAll = stmt.executeBatch();
 			System.out.println(new Timestamp());
-			Boolean did = false;
 			for (int i = 0; i < executedAll.length; i++) {
 				if (executedAll[i] == 0) {
 					return false;
@@ -85,4 +77,5 @@ public class Database {
 		}
 		return false;
 	}
+	
 }

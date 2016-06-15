@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.mockito.*;
-import org.powermock.api.mockito.PowerMockito;
 
 public class HashTest {
 
@@ -26,11 +26,12 @@ public class HashTest {
 		assertNotNull(salt);
 		assertNotNull(Hash.SHA512("test123", salt));
 	}
-
-//	@Test(expected = NoSuchAlgorithmException.class)
-//	public void exceptionCatch() throws NoSuchAlgorithmException {
-//		PowerMockito.spy(Hash.class);
-//		Mockito.when(Hash.SHA512("test", salt)).thenReturn(false);
-//		PowerMockito.verifyStatic(Mockito.times(2));
-//	}
+	
+	@Test
+	public void exceptionCatch() throws NoSuchAlgorithmException {
+		LinkedList mockedList = mock(LinkedList.class);
+		when(mockedList.get(0)).thenReturn("first");
+		System.out.println(mockedList.get(0));
+		System.out.println(mockedList.get(999));
+	}
 }

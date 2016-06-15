@@ -23,17 +23,21 @@ public class Customer extends User {
 		if (account.getCurrency() == receiveAccount.getCurrency()) {
 			receiveAccount.addBalance(amount);
 			DatabaseSet.setAccount(receiveAccount);
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(),
+			if(!DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(),
 					receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION,
-					new Timestamp(Calendar.getInstance().getTime().getTime())));
+					new Timestamp(Calendar.getInstance().getTime().getTime())))) {
+				return false;
+			}
 			return true;
 		} else {
 			Double newAmount = amount * Currencies.changeCurrency(account.getCurrency(), receiveAccount.getCurrency());
 			receiveAccount.addBalance(newAmount);
 			DatabaseSet.setAccount(receiveAccount);
-			DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(),
+			if(!DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(),
 					receiveAccount.getAccountID(), amount, receiveAccount.getCurrency(), TransactionType.TRANSACTION,
-					new Timestamp(Calendar.getInstance().getTime().getTime())));
+					new Timestamp(Calendar.getInstance().getTime().getTime())))) {
+				return false;
+			}
 			return true;
 		}
 	}
@@ -44,9 +48,11 @@ public class Customer extends User {
 		if (account.belowZeroBalance(amount) || amount < 0) { 
 			return false;
 		}
-		DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), account.getAccountID(),
+		if(!DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), account.getAccountID(),
 				amount, account.getCurrency(), TransactionType.WITHDRAWAL,
-				new Timestamp(Calendar.getInstance().getTime().getTime())));
+				new Timestamp(Calendar.getInstance().getTime().getTime())))) {
+			return false;
+		}
 		account.subtractBalance(amount);
 		DatabaseSet.setAccount(account);
 		return true;

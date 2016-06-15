@@ -7,17 +7,12 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.UUID;
-import model.servle;
 
 public class DatabaseGet {
 
 	public static ArrayList<Account> getAccountsByUserID(UUID ID) {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
 		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='" + ID.toString() + "'");
-		ResultSet res = servle.getDb()
+		ResultSet res = Database
 				.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"cusid\"='" + ID.toString() + "'");
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		try {
@@ -39,12 +34,8 @@ public class DatabaseGet {
 	}
 
 	public static Account getAccountByAccountID(UUID ID) {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
 		System.out.println("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='" + ID.toString() + "'");
-		ResultSet res = servle.getDb()
+		ResultSet res = Database
 				.getters("SELECT * FROM DTUGRP04.\"accounts\" WHERE \"accid\"='" + ID.toString() + "'");
 		try {
 			if (res.next()) {
@@ -64,12 +55,8 @@ public class DatabaseGet {
 	}
 
 	public static UserInf getUserByUserID(UUID ID) {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '" + ID.toString() + "'");
-		ResultSet res = servle.getDb()
+		ResultSet res = Database
 				.getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"cusid\" = '" + ID.toString() + "'");
 		try {
 			if (res.next()) {
@@ -91,7 +78,7 @@ public class DatabaseGet {
 
 	public static UserInf getUserByUsername(String username) {
 		System.out.println("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '" + username + "'");
-		ResultSet res = servle.getDb()
+		ResultSet res = Database
 				.getters("SELECT * FROM DTUGRP04.\"customers\" WHERE \"username\" = '" + username + "'");
 		try {
 			if (res.next()) {
@@ -113,11 +100,7 @@ public class DatabaseGet {
 	}
 
 	public static ArrayList<Transaction> getTransactionByAccountID(UUID ID) {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"transactions\" WHERE (\"senderid\" = '"
+		ResultSet res = Database.getters("SELECT * FROM DTUGRP04.\"transactions\" WHERE (\"senderid\" = '"
 				+ ID.toString() + "' OR \"receiverid\" = '" + ID.toString() + "')");
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
@@ -142,11 +125,7 @@ public class DatabaseGet {
 	}
 
 	public static Double getCurrency(Currency currency) {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
-		ResultSet res = servle.getDb().getters(
+		ResultSet res = Database.getters(
 				"SELECT * FROM DTUGRP04.\"currencies\" WHERE \"currency\" = '" + currency.getCurrencyCode() + "'");
 		try {
 			if (res.next()) {
@@ -165,12 +144,8 @@ public class DatabaseGet {
 	}
 
 	public static HashMap<Currency, Double> getCurrencies() {
-		if (servle.getDb() == null) {
-			servle.initDB();
-		}
-		;
 		HashMap<Currency, Double> currencies = new HashMap<Currency, Double>();
-		ResultSet res = servle.getDb().getters("SELECT * FROM DTUGRP04.\"currencies\"");
+		ResultSet res = Database.getters("SELECT * FROM DTUGRP04.\"currencies\"");
 		try {
 			while (res.next()) {
 				currencies.put(Currency.getInstance(res.getString(1)), res.getDouble(2));

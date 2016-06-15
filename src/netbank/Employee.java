@@ -103,7 +103,7 @@ public class Employee extends User {
 			if(oneAccount.getAccountID().toString().equals(account.getAccountID().toString())) {
 				return false;
 			}
-			if (account.getCurrency().equals(oneAccount.getCurrency())) {
+			if (account.getCurrency().toString().equals(oneAccount.getCurrency().toString())) {
 				Employee.deposit(oneAccount, tempBalance);
 				Employee.addAccountDebt(oneAccount, tempDebt);
 				if(!DatabaseSet.setAccount(oneAccount)) { return false; }

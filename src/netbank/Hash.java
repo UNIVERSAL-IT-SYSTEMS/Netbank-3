@@ -7,20 +7,21 @@ import java.security.SecureRandom;
 public class Hash {
 
 	public static String SHA512(String passwordToHash, String salt) {
-		String generatedHash = null;
+		MessageDigest md;
 		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			md = MessageDigest.getInstance("SHA-512");
 			md.update(salt.getBytes());
 			byte[] bytes = md.digest(passwordToHash.getBytes());
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < bytes.length; i++) {
 				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
-			generatedHash = sb.toString();
+			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return generatedHash;
+
 	}
 
 	public static String getSalt() {
