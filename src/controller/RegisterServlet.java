@@ -1,7 +1,6 @@
-package model;
+package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -33,26 +32,30 @@ public class RegisterServlet extends HttpServlet {
 		String language = request.getParameter("language");
 		String country = request.getParameter("country");
 
-		// Check if username is not already taken
-		// CustomerInf sameUsername = DatabaseGet.getCustomer(username);
-		if (Dao.userNameExists(username)) {// sameUsername != null) {
-			request.setAttribute("message", "Username taken");
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
-			dispatcher.forward(request, response);
-		} else if (!password.equals(repeatpassword)) {
-			request.setAttribute("message", "Passwords not matching");
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
-			dispatcher.forward(request, response);
-		} else {
-			String salt = Hash.getSalt();
-			DatabaseSet.setUser(new UserInf(UUID.randomUUID(), username, name, address, language, country, salt,
-					Hash.SHA512(password, salt), false));
-			request.setAttribute("message", "Registered");
+		try {
+			if (Dao.userNameExists(username)) {
+				request.setAttribute("message", "Username taken");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
+				dispatcher.forward(request, response);
+			} else if (!password.equals(repeatpassword)) {
+				request.setAttribute("message", "Passwords not matching");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("Register.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				if(Customer.registerUser(username, name, address, language, country, password)) {
+					request.setAttribute("message", "Registered");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
+					dispatcher.forward(request, response);
+				} else {
+					request.setAttribute("message", "Something went wrong!");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
+					dispatcher.forward(request, response);
+				}
+			}
+		} catch (Exception e) {
+			request.setAttribute("message", "Something went wrong!");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
-		// doGet(request, response);
-		// out.close();
 	}
-
 }

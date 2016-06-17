@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.util.UUID;
 
@@ -44,6 +44,9 @@ public class Dao {
 			UUID sID = UUID.fromString(senderID);
 			Double am = Double.parseDouble(amount);
 			UUID rID = UUID.fromString(receiverID);
+			if(am < 0) {
+				return false;
+			}
 			System.out.println("GETTING ACCOUNTS");
 			Account account = DatabaseGet.getAccountByAccountID(sID);
 			System.out.println("PERFORMING TRANSACTION");

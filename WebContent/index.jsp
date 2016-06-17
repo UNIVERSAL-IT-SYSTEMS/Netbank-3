@@ -1,16 +1,4 @@
 <!DOCTYPE HTML>
-<%@page import="java.math.BigInteger"%>
-<%@page import="java.security.SecureRandom"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.Locale"%>
-<%@page import="java.util.Currency"%>
-<%@page import="netbank.*"%>
-<%@page import="model.*"%>
-<%@page import="java.text.NumberFormat"%>
-<%@page import="java.util.GregorianCalendar"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="org.json.*"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>

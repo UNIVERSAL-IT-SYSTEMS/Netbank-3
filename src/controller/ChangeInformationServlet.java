@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.IOException;
 import java.util.Currency;
@@ -31,49 +31,50 @@ public class ChangeInformationServlet extends HttpServlet {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		String accid = request.getParameter("accid");
-		System.out.println("accid: " + accid);
 		String balance = request.getParameter("balance");
-		System.out.println("balance: " + balance);
 		String currency = request.getParameter("currency");
-		System.out.println("currency: " + currency);
 		String debt = request.getParameter("debt");
-		System.out.println("debt: " + debt);
 		String interest = request.getParameter("interest");
-		System.out.println("interst: " + interest);
 		String cusid = request.getParameter("cusid");
-		System.out.println("cusid: " + cusid);
-		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
-		String returnMessage = "";
+		try {
+			Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
+			String returnMessage = "";
 
-		if (setAccountBalance(balance, account)) {
-			returnMessage += "balance, ";
+			if (setAccountBalance(balance, account)) {
+				returnMessage += "balance, ";
+			}
+
+			if (setAccountInterest(interest, account)) {
+				returnMessage += "interest, ";
+			}
+
+			if (setAccountCurrency(currency, account)) {
+				returnMessage += "currency, ";
+			}
+
+			if (setAccountDebt(debt, account)) {
+				returnMessage += "debt, ";
+			}
+
+			if (changeAccountOwner(account, cusid)) {
+				returnMessage += "cusid, ";
+			}
+
+			if (returnMessage.isEmpty()) {
+				request.setAttribute("message", "Wasn't able to change anything");
+			} else {
+				request.setAttribute("message", "Was able to change " + returnMessage);
+			}
+			request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
+		} catch (Exception e) {
+			request.setAttribute("message", "Something went wrong");
+			request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
 		}
 
-		if (setAccountInterest(interest, account)) {
-			returnMessage += "interest, ";
-		}
 
-		if (setAccountCurrency(currency, account)) {
-			returnMessage += "currency, ";
-		}
-
-		if (setAccountDebt(debt, account)) {
-			returnMessage += "debt, ";
-		}
-
-		if (changeAccountOwner(account, cusid)) {
-			returnMessage += "cusid, ";
-		}
-
-		if (returnMessage.isEmpty()) {
-			request.setAttribute("message", "Wasn't able to change anything");
-		} else {
-			request.setAttribute("message", "Was able to change " + returnMessage);
-		}
-		request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
 	}
 
-	private Boolean setAccountBalance(String balance, Account account) {
+	private boolean setAccountBalance(String balance, Account account) {
 		try {
 			if (!balance.isEmpty()) {
 				Double BalanceDouble = Double.parseDouble(balance);
@@ -86,7 +87,7 @@ public class ChangeInformationServlet extends HttpServlet {
 		}
 	}
 
-	private Boolean setAccountInterest(String interest, Account account) {
+	private boolean setAccountInterest(String interest, Account account) {
 		try {
 			if (!interest.isEmpty()) {
 				Double interestDouble = Double.parseDouble(interest);
@@ -100,7 +101,7 @@ public class ChangeInformationServlet extends HttpServlet {
 
 	}
 
-	private Boolean setAccountCurrency(String currency, Account account) {
+	private boolean setAccountCurrency(String currency, Account account) {
 		try {
 			if (currency != account.getCurrency().getCurrencyCode() || currency != "dontchange") {
 				Currency currencyObject = Currency.getInstance(currency);
@@ -113,7 +114,7 @@ public class ChangeInformationServlet extends HttpServlet {
 		}
 	}
 
-	private Boolean setAccountDebt(String debt, Account account) {
+	private boolean setAccountDebt(String debt, Account account) {
 		try {
 			if (!debt.isEmpty()) {
 				Double debtDouble = Double.parseDouble(debt);
@@ -133,7 +134,7 @@ public class ChangeInformationServlet extends HttpServlet {
 		}
 	}
 
-	private Boolean changeAccountOwner(Account account, String id) {
+	private boolean changeAccountOwner(Account account, String id) {
 		try {
 			if (!id.isEmpty()) {
 				UUID cusid = UUID.fromString(id);

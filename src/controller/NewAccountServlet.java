@@ -1,6 +1,7 @@
-package model;
+package controller;
 
 import java.io.IOException;
+import java.util.Currency;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -11,15 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import netbank.Account;
-import netbank.DatabaseGet;
 import netbank.Employee;
 
 /**
- * Servlet implementation class DepositServlet
+ * Servlet implementation class NewAccountServlet
  */
-@WebServlet("/DepositServlet")
-public class DepositServlet extends HttpServlet {
+@WebServlet("/NewAccountServlet")
+public class NewAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,22 +29,18 @@ public class DepositServlet extends HttpServlet {
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
-		String amount = request.getParameter("amount");
-		String accid = request.getParameter("accid");
-		Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
-		Double am = Double.valueOf(amount);
-		System.out.println(am);
-		if (am > 0) {
-			if (Employee.deposit(account, am)) {
-				request.setAttribute("message", "Successfully deposited");
-			} else {
-				request.setAttribute("message", "Deposit failed");
-			}
+		String cusid = request.getParameter("cusid");
+		String interest = request.getParameter("interest");
+		String currency = request.getParameter("currency");
+		
+		if (Employee.newAccount(UUID.fromString(cusid), Double.valueOf(interest), Currency.getInstance(currency))) {
+			request.setAttribute("message", "Created new account");
 		} else {
-			request.setAttribute("message", "Only positive numbers accepted");
+			request.setAttribute("message", "Failed at creating new account");
 		}
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}
+
 }

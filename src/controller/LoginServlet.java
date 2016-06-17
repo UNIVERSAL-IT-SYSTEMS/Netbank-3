@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import netbank.*;
 import java.io.PrintWriter;
@@ -24,24 +24,31 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		UserInf user = DatabaseGet.getUserByUsername(username);
-		if (user != null && Dao.loginValidate(user.getSalt(), user.getHash(), password)) {
-			if (user.getIsEmployee()) {
-				HttpSession session = request.getSession();
-				session.setAttribute("empID", user.getID());
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
-				dispatcher.forward(request, response);
+		try {
+			UserInf user = DatabaseGet.getUserByUsername(username);
+			if (Dao.loginValidate(user.getSalt(), user.getHash(), password)) {
+				if (user.getIsEmployee()) {
+					HttpSession session = request.getSession();
+					session.setAttribute("empID", user.getID());
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
+					dispatcher.forward(request, response);
+				} else {
+					HttpSession session = request.getSession();
+					session.setAttribute("cusID", user.getID());
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
+					dispatcher.forward(request, response);
+				}
 			} else {
-				HttpSession session = request.getSession();
-				session.setAttribute("cusID", user.getID());
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("MainMenu.jsp");
+				request.setAttribute("message", "Username or password error");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 			}
-		} else {
-			request.setAttribute("message", "Username or password error");
+		} catch (Exception e) {
+			request.setAttribute("message", "Something went wrong!");
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
+
 		out.close();
 	}
 }

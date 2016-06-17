@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,16 +34,23 @@ public class ChangePasswordServlet extends HttpServlet {
 		String newpass = request.getParameter("newpassword");
 		String repeat = request.getParameter("repeatednewpassword");
 		String id = request.getParameter("cusID");
-		UserInf user = DatabaseGet.getUserByUserID(UUID.fromString(id));
-		if (Dao.loginValidate(user.getSalt(), user.getHash(), old) && newpass.equals(repeat)) {
-			Customer.ChangePassword(user, newpass);
-			out.print("<h1>Success!</h1>");
-			out.print("<a href=\"MainMenu.jsp\">Back</a>");
-			out.close();
-		} else {
+		try {
+			UserInf user = DatabaseGet.getUserByUserID(UUID.fromString(id));
+			if (Dao.loginValidate(user.getSalt(), user.getHash(), old) && newpass.equals(repeat)) {
+				Customer.ChangePassword(user, newpass);
+				out.print("<h1>Success!</h1>");
+				out.print("<a href=\"MainMenu.jsp\">Back</a>");
+				out.close();
+			} else {
+				out.print("<h1>Failed</h1>");
+				out.print("<a href=\"ChangePassword.jsp\">Back</a>");
+				out.close();
+			}
+		} catch (Exception e) {
 			out.print("<h1>Failed</h1>");
 			out.print("<a href=\"ChangePassword.jsp\">Back</a>");
 			out.close();
 		}
+
 	}
 }

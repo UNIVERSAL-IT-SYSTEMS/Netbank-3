@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,15 +30,20 @@ public class WithdrawalServlet extends HttpServlet {
 		String choice = request.getParameter("choice");
 		String amount = request.getParameter("amount");
 		System.out.println("HAVE INFO - TRYING TO DO WITHDRAWAL");
-		if (Dao.Withdrawal(choice, amount)) {
-			out.print("<h1>Success!</h1>");
-			out.print("<a href=\"MainMenu.jsp\">Back</a>");
-			out.close();
-		} else {
+		try {
+			if (Dao.Withdrawal(choice, amount)) {
+				out.print("<h1>Success!</h1>");
+				out.print("<a href=\"MainMenu.jsp\">Back</a>");
+				out.close();
+			} else {
+				out.print("<h1>Failed</h1>");
+				out.print("<a href=\"Withdrawal.jsp\">Back</a>");
+				out.close();
+			}
+		} catch (Exception e) {
 			out.print("<h1>Failed</h1>");
 			out.print("<a href=\"Withdrawal.jsp\">Back</a>");
 			out.close();
 		}
 	}
-
 }

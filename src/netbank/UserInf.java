@@ -14,10 +14,10 @@ public class UserInf {
 	private UUID ID;
 	private String salt;
 	private String hash;
-	private Boolean isEmployee;
+	private boolean isEmployee;
 
 	public UserInf(UUID ID, String username, String name, String address, String language, String country, String salt,
-			String hash, Boolean isEmployee) {
+			String hash, boolean isEmployee) {
 		this.username = username;
 		this.name = name;
 		this.address = address;
@@ -66,7 +66,7 @@ public class UserInf {
 		return hash;
 	}
 
-	public Boolean getIsEmployee() {
+	public boolean getIsEmployee() {
 		return isEmployee;
 	}
 
@@ -92,7 +92,7 @@ public class UserInf {
 		this.hash = hash;
 	}
 
-	public Locale buildLocation(String language, String country) {
+	private Locale buildLocation(String language, String country) {
 		return new Locale.Builder().setLanguage(language).setRegion(country).build();
 	}
 }

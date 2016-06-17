@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,12 +30,18 @@ public class TransactionServlet extends HttpServlet {
 		String choice = request.getParameter("choice");
 		String amount = request.getParameter("amount");
 		String receiverID = request.getParameter("receiverID");
-		System.out.println("HAVE INFO - TRYING TO DO TRANSACTION");
-		if (Dao.Transaction(choice, amount, receiverID)) {
-			out.print("<h1>Success!</h1>");
-			out.print("<a href=\"MainMenu.jsp\">Back</a>");
-			out.close();
-		} else {
+		try {
+			System.out.println("HAVE INFO - TRYING TO DO TRANSACTION");
+			if (Dao.Transaction(choice, amount, receiverID)) {
+				out.print("<h1>Success!</h1>");
+				out.print("<a href=\"MainMenu.jsp\">Back</a>");
+				out.close();
+			} else {
+				out.print("<h1>Failed</h1>");
+				out.print("<a href=\"Transaction.jsp\">Back</a>");
+				out.close();
+			}
+		} catch (Exception e) {
 			out.print("<h1>Failed</h1>");
 			out.print("<a href=\"Transaction.jsp\">Back</a>");
 			out.close();

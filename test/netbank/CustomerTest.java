@@ -65,21 +65,6 @@ public class CustomerTest {
 
 	@Test
 	public void AbstractUserClass() {
-
-		assertEquals("test", Customer.getName(custInf));
-		assertEquals("testaddress", Customer.getAddress(custInf));
-		assertEquals("da", Customer.getLanguage(custInf));
-		assertEquals("dk", Customer.getCountry(custInf));
-		assertEquals(new Locale.Builder().setLanguage("da").setRegion("dk").build(), Customer.getLocale(custInf));
-		assertEquals(sender, Customer.getID(custInf));
-
-		assertEquals(200.0, Customer.getAccountBalance(senderAccount), 0.0);
-		assertEquals(2.0, Customer.getAccountInterest(senderAccount), 0.0);
-		assertEquals(40.0, Customer.getAccountDebt(senderAccount), 0.0);
-		assertEquals(sender, Customer.getAccountOwnerID(senderAccount));
-		assertEquals(Currency.getInstance(Locale.GERMANY), Customer.getAccountCurrency(senderAccount));
-		assertEquals(accID1, Customer.getAccountID(senderAccount));
-
 		assertTrue(Customer.ChangePassword(custInf, "123"));
 		assertEquals(Hash.SHA512("123", salt), custInf.getHash());
 	}

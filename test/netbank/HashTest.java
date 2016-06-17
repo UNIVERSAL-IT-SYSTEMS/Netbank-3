@@ -27,11 +27,8 @@ public class HashTest {
 		assertNotNull(Hash.SHA512("test123", salt));
 	}
 	
-	@Test
-	public void exceptionCatch() throws NoSuchAlgorithmException {
-		LinkedList mockedList = mock(LinkedList.class);
-		when(mockedList.get(0)).thenReturn("first");
-		System.out.println(mockedList.get(0));
-		System.out.println(mockedList.get(999));
-	}
+//	@Test
+//	public void exceptionCatch() throws NoSuchAlgorithmException {
+//		
+//	}
 }

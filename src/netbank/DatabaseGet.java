@@ -62,7 +62,7 @@ public class DatabaseGet {
 			if (res.next()) {
 				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7
 				// salt, 8 hash, 9 isEmployee
-				Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
+				boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
 				return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3),
 						res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8),
 						isEmployee);
@@ -85,7 +85,7 @@ public class DatabaseGet {
 				System.out.println("RETURNING USER INFO");
 				// 1 ID, 2 username, 3 name, 4 address, 5 language, 6 country, 7
 				// salt, 8 hash, 9 isEmployee
-				Boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
+				boolean isEmployee = ((Integer.parseInt(res.getString(9).substring(1, 2)) == 0)) ? false : true;
 				return new UserInf(UUID.fromString(res.getString(1)), res.getString(2), res.getString(3),
 						res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8),
 						isEmployee);

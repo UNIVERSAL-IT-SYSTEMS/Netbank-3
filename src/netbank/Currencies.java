@@ -9,7 +9,7 @@ import org.json.*;
 
 public class Currencies {
 
-	public static Boolean UpdateCurrencies() throws IOException {
+	public static boolean UpdateCurrencies() throws IOException {
 		Hashtable<Currency, Double> currencies = new Hashtable<Currency, Double>();
 		URL url = new URL("http://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a");
 		Currency[] currencyNames = Currency.getAvailableCurrencies()
@@ -17,7 +17,6 @@ public class Currencies {
 		try {
 			Scanner scan = new Scanner(url.openStream());
 			String text = new String();
-			
 			while (scan.hasNext()) {
 				text += scan.nextLine();
 			}
@@ -27,7 +26,6 @@ public class Currencies {
 			for (int i = 0; i < Currency.getAvailableCurrencies().size(); i++) {
 				try {
 					currencies.put(currencyNames[i], rates.getDouble(currencyNames[i].getCurrencyCode()));
-					rates.getDouble(currencyNames[i].getCurrencyCode());
 				} catch (Exception e) {
 					// System.err.println("Couldn't add:
 					// "+Currency.getAvailableCurrencies().toArray()[i]+e);
@@ -43,7 +41,6 @@ public class Currencies {
 	public static Double changeCurrency(Currency oldCurrency, Currency newCurrency) {
 		Double oldAmount = DatabaseGet.getCurrency(oldCurrency);
 		Double newAmount = DatabaseGet.getCurrency(newCurrency);
-		System.out.println("Ratio: " + newAmount / oldAmount);
 		return newAmount / oldAmount;
 	}
 }

@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import netbank.*;
 import java.io.IOException;

@@ -74,23 +74,20 @@ public class Account {
 		Double tempBalance = balance.doubleValue();
 		tempBalance = tempBalance * Currencies.changeCurrency(currency, newCurrency);
 		balance = BigDecimal.valueOf(tempBalance).setScale(2, BigDecimal.ROUND_FLOOR);
-		System.out.println("New balance: " + balance);
 		Double tempDebt = debt.doubleValue();
 		tempDebt = tempDebt * Currencies.changeCurrency(currency, newCurrency);
 		debt = BigDecimal.valueOf(tempDebt).setScale(2, BigDecimal.ROUND_FLOOR);
-		System.out.println("New debt: " + debt);
-		System.out.println(balance + " , " + debt);
 		currency = newCurrency;
 	}
 
-	public Boolean belowZeroBalance(Double value) {
+	public boolean belowZeroBalance(Double value) {
 		if ((balance.doubleValue() - value) >= 0) {
 			return false;
 		}
 		return true;
 	}
 	
-	public Boolean belowZeroDebt(Double value) {
+	public boolean belowZeroDebt(Double value) {
 		if ((debt.doubleValue() - value) >= 0) {
 			return false;
 		}

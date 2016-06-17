@@ -1,7 +1,6 @@
-package model;
+package controller;
 
 import java.io.IOException;
-import java.util.Currency;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -12,15 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import netbank.UserInf;
+import netbank.Account;
 import netbank.DatabaseGet;
 import netbank.Employee;
 
 /**
- * Servlet implementation class NewAccountServlet
+ * Servlet implementation class DepositServlet
  */
-@WebServlet("/NewAccountServlet")
-public class NewAccountServlet extends HttpServlet {
+@WebServlet("/DepositServlet")
+public class DepositServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,18 +30,25 @@ public class NewAccountServlet extends HttpServlet {
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
-		String cusid = request.getParameter("cusid");
-		String interest = request.getParameter("interest");
-		String currency = request.getParameter("currency");
+		String amount = request.getParameter("amount");
+		String accid = request.getParameter("accid");
 
-		if (Employee.newAccount(UUID.fromString(cusid), Double.valueOf(interest), Currency.getInstance(currency))) {
-			request.setAttribute("message", "Created new account");
-		} else {
-			request.setAttribute("message", "Failed at creating new account");
+		try {
+			Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
+			Double am = Double.valueOf(amount);
+			if (am > 0) {
+				if (Employee.deposit(account, am)) {
+					request.setAttribute("message", "Successfully deposited");
+				} else {
+					request.setAttribute("message", "Deposit failed");
+				}
+			} else {
+				request.setAttribute("message", "Only positive numbers accepted");
+			}
+		} catch (Exception e) {
+			request.setAttribute("message", "Deposit failed");
 		}
-
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}
-
 }

@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -32,14 +32,16 @@ public class DeleteAccountServlet extends HttpServlet {
 		}
 		String accid = request.getParameter("accid");
 
-		Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
-
-		if (Employee.deleteAccount(account)) {
-			request.setAttribute("message", "Deleted account " + accid);
-		} else {
+		try {
+			Account account = DatabaseGet.getAccountsByUserID(UUID.fromString(accid)).get(0);
+			if (Employee.deleteAccount(account)) {
+				request.setAttribute("message", "Deleted account " + accid);
+			} else {
+				request.setAttribute("message", "Could not delete account " + accid);
+			}
+		} catch (Exception e) {
 			request.setAttribute("message", "Could not delete account " + accid);
 		}
-
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
 		dispatcher.forward(request, response);
 	}

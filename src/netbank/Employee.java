@@ -4,25 +4,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.UUID;
+import java.io.IOException;
 import java.sql.Timestamp;
 
 public class Employee extends User {
 
-	public static Boolean newAccount(UUID userID, Double interest, Currency currency) {
+	public static boolean newAccount(UUID userID, Double interest, Currency currency) {
 		return DatabaseSet.setAccount(new Account(UUID.randomUUID(), userID, 0.0, interest, 0.0, currency));
 	}
 
-	public static Boolean setAccountInterest(Account account, Double interest) {
+	public static boolean setAccountInterest(Account account, Double interest) {
 		account.setInterest(interest);
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean setAccountCurrency(Account account, Currency currency) {
+	public static boolean setAccountCurrency(Account account, Currency currency) {
 		account.setCurrency(currency);
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean subtractAccountBalance(Account account, Double value) {
+	public static boolean subtractAccountBalance(Account account, Double value) {
 		if (account.belowZeroBalance(value) || value < 0) {
 			return false;
 		}
@@ -36,7 +37,7 @@ public class Employee extends User {
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean addAccountDebt(Account account, Double value) {
+	public static boolean addAccountDebt(Account account, Double value) {
 		if(value < 0) {
 			return false;
 		}
@@ -50,8 +51,7 @@ public class Employee extends User {
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean subtractAccountDebt(Account account, Double value) {
-		System.out.println(value < 0);
+	public static boolean subtractAccountDebt(Account account, Double value) {
 		if (account.belowZeroDebt(value) || value < 0) {
 			return false;
 		}
@@ -65,7 +65,7 @@ public class Employee extends User {
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean deposit(Account account, Double amount) {
+	public static boolean deposit(Account account, Double amount) {
 		if(amount < 0) { return false; }
 		if(!DatabaseSet.setTransaction(new Transaction(UUID.randomUUID(), account.getAccountID(), account.getAccountID(),
 				amount, account.getCurrency(), TransactionType.DEPOSIT,
@@ -76,7 +76,7 @@ public class Employee extends User {
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean changeOwnershipOfAccount(Account account, UUID newOwner) {
+	public static boolean changeOwnershipOfAccount(Account account, UUID newOwner) {
 		UserInf thisCustomer = DatabaseGet.getUserByUserID(newOwner);
 		try {
 			account.setOwnerID(thisCustomer.getID());
@@ -86,7 +86,7 @@ public class Employee extends User {
 		return DatabaseSet.setAccount(account);
 	}
 
-	public static Boolean deleteAccount(Account account) {
+	public static boolean deleteAccount(Account account) {
 		if (account.getBalance() == 0 && account.getDebt() == 0) {
 			return DatabaseSet.removeAccount(account);
 		} else {
@@ -116,5 +116,9 @@ public class Employee extends User {
 				return DatabaseSet.removeAccount(account);
 			}
 		}
+	}
+
+	public static boolean UpdateCurrencies() throws IOException {
+		return Currencies.UpdateCurrencies();
 	}
 }
