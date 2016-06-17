@@ -28,19 +28,20 @@ public class NewAccountServlet extends HttpServlet {
 			// Forward the control to login.jsp if authentication fails or
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-		}
-		String cusid = request.getParameter("cusid");
-		String interest = request.getParameter("interest");
-		String currency = request.getParameter("currency");
-		
-		if (Employee.newAccount(UUID.fromString(cusid), Double.valueOf(interest), Currency.getInstance(currency))) {
-			request.setAttribute("message", "Created new account");
 		} else {
-			request.setAttribute("message", "Failed at creating new account");
-		}
+			String cusid = request.getParameter("cusid");
+			String interest = request.getParameter("interest");
+			String currency = request.getParameter("currency");
 
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
-		dispatcher.forward(request, response);
+			if (Employee.newAccount(UUID.fromString(cusid), Double.valueOf(interest), Currency.getInstance(currency))) {
+				request.setAttribute("message", "Created new account");
+			} else {
+				request.setAttribute("message", "Failed at creating new account");
+			}
+
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("EmpMainMenu.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

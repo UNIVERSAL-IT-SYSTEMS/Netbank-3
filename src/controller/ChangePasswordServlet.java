@@ -27,29 +27,30 @@ public class ChangePasswordServlet extends HttpServlet {
 			// Forward the control to login.jsp if authentication fails or
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-		}
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		String old = request.getParameter("oldpassword");
-		String newpass = request.getParameter("newpassword");
-		String repeat = request.getParameter("repeatednewpassword");
-		String id = request.getParameter("cusID");
-		try {
-			UserInf user = DatabaseGet.getUserByUserID(UUID.fromString(id));
-			if (Dao.loginValidate(user.getSalt(), user.getHash(), old) && newpass.equals(repeat)) {
-				Customer.ChangePassword(user, newpass);
-				out.print("<h1>Success!</h1>");
-				out.print("<a href=\"MainMenu.jsp\">Back</a>");
-				out.close();
-			} else {
+		} else {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String old = request.getParameter("oldpassword");
+			String newpass = request.getParameter("newpassword");
+			String repeat = request.getParameter("repeatednewpassword");
+			String id = request.getParameter("cusID");
+			try {
+				UserInf user = DatabaseGet.getUserByUserID(UUID.fromString(id));
+				if (Dao.loginValidate(user.getSalt(), user.getHash(), old) && newpass.equals(repeat)) {
+					Customer.ChangePassword(user, newpass);
+					out.print("<h1>Success!</h1>");
+					out.print("<a href=\"MainMenu.jsp\">Back</a>");
+					out.close();
+				} else {
+					out.print("<h1>Failed</h1>");
+					out.print("<a href=\"ChangePassword.jsp\">Back</a>");
+					out.close();
+				}
+			} catch (Exception e) {
 				out.print("<h1>Failed</h1>");
 				out.print("<a href=\"ChangePassword.jsp\">Back</a>");
 				out.close();
 			}
-		} catch (Exception e) {
-			out.print("<h1>Failed</h1>");
-			out.print("<a href=\"ChangePassword.jsp\">Back</a>");
-			out.close();
 		}
 
 	}
