@@ -24,27 +24,28 @@ public class TransactionServlet extends HttpServlet {
 			// Forward the control to login.jsp if authentication fails or
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
-		}
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		String choice = request.getParameter("choice");
-		String amount = request.getParameter("amount");
-		String receiverID = request.getParameter("receiverID");
-		try {
-			System.out.println("HAVE INFO - TRYING TO DO TRANSACTION");
-			if (Dao.Transaction(choice, amount, receiverID)) {
-				out.print("<h1>Success!</h1>");
-				out.print("<a href=\"MainMenu.jsp\">Back</a>");
-				out.close();
-			} else {
+		} else {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			String choice = request.getParameter("choice");
+			String amount = request.getParameter("amount");
+			String receiverID = request.getParameter("receiverID");
+			try {
+				System.out.println("HAVE INFO - TRYING TO DO TRANSACTION");
+				if (Dao.Transaction(choice, amount, receiverID)) {
+					out.print("<h1>Success!</h1>");
+					out.print("<a href=\"MainMenu.jsp\">Back</a>");
+					out.close();
+				} else {
+					out.print("<h1>Failed</h1>");
+					out.print("<a href=\"Transaction.jsp\">Back</a>");
+					out.close();
+				}
+			} catch (Exception e) {
 				out.print("<h1>Failed</h1>");
 				out.print("<a href=\"Transaction.jsp\">Back</a>");
 				out.close();
 			}
-		} catch (Exception e) {
-			out.print("<h1>Failed</h1>");
-			out.print("<a href=\"Transaction.jsp\">Back</a>");
-			out.close();
 		}
 	}
 }

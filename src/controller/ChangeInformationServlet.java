@@ -29,48 +29,48 @@ public class ChangeInformationServlet extends HttpServlet {
 			// Forward the control to login.jsp if authentication fails or
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		} else {
+			String accid = request.getParameter("accid");
+			String balance = request.getParameter("balance");
+			String currency = request.getParameter("currency");
+			String debt = request.getParameter("debt");
+			String interest = request.getParameter("interest");
+			String cusid = request.getParameter("cusid");
+			try {
+				Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
+				String returnMessage = "";
+
+				if (setAccountBalance(balance, account)) {
+					returnMessage += "balance, ";
+				}
+
+				if (setAccountInterest(interest, account)) {
+					returnMessage += "interest, ";
+				}
+
+				if (setAccountCurrency(currency, account)) {
+					returnMessage += "currency, ";
+				}
+
+				if (setAccountDebt(debt, account)) {
+					returnMessage += "debt, ";
+				}
+
+				if (changeAccountOwner(account, cusid)) {
+					returnMessage += "cusid, ";
+				}
+
+				if (returnMessage.isEmpty()) {
+					request.setAttribute("message", "Wasn't able to change anything");
+				} else {
+					request.setAttribute("message", "Was able to change " + returnMessage);
+				}
+				request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("message", "Something went wrong");
+				request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
+			}
 		}
-		String accid = request.getParameter("accid");
-		String balance = request.getParameter("balance");
-		String currency = request.getParameter("currency");
-		String debt = request.getParameter("debt");
-		String interest = request.getParameter("interest");
-		String cusid = request.getParameter("cusid");
-		try {
-			Account account = DatabaseGet.getAccountByAccountID(UUID.fromString(accid));
-			String returnMessage = "";
-
-			if (setAccountBalance(balance, account)) {
-				returnMessage += "balance, ";
-			}
-
-			if (setAccountInterest(interest, account)) {
-				returnMessage += "interest, ";
-			}
-
-			if (setAccountCurrency(currency, account)) {
-				returnMessage += "currency, ";
-			}
-
-			if (setAccountDebt(debt, account)) {
-				returnMessage += "debt, ";
-			}
-
-			if (changeAccountOwner(account, cusid)) {
-				returnMessage += "cusid, ";
-			}
-
-			if (returnMessage.isEmpty()) {
-				request.setAttribute("message", "Wasn't able to change anything");
-			} else {
-				request.setAttribute("message", "Was able to change " + returnMessage);
-			}
-			request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
-		} catch (Exception e) {
-			request.setAttribute("message", "Something went wrong");
-			request.getRequestDispatcher("EmpMainMenu.jsp").forward(request, response);
-		}
-
 
 	}
 
