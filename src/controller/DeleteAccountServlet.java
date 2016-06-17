@@ -25,7 +25,7 @@ public class DeleteAccountServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if (session == null || session.getAttribute("empsID") == null) {
+		if (session == null || session.getAttribute("empID") == null) {
 			// Forward the control to login.jsp if authentication fails or
 			// session expires
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
