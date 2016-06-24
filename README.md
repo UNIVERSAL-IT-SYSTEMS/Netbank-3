@@ -2,9 +2,13 @@
 
 ![alt text](https://github.com/jesperlunpet/Netbank/blob/master/WebContent/Images/put-in.png "Put-in")
 
+#### Mainframe
+
+[http://192.86.32.54:9080/Put-in/](http://192.86.32.54:9080/Put-in/)
+
 #### Localhost
 
-Show the app on your browser: [http://localhost:9080/Netbank/](http://localhost:9080/Netbank/)
+Show the app on your browser: [http://localhost:9080/Put-in/](http://localhost:9080/Put-in/)
 
 #### Connection to DB2
 
@@ -29,11 +33,4 @@ After having copied the two .jar files into the correct folder
 
 [https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a](https://openexchangerates.org/api/latest.json?app_id=9d966ccd4fef4ff3ba3b48613802985a)
 
-#### Mainframe
 
-Login to change the files in the Mainframe:
-
-Jesper: DTU08
-Morten: DTU09
-
-Password: FAGP2016
