@@ -1,5 +1,7 @@
 # Netbank
 
+![alt text](https://github.com/jesperlunpet/Netbank/blob/master/WebContent/Images/put-in.png "Put-in")
+
 #### Localhost
 
 Show the app on your browser: [http://localhost:9080/Netbank/](http://localhost:9080/Netbank/)
